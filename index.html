@@ -109,6 +109,19 @@
   transform: scale(1.1);
 }
 
+.video-container {
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+  }
+
+.video-container:hover {
+  transform: scale(1.1);
+  }
+
+.video-container video {
+  width: 100%;
+  height: auto;
+  display: block;
 
 </style>
 
@@ -289,6 +302,17 @@
 				</div>
 			</div>
 		</div>
+
+
+
+
+
+
+
+
+
+
+	    
     </section>
     <section class="ftco-section ftco-no-pb" id="resume-section">
     	<div class="container">
@@ -393,6 +417,16 @@
 
 
     	</div>
+
+
+
+
+
+
+
+
+
+	    
     </section>
     <section class="ftco-section" id="publications-section">
       <div class="container">
@@ -460,6 +494,42 @@
         </div>
 	<br>
 	  </div>
+
+
+
+
+
+
+
+</section>
+<section class="ftco-section" id="projects">
+  <div class="container">
+    <div class="row justify-content-center mb-5 pb-5">
+      <div class="col-md-7 heading-section text-center ftco-animate">
+        <h2 class="mb-4">Projects</h2>
+      </div>
+    </div>
+    <div class="row d-flex">
+      <div class="col-md-4 d-flex ftco-animate">
+        <div class="blog-entry">
+          <div class="video-container">
+            <video src="images/SpaDeX.mp4" muted onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;"></video>
+          </div>
+          <div class="text mt-3 float-right d-block">
+            <h3 class="heading"><a href="https://doi.org/10.48550/arXiv.2502.09517">ISRO SpaDeX Mission</a></h3>
+            <p>Coupled Rendezvous and Docking Maneuver control of satellite</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+	    
+
+
+
+
+
+	    
     </section>  
     <section class="ftco-section" id="certificates-section">
       <div class="container">
@@ -521,6 +591,14 @@
         </div>
 	<br>
 	  </div>
+
+
+
+
+
+
+
+	    
     </section>
     <section class="ftco-section contact-section ftco-no-pb" id="contact-section">
       <div class="container">
