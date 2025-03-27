@@ -123,6 +123,55 @@
   height: auto;
   display: block;
 
+  .achievements-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .achievement-tile {
+    display: flex;
+    align-items: center;
+    background: #f8f8f8;
+    padding: 15px;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .achievement-tile:hover {
+    transform: scale(1.05);
+  }
+
+  .achievement-image {
+    width: 150px;
+    height: 100px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .achievement-text {
+    margin-left: 20px;
+  }
+
+  .popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .popup-image {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+  }
+	
 </style>
 
 
@@ -501,6 +550,51 @@
     </section>  
 -->
 
+
+<section class="ftco-section" id="achievements">
+  <div class="container">
+    <div class="row justify-content-center mb-5 pb-5">
+      <div class="col-md-7 heading-section text-center ftco-animate">
+        <h2 class="mb-4">Achievements</h2>
+      </div>
+    </div>
+    
+    <div class="achievements-section">
+      <div class="achievement-tile">
+        <img src="images/award1.jpg" class="achievement-image" onclick="openPopup(this.src)">
+        <div class="achievement-text">
+          <h3>Best Research Paper Award</h3>
+          <p>Awarded at the International Astronautical Congress, 2024.</p>
+        </div>
+      </div>
+      
+      <div class="achievement-tile">
+        <img src="images/award2.jpg" class="achievement-image" onclick="openPopup(this.src)">
+        <div class="achievement-text">
+          <h3>ISRO Young Scientist Award</h3>
+          <p>Received for significant contributions to space research.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="popup-overlay" id="popup">
+  <img id="popup-img" class="popup-image">
+</div>
+
+<script>
+  function openPopup(src) {
+    document.getElementById("popup-img").src = src;
+    document.getElementById("popup").style.display = "flex";
+  }
+  
+  document.getElementById("popup").onclick = function () {
+    this.style.display = "none";
+  };
+</script>
+
+	  
 	  
     <section class="ftco-section" id="certificates-section">
       <div class="container">
