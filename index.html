@@ -123,47 +123,54 @@
   height: auto;
   display: block;
 
-/* Modal container */
+/* ===== Modal Overlay ===== */
 .modal {
   display: none;
   position: fixed;
   z-index: 9999;
-  left: 0;
   top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);  /* darker transparent background */
-  backdrop-filter: blur(4px);      /* background blur effect */
-  display: flex;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6); /* semi-transparent black */
+  backdrop-filter: blur(6px);
   justify-content: center;
   align-items: center;
 }
 
-/* Close button */
+/* ===== Modal Image ===== */
+.modal-content {
+  width: 50vw;        /* 50% of viewport width */
+  height: auto;
+  max-height: 50vh;   /* 50% of viewport height */
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+  animation: zoomIn 0.3s ease;
+  object-fit: contain;
+}
+
+/* ===== Close Button ===== */
 .modal .close {
   position: absolute;
   top: 20px;
-  right: 35px;
-  color: #f1f1f1;
-  font-size: 40px;
+  right: 30px;
+  font-size: 35px;
   font-weight: bold;
+  color: #fff;
   cursor: pointer;
+  z-index: 10000;
 }
 
-/* Modal image */
-.modal-content {
-  width: 50vw;           /* 50% of viewport width */
-  height: auto;          /* maintain aspect ratio */
-  max-height: 50vh;      /* don't exceed 50% of viewport height */
-  object-fit: contain;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(255,255,255,0.1);
-  animation: zoomIn 0.3s ease-in-out;
-}
-
+/* ===== Zoom Animation ===== */
 @keyframes zoomIn {
-  from { transform: scale(0.5); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+  from {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }	
 </style>
 
