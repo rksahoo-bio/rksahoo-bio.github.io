@@ -5,11 +5,21 @@
   "scholar_url": "https://scholar.google.com/citations?user=naY3uPgAAAAJ&hl=en",
   "metrics": {
     "citations_all": 5,
-    "citations_5yr": 5,
-    "h_index_all": null,
+    "citations_5yr": null,
+    "h_index_all": 1,
     "h_index_5yr": null,
-    "i10_index_all": null,
+    "i10_index_all": 0,
     "i10_index_5yr": null
   },
-  "updated_at": "2025-11-07T09:50:37.692Z"
+  "graph": [
+    {
+      "year": 2023,
+      "citations": 1
+    },
+    {
+      "year": 2025,
+      "citations": 4
+    }
+  ],
+  "updated_at": "2025-11-07T11:36:25.077Z"
 }
