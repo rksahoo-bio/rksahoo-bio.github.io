@@ -1,0 +1,219 @@
+{
+  "search_metadata": {
+    "id": "690db28daf5fdc36b14cd9cd",
+    "status": "Success",
+    "json_endpoint": "https://serpapi.com/searches/956c3c5e24083e17/690db28daf5fdc36b14cd9cd.json",
+    "created_at": "2025-11-07 08:49:17 UTC",
+    "processed_at": "2025-11-07 08:49:17 UTC",
+    "google_scholar_author_url": "https://scholar.google.com/citations?user=naY3uPgAAAAJ&hl=en",
+    "raw_html_file": "https://serpapi.com/searches/956c3c5e24083e17/690db28daf5fdc36b14cd9cd.html",
+    "total_time_taken": 2.59
+  },
+  "search_parameters": {
+    "engine": "google_scholar_author",
+    "author_id": "naY3uPgAAAAJ",
+    "hl": "en"
+  },
+  "author": {
+    "name": "Rakesh Kumar Sahoo",
+    "affiliations": "PhD Research Scholar at Indian Institute of Technology Kharagpur",
+    "email": "Verified email at kgpian.iitkgp.ac.in",
+    "website": "https://rksahoo-bio.github.io/",
+    "interests": [
+      {
+        "title": "Satellite Dynamics",
+        "link": "https://scholar.google.com/citations?view_op=search_authors&hl=en&mauthors=label:satellite_dynamics",
+        "serpapi_link": "https://serpapi.com/search.json?engine=google_scholar_profiles&hl=en&mauthors=label%3Asatellite_dynamics"
+      },
+      {
+        "title": "Orbital Mechanics",
+        "link": "https://scholar.google.com/citations?view_op=search_authors&hl=en&mauthors=label:orbital_mechanics",
+        "serpapi_link": "https://serpapi.com/search.json?engine=google_scholar_profiles&hl=en&mauthors=label%3Aorbital_mechanics"
+      },
+      {
+        "title": "Flight Dynamics and Control",
+        "link": "https://scholar.google.com/citations?view_op=search_authors&hl=en&mauthors=label:flight_dynamics_and_control",
+        "serpapi_link": "https://serpapi.com/search.json?engine=google_scholar_profiles&hl=en&mauthors=label%3Aflight_dynamics_and_control"
+      },
+      {
+        "title": "Vehicle Dynamics",
+        "link": "https://scholar.google.com/citations?view_op=search_authors&hl=en&mauthors=label:vehicle_dynamics",
+        "serpapi_link": "https://serpapi.com/search.json?engine=google_scholar_profiles&hl=en&mauthors=label%3Avehicle_dynamics"
+      }
+    ],
+    "thumbnail": "https://scholar.googleusercontent.com/citations?view_op=view_photo&user=naY3uPgAAAAJ&citpid=1"
+  },
+  "articles": [
+    {
+      "title": "Coupled Rendezvous and Docking Maneuver control of satellite using Reinforcement learning-based Adaptive Fixed-Time Sliding Mode Controller",
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:qjMakFHDy7sC",
+      "citation_id": "naY3uPgAAAAJ:qjMakFHDy7sC",
+      "authors": "RK Sahoo, M Sinha",
+      "publication": "arXiv preprint arXiv:2502.09517, 2025",
+      "cited_by": {
+        "value": 2,
+        "link": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=1311667384750797321",
+        "serpapi_link": "https://serpapi.com/search.json?cites=1311667384750797321&engine=google_scholar&hl=en",
+        "cites_id": "1311667384750797321"
+      },
+      "year": "2025"
+    },
+    {
+      "title": "Long-Range Rendezvous and Docking Maneuver Control of Satellite using Cross-Feedback Sliding Mode Controller",
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:IjCSPb-OGe4C",
+      "citation_id": "naY3uPgAAAAJ:IjCSPb-OGe4C",
+      "authors": "VV Kini, DP Surya, RK Sahoo, M Sinha",
+      "cited_by": {
+        "value": 1,
+        "link": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=5203929120501197320,3486739243287796040",
+        "serpapi_link": "https://serpapi.com/search.json?cites=5203929120501197320%2C3486739243287796040&engine=google_scholar&hl=en",
+        "cites_id": "5203929120501197320,3486739243287796040"
+      },
+      "year": "2025"
+    },
+    {
+      "title": "Coupled rendezvous and docking maneuver control of spacecraft using fast fixed-time sliding mode controller",
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:2osOgNQ5qMEC",
+      "citation_id": "naY3uPgAAAAJ:2osOgNQ5qMEC",
+      "authors": "RK Sahoo, M Sinha",
+      "publication": "IAF Astrodynamics Symposium, 1028-1042 (15 pages), 2024",
+      "cited_by": {
+        "value": 1,
+        "link": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=6364243302192327603",
+        "serpapi_link": "https://serpapi.com/search.json?cites=6364243302192327603&engine=google_scholar&hl=en",
+        "cites_id": "6364243302192327603"
+      },
+      "year": "2024"
+    },
+    {
+      "title": "Study on the effect of manifold induction of acetylene in a dual-fuelled CI engine",
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:u5HHmVD_uO8C",
+      "citation_id": "naY3uPgAAAAJ:u5HHmVD_uO8C",
+      "authors": "RK Sahoo, A Jaiswal, M Sivalingam",
+      "publication": "SAE Technical Paper, 2020",
+      "cited_by": {
+        "value": 1,
+        "link": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=3214994570949949061",
+        "serpapi_link": "https://serpapi.com/search.json?cites=3214994570949949061&engine=google_scholar&hl=en",
+        "cites_id": "3214994570949949061"
+      },
+      "year": "2020"
+    },
+    {
+      "title": "Satellite Navigation and Control using Physics-Informed Artificial Potential Field and Sliding Mode Controller",
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:Y0pCki6q_DkC",
+      "citation_id": "naY3uPgAAAAJ:Y0pCki6q_DkC",
+      "authors": "RK Sahoo, P Choudhary, M Sinha",
+      "publication": "arXiv preprint arXiv:2510.08184, 2025",
+      "cited_by": {
+        "value": null
+      },
+      "year": "2025"
+    },
+    {
+      "title": "Collision-Free Trajectory Planning and control of Robotic Manipulator using Energy-Based Artificial Potential Field (E-APF)",
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:zYLM7Y9cAGgC",
+      "citation_id": "naY3uPgAAAAJ:zYLM7Y9cAGgC",
+      "authors": "A Uppal, RK Sahoo, M Sinha",
+      "publication": "arXiv:2508.07323, 2025",
+      "cited_by": {
+        "value": null
+      },
+      "year": "2025"
+    },
+    {
+      "title": "Satellite Navigation and Control using Discrete-APF and Fixed-Time Sliding Mode Controller",
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:Tyk-4Ss8FVUC",
+      "citation_id": "naY3uPgAAAAJ:Tyk-4Ss8FVUC",
+      "authors": "P Choudhary, RK Sahoo, M Sinha",
+      "publication": "2025 IEEE Space, Aerospace and Defence Conference (SPACE), 1-6, 2025",
+      "cited_by": {
+        "value": null
+      },
+      "year": "2025"
+    },
+    {
+      "title": "A Novel Machine-Learning Approach for Detection and Avoidance of Space Debris Collisions",
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:d1gkVwhDpl0C",
+      "citation_id": "naY3uPgAAAAJ:d1gkVwhDpl0C",
+      "authors": "S Siddhamoorthy, M Meleet, A Gupta, A Sajit, RK Sahoo",
+      "publication": "22nd IAA Symposium on Space Debris, 1492-1504 (13 pages), 2024",
+      "cited_by": {
+        "value": null
+      },
+      "year": "2024"
+    },
+    {
+      "title": "Forming Simulation of Bump Foils Used in Complaint Gas Foil Bearings",
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:u-x6o8ySG0sC",
+      "citation_id": "naY3uPgAAAAJ:u-x6o8ySG0sC",
+      "authors": "RK Sahoo, D Mohapatra, SK Behera",
+      "publication": "Recent Advances in Manufacturing Processes and Systems: Select Proceedings …, 2022",
+      "cited_by": {
+        "value": null
+      },
+      "year": "2022"
+    }
+  ],
+  "cited_by": {
+    "table": [
+      {
+        "citations": {
+          "all": 5,
+          "since_2020": 5
+        }
+      },
+      {
+        "h_index": {
+          "all": 1,
+          "since_2020": 1
+        }
+      },
+      {
+        "i10_index": {
+          "all": 0,
+          "since_2020": 0
+        }
+      }
+    ],
+    "graph": [
+      {
+        "year": 2023,
+        "citations": 1
+      },
+      {
+        "year": 2025,
+        "citations": 4
+      }
+    ]
+  },
+  "co_authors": [
+    {
+      "name": "Akshat Jaiswal",
+      "link": "https://scholar.google.com/citations?user=HV1ccN0AAAAJ&hl=en",
+      "serpapi_link": "https://serpapi.com/search.json?author_id=HV1ccN0AAAAJ&engine=google_scholar_author&hl=en",
+      "author_id": "HV1ccN0AAAAJ",
+      "affiliations": "National Institute of Technology Rourkela",
+      "email": "Verified email at nitrkl.ac.in",
+      "thumbnail": "https://scholar.googleusercontent.com/citations?view_op=small_photo&user=HV1ccN0AAAAJ&citpid=1"
+    },
+    {
+      "name": "Prof. Suraj Kumar Behera",
+      "link": "https://scholar.google.com/citations?user=tUCLvx0AAAAJ&hl=en",
+      "serpapi_link": "https://serpapi.com/search.json?author_id=tUCLvx0AAAAJ&engine=google_scholar_author&hl=en",
+      "author_id": "tUCLvx0AAAAJ",
+      "affiliations": "Associate Professor NIT Rourkela",
+      "email": "Verified email at nitrkl.ac.in",
+      "thumbnail": "https://scholar.googleusercontent.com/citations?view_op=small_photo&user=tUCLvx0AAAAJ&citpid=1"
+    },
+    {
+      "name": "Dr. S.Murugan",
+      "link": "https://scholar.google.com/citations?user=C1kgS_wAAAAJ&hl=en",
+      "serpapi_link": "https://serpapi.com/search.json?author_id=C1kgS_wAAAAJ&engine=google_scholar_author&hl=en",
+      "author_id": "C1kgS_wAAAAJ",
+      "affiliations": "Professor, National Institute of Technology Rourkela, India",
+      "email": "Verified email at nitrkl.ac.in",
+      "thumbnail": "https://scholar.googleusercontent.com/citations?view_op=small_photo&user=C1kgS_wAAAAJ&citpid=9"
+    }
+  ]
+}
