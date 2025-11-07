@@ -1,0 +1,40 @@
+name: Update Google Scholar stats
+
+on:
+  schedule:
+    - cron: "0 */12 * * *"    # every 12 hours (UTC)
+  workflow_dispatch:          # lets you run it manually
+
+permissions:
+  contents: write             # allow the workflow to commit to the repo
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch from SerpAPI and write data/scholar.json
+        env:
+          SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
+        run: |
+          mkdir -p data
+          curl -s "https://serpapi.com/search.json?engine=google_scholar_author&author_id=naY3uPgAAAAJ&api_key=${SERPAPI_KEY}" > data/_raw_scholar.json
+
+          node -e "const fs=require('fs'); const j=JSON.parse(fs.readFileSync('data/_raw_scholar.json','utf8')); const t=(j?.cited_by?.table?.[0])||{}; const d={ name:j?.author?.name||null, affiliation:j?.author?.affiliations||null, photo:j?.author?.thumbnail||null, scholar_url:j?.search_metadata?.google_scholar_author_url||null, metrics:{ citations_all:t?.citations?.all??null, citations_5yr:t?.citations?.['since 2020']??t?.citations?.['since 2019']??t?.citations?.since_2020??t?.citations?.since_2019??null, h_index_all:t?.h_index?.all??null, h_index_5yr:t?.h_index?.['since 2020']??t?.h_index?.['since 2019']??t?.h_index?.since_2020??t?.h_index?.since_2019??null, i10_index_all:t?.i10_index?.all??null, i10_index_5yr:t?.i10_index?.['since 2020']??t?.i10_index?.['since 2019']??t?.i10_index?.since_2020??t?.i10_index?.since_2019??null }, updated_at:new Date().toISOString() }; fs.writeFileSync('data/scholar.json', JSON.stringify(d,null,2));"
+
+      - name: Commit changes (if any)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet; then
+            git add data/scholar.json data/_raw_scholar.json
+            git commit -m "Update scholar.json"
+            git push
+          fi
