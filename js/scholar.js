@@ -19,24 +19,26 @@ el.innerHTML = `
     gap:14px;
     align-items:center;
     font:15px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    border:1px solid #444;
-    border-radius:14px;
+    border:1px solid #666;
+    border-radius:12px;
     padding:16px 20px;
     max-width:520px;
-    background:#111;
+    background:#000;
     color:#fff;
-    box-shadow:0 4px 12px rgba(255,255,255,0.1);
+    box-shadow:0 0 12px rgba(255,255,255,0.05);
   ">
-    ${d.photo ? `<img src="${d.photo}" alt="" style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid #555;">` : ""}
+    ${d.photo ? `<img src="${d.photo}" alt="" style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid #888;">` : ""}
     <div style="flex:1; text-align:left;">
       <div style="font-weight:700; font-size:16px; color:#fff;">${nameHtml}</div>
-      <div style="opacity:.8; font-weight:500; font-size:14px; color:#ccc; margin-bottom:6px;">${d.affiliation ?? ""}</div>
+      <div style="opacity:.85; font-weight:500; font-size:14px; color:#ccc; margin-bottom:6px;">
+        ${d.affiliation ?? ""}
+      </div>
       <table style="margin-top:6px; width:100%; border-collapse:collapse; font-weight:600;">
         <tr><td style="color:#fff;">Citations</td> <td style="text-align:right; color:#fff;">${fmt(d.metrics?.citations_all)}</td></tr>
         <tr><td style="color:#fff;">h-index</td>   <td style="text-align:right; color:#fff;">${fmt(d.metrics?.h_index_all)}</td></tr>
         <tr><td style="color:#fff;">i10-index</td> <td style="text-align:right; color:#fff;">${fmt(d.metrics?.i10_index_all)}</td></tr>
       </table>
-      <div style="margin-top:8px; font-size:12px; opacity:.6; font-weight:500; color:#ccc;">
+      <div style="margin-top:8px; font-size:12px; opacity:.7; font-weight:500; color:#ccc;">
         Updated: ${d.updated_at ? new Date(d.updated_at).toLocaleString() : "—"}
       </div>
     </div>
