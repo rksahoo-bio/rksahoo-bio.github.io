@@ -2,11 +2,11 @@ name: Update Google Scholar stats
 
 on:
   schedule:
-    - cron: "0 */12 * * *"    # every 12 hours (UTC)
+    - cron: "0 */12 * * *"   # every 12 hours (UTC)
   workflow_dispatch:
 
 permissions:
-  contents: write   # allow push
+  contents: write            # allow the workflow to push files
 
 jobs:
   build:
@@ -15,7 +15,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0    # so we can push back to main
+          fetch-depth: 0     # so we can push back to main
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -29,9 +29,50 @@ jobs:
           set -euxo pipefail
           mkdir -p data
           curl -s "https://serpapi.com/search.json?engine=google_scholar_author&author_id=naY3uPgAAAAJ&api_key=${SERPAPI_KEY}" > data/_raw_scholar.json
-          node -e "const fs=require('fs'); const j=JSON.parse(fs.readFileSync('data/_raw_scholar.json','utf8')); const t=(j?.cited_by?.table?.[0])||{}; const d={ name:j?.author?.name||null, affiliation:j?.author?.affiliations||null, photo:j?.author?.thumbnail||null, scholar_url:j?.search_metadata?.google_scholar_author_url||null, metrics:{ citations_all:t?.citations?.all??null, citations_5yr:t?.citations?.['since 2020']??t?.citations?.['since 2019']??t?.citations?.since_2020??t?.citations?.since_2019??null, h_index_all:t?.h_index?.all??null, h_index_5yr:t?.h_index?.['since 2020']??t?.h_index?.['since 2019']??t?.h_index?.since_2020??t?.h_index?.since_2019??null, i10_index_all:t?.i10_index?.all??null, i10_index_5yr:t?.i10_index?.['since 2020']??t?.i10_index?.['since 2019']??t?.i10_index?.since_2020??t?.i10_index?.since_2019??null }, updated_at:new Date().toISOString() }; fs.writeFileSync('data/scholar.json', JSON.stringify(d,null,2));"
-          echo "----- ls -la -----"
-          ls -la
+
+          node <<'NODE'
+          const fs = require('fs');
+          const raw = fs.readFileSync('data/_raw_scholar.json', 'utf8');
+          const j = JSON.parse(raw);
+
+          // SerpAPI returns "cited_by.table" as rows: [citations, h_index, i10_index]
+          const rows = Array.isArray(j?.cited_by?.table) ? j.cited_by.table : [];
+
+          const findRow = (key) => rows.find(r => r && Object.prototype.hasOwnProperty.call(r, key)) || {};
+          const citations = findRow('citations').citations || {};
+          const hindex    = findRow('h_index').h_index || {};
+          const i10index  = findRow('i10_index').i10_index || {};
+
+          // Determine the most recent "since YYYY" key available (varies by year)
+          const sinceCandidates = Object.keys(citations).filter(k => /^since \d{4}$/.test(k));
+          sinceCandidates.sort((a,b) => parseInt(b.replace(/\D/g,'')) - parseInt(a.replace(/\D/g,'')));
+          const sinceKey = sinceCandidates[0] || 'since 2020';
+
+          // Citations-by-year graph
+          const graph = Array.isArray(j?.cited_by?.graph)
+            ? j.cited_by.graph.map(p => ({ year: p.year, citations: p.citations }))
+            : [];
+
+          const data = {
+            name: j?.author?.name ?? null,
+            affiliation: j?.author?.affiliations ?? null,
+            photo: j?.author?.thumbnail ?? null,
+            scholar_url: j?.search_metadata?.google_scholar_author_url ?? null,
+            metrics: {
+              citations_all:  citations.all ?? null,
+              citations_5yr:  citations[sinceKey] ?? null,
+              h_index_all:    hindex.all ?? null,
+              h_index_5yr:    hindex[sinceKey] ?? null,
+              i10_index_all:  i10index.all ?? null,
+              i10_index_5yr:  i10index[sinceKey] ?? null,
+            },
+            graph,
+            updated_at: new Date().toISOString(),
+          };
+
+          fs.writeFileSync('data/scholar.json', JSON.stringify(data, null, 2));
+          NODE
+
           echo "----- ls -la data -----"
           ls -la data || true
 
