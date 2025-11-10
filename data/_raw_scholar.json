@@ -1,13 +1,13 @@
 {
   "search_metadata": {
-    "id": "6910893cae39f3475a6d0789",
+    "id": "69113d8df3fc7b0c2dfc3123",
     "status": "Success",
-    "json_endpoint": "https://serpapi.com/searches/956c3c5e24083e17/6910893cae39f3475a6d0789.json",
-    "created_at": "2025-11-09 12:29:48 UTC",
-    "processed_at": "2025-11-09 12:29:48 UTC",
+    "json_endpoint": "https://serpapi.com/searches/956c3c5e24083e17/69113d8df3fc7b0c2dfc3123.json",
+    "created_at": "2025-11-10 01:19:09 UTC",
+    "processed_at": "2025-11-10 01:19:09 UTC",
     "google_scholar_author_url": "https://scholar.google.com/citations?user=naY3uPgAAAAJ&hl=en",
-    "raw_html_file": "https://serpapi.com/searches/956c3c5e24083e17/6910893cae39f3475a6d0789.html",
-    "total_time_taken": 0.71
+    "raw_html_file": "https://serpapi.com/searches/956c3c5e24083e17/69113d8df3fc7b0c2dfc3123.html",
+    "total_time_taken": 1.06
   },
   "search_parameters": {
     "engine": "google_scholar_author",
@@ -51,7 +51,7 @@
       "authors": "RK Sahoo, M Sinha",
       "publication": "arXiv preprint arXiv:2502.09517, 2025",
       "cited_by": {
-        "value": 2,
+        "value": 3,
         "link": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=1311667384750797321",
         "serpapi_link": "https://serpapi.com/search.json?cites=1311667384750797321&engine=google_scholar&hl=en",
         "cites_id": "1311667384750797321"
@@ -159,8 +159,8 @@
     "table": [
       {
         "citations": {
-          "all": 5,
-          "since_2020": 5
+          "all": 6,
+          "since_2020": 6
         }
       },
       {
@@ -183,7 +183,7 @@
       },
       {
         "year": 2025,
-        "citations": 4
+        "citations": 5
       }
     ]
   },
