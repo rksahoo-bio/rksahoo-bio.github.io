@@ -1,13 +1,13 @@
 {
   "search_metadata": {
-    "id": "6932d1a13d40b6308f22dbf0",
+    "id": "6933838671a90d8ef87c2378",
     "status": "Success",
-    "json_endpoint": "https://serpapi.com/searches/956c3c5e24083e17/6932d1a13d40b6308f22dbf0.json",
-    "created_at": "2025-12-05 12:35:45 UTC",
-    "processed_at": "2025-12-05 12:35:45 UTC",
+    "json_endpoint": "https://serpapi.com/searches/956c3c5e24083e17/6933838671a90d8ef87c2378.json",
+    "created_at": "2025-12-06 01:14:46 UTC",
+    "processed_at": "2025-12-06 01:14:46 UTC",
     "google_scholar_author_url": "https://scholar.google.com/citations?user=naY3uPgAAAAJ&hl=en",
-    "raw_html_file": "https://serpapi.com/searches/956c3c5e24083e17/6932d1a13d40b6308f22dbf0.html",
-    "total_time_taken": 1.42
+    "raw_html_file": "https://serpapi.com/searches/956c3c5e24083e17/6933838671a90d8ef87c2378.html",
+    "total_time_taken": 1.0
   },
   "search_parameters": {
     "engine": "google_scholar_author",
@@ -133,6 +133,17 @@
       "year": "2025"
     },
     {
+      "title": "Coupled Rendezvous and Docking Maneuver of Satellite Using Visual-Haptic Guided Motion Planning",
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:YsMSGLbcyi4C",
+      "citation_id": "naY3uPgAAAAJ:YsMSGLbcyi4C",
+      "authors": "RK Sahoo, M Sinha",
+      "publication": "ASME 2025 International Mechanical Engineering Congress and Exposition …, 2025",
+      "cited_by": {
+        "value": null
+      },
+      "year": "2025"
+    },
+    {
       "title": "A Novel Machine-Learning Approach for Detection and Avoidance of Space Debris Collisions",
       "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:d1gkVwhDpl0C",
       "citation_id": "naY3uPgAAAAJ:d1gkVwhDpl0C",
@@ -145,8 +156,8 @@
     },
     {
       "title": "Forming Simulation of Bump Foils Used in Complaint Gas Foil Bearings",
-      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:u-x6o8ySG0sC",
-      "citation_id": "naY3uPgAAAAJ:u-x6o8ySG0sC",
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:W7OEmFMy1HYC",
+      "citation_id": "naY3uPgAAAAJ:W7OEmFMy1HYC",
       "authors": "RK Sahoo, D Mohapatra, SK Behera",
       "publication": "Recent Advances in Manufacturing Processes and Systems: Select Proceedings …, 2022",
       "cited_by": {
