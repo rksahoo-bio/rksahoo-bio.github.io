@@ -1,13 +1,13 @@
 {
   "search_metadata": {
-    "id": "6934d79016a5a8f8160a9be5",
+    "id": "693573931a29fe90275954a9",
     "status": "Success",
-    "json_endpoint": "https://serpapi.com/searches/956c3c5e24083e17/6934d79016a5a8f8160a9be5.json",
-    "created_at": "2025-12-07 01:25:36 UTC",
-    "processed_at": "2025-12-07 01:25:36 UTC",
+    "json_endpoint": "https://serpapi.com/searches/956c3c5e24083e17/693573931a29fe90275954a9.json",
+    "created_at": "2025-12-07 12:31:15 UTC",
+    "processed_at": "2025-12-07 12:31:15 UTC",
     "google_scholar_author_url": "https://scholar.google.com/citations?user=naY3uPgAAAAJ&hl=en",
-    "raw_html_file": "https://serpapi.com/searches/956c3c5e24083e17/6934d79016a5a8f8160a9be5.html",
-    "total_time_taken": 1.03
+    "raw_html_file": "https://serpapi.com/searches/956c3c5e24083e17/693573931a29fe90275954a9.html",
+    "total_time_taken": 3.34
   },
   "search_parameters": {
     "engine": "google_scholar_author",
@@ -51,12 +51,26 @@
       "authors": "RK Sahoo, M Sinha",
       "publication": "arXiv preprint arXiv:2502.09517, 2025",
       "cited_by": {
-        "value": 3,
+        "value": 4,
         "link": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=1311667384750797321",
         "serpapi_link": "https://serpapi.com/search.json?cites=1311667384750797321&engine=google_scholar&hl=en",
         "cites_id": "1311667384750797321"
       },
       "year": "2025"
+    },
+    {
+      "title": "Coupled rendezvous and docking maneuver control of spacecraft using fast fixed-time sliding mode controller",
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:2osOgNQ5qMEC",
+      "citation_id": "naY3uPgAAAAJ:2osOgNQ5qMEC",
+      "authors": "RK Sahoo, M Sinha",
+      "publication": "IAF Astrodynamics Symposium, 1028-1042 (15 pages), 2024",
+      "cited_by": {
+        "value": 2,
+        "link": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=6364243302192327603",
+        "serpapi_link": "https://serpapi.com/search.json?cites=6364243302192327603&engine=google_scholar&hl=en",
+        "cites_id": "6364243302192327603"
+      },
+      "year": "2024"
     },
     {
       "title": "Long-Range Rendezvous and Docking Maneuver Control of Satellite using Cross-Feedback Sliding Mode Controller",
@@ -70,20 +84,6 @@
         "cites_id": "5203929120501197320,3486739243287796040"
       },
       "year": "2025"
-    },
-    {
-      "title": "Coupled rendezvous and docking maneuver control of spacecraft using fast fixed-time sliding mode controller",
-      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:2osOgNQ5qMEC",
-      "citation_id": "naY3uPgAAAAJ:2osOgNQ5qMEC",
-      "authors": "RK Sahoo, M Sinha",
-      "publication": "IAF Astrodynamics Symposium, 1028-1042 (15 pages), 2024",
-      "cited_by": {
-        "value": 1,
-        "link": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=6364243302192327603",
-        "serpapi_link": "https://serpapi.com/search.json?cites=6364243302192327603&engine=google_scholar&hl=en",
-        "cites_id": "6364243302192327603"
-      },
-      "year": "2024"
     },
     {
       "title": "Study on the effect of manifold induction of acetylene in a dual-fuelled CI engine",
@@ -170,14 +170,14 @@
     "table": [
       {
         "citations": {
-          "all": 6,
-          "since_2020": 6
+          "all": 8,
+          "since_2020": 8
         }
       },
       {
         "h_index": {
-          "all": 1,
-          "since_2020": 1
+          "all": 2,
+          "since_2020": 2
         }
       },
       {
@@ -194,7 +194,7 @@
       },
       {
         "year": 2025,
-        "citations": 5
+        "citations": 7
       }
     ]
   },

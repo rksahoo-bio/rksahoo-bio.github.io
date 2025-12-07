@@ -4,9 +4,9 @@
   "photo": "https://scholar.googleusercontent.com/citations?view_op=view_photo&user=naY3uPgAAAAJ&citpid=1",
   "scholar_url": "https://scholar.google.com/citations?user=naY3uPgAAAAJ&hl=en",
   "metrics": {
-    "citations_all": 6,
+    "citations_all": 8,
     "citations_5yr": null,
-    "h_index_all": 1,
+    "h_index_all": 2,
     "h_index_5yr": null,
     "i10_index_all": 0,
     "i10_index_5yr": null
@@ -18,8 +18,8 @@
     },
     {
       "year": 2025,
-      "citations": 5
+      "citations": 7
     }
   ],
-  "updated_at": "2025-12-07T01:25:37.720Z"
+  "updated_at": "2025-12-07T12:31:19.048Z"
 }
