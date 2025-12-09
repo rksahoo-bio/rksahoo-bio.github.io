@@ -1,13 +1,13 @@
 {
   "search_metadata": {
-    "id": "693778e32f5ea00602ed9235",
+    "id": "693817e971b492b37c393c59",
     "status": "Success",
-    "json_endpoint": "https://serpapi.com/searches/956c3c5e24083e17/693778e32f5ea00602ed9235.json",
-    "created_at": "2025-12-09 01:18:27 UTC",
-    "processed_at": "2025-12-09 01:18:27 UTC",
+    "json_endpoint": "https://serpapi.com/searches/956c3c5e24083e17/693817e971b492b37c393c59.json",
+    "created_at": "2025-12-09 12:36:57 UTC",
+    "processed_at": "2025-12-09 12:36:57 UTC",
     "google_scholar_author_url": "https://scholar.google.com/citations?user=naY3uPgAAAAJ&hl=en",
-    "raw_html_file": "https://serpapi.com/searches/956c3c5e24083e17/693778e32f5ea00602ed9235.html",
-    "total_time_taken": 1.24
+    "raw_html_file": "https://serpapi.com/searches/956c3c5e24083e17/693817e971b492b37c393c59.html",
+    "total_time_taken": 1.31
   },
   "search_parameters": {
     "engine": "google_scholar_author",
@@ -111,6 +111,17 @@
       "year": "2025"
     },
     {
+      "title": "Coupled Rendezvous and Docking Maneuver of Satellite Using Visual-Haptic Guided Motion Planning",
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:eQOLeE2rZwMC",
+      "citation_id": "naY3uPgAAAAJ:eQOLeE2rZwMC",
+      "authors": "RK Sahoo, M Sinha",
+      "publication": "International Mechanical Engineering Congress and Exposition-India 89169 …, 2025",
+      "cited_by": {
+        "value": null
+      },
+      "year": "2025"
+    },
+    {
       "title": "Collision-Free Trajectory Planning and control of Robotic Manipulator using Energy-Based Artificial Potential Field (E-APF)",
       "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:zYLM7Y9cAGgC",
       "citation_id": "naY3uPgAAAAJ:zYLM7Y9cAGgC",
@@ -127,17 +138,6 @@
       "citation_id": "naY3uPgAAAAJ:Tyk-4Ss8FVUC",
       "authors": "P Choudhary, RK Sahoo, M Sinha",
       "publication": "2025 IEEE Space, Aerospace and Defence Conference (SPACE), 1-6, 2025",
-      "cited_by": {
-        "value": null
-      },
-      "year": "2025"
-    },
-    {
-      "title": "Coupled Rendezvous and Docking Maneuver of Satellite Using Visual-Haptic Guided Motion Planning",
-      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:YsMSGLbcyi4C",
-      "citation_id": "naY3uPgAAAAJ:YsMSGLbcyi4C",
-      "authors": "RK Sahoo, M Sinha",
-      "publication": "ASME 2025 International Mechanical Engineering Congress and Exposition …, 2025",
       "cited_by": {
         "value": null
       },
