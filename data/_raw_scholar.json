@@ -1,13 +1,13 @@
 {
   "search_metadata": {
-    "id": "693abb2ccbcccff666f173ed",
+    "id": "693b6df30558c0d3c27c5492",
     "status": "Success",
-    "json_endpoint": "https://serpapi.com/searches/956c3c5e24083e17/693abb2ccbcccff666f173ed.json",
-    "created_at": "2025-12-11 12:38:04 UTC",
-    "processed_at": "2025-12-11 12:38:04 UTC",
+    "json_endpoint": "https://serpapi.com/searches/956c3c5e24083e17/693b6df30558c0d3c27c5492.json",
+    "created_at": "2025-12-12 01:20:51 UTC",
+    "processed_at": "2025-12-12 01:20:51 UTC",
     "google_scholar_author_url": "https://scholar.google.com/citations?user=naY3uPgAAAAJ&hl=en",
-    "raw_html_file": "https://serpapi.com/searches/956c3c5e24083e17/693abb2ccbcccff666f173ed.html",
-    "total_time_taken": 1.37
+    "raw_html_file": "https://serpapi.com/searches/956c3c5e24083e17/693b6df30558c0d3c27c5492.html",
+    "total_time_taken": 0.8
   },
   "search_parameters": {
     "engine": "google_scholar_author",
@@ -59,6 +59,20 @@
       "year": "2025"
     },
     {
+      "title": "Collision-Free Trajectory Planning and control of Robotic Manipulator using Energy-Based Artificial Potential Field (E-APF)",
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:zYLM7Y9cAGgC",
+      "citation_id": "naY3uPgAAAAJ:zYLM7Y9cAGgC",
+      "authors": "A Uppal, RK Sahoo, M Sinha",
+      "publication": "arXiv:2508.07323, 2025",
+      "cited_by": {
+        "value": 2,
+        "link": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=18120591369754224915",
+        "serpapi_link": "https://serpapi.com/search.json?cites=18120591369754224915&engine=google_scholar&hl=en",
+        "cites_id": "18120591369754224915"
+      },
+      "year": "2025"
+    },
+    {
       "title": "Coupled rendezvous and docking maneuver control of spacecraft using fast fixed-time sliding mode controller",
       "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:2osOgNQ5qMEC",
       "citation_id": "naY3uPgAAAAJ:2osOgNQ5qMEC",
@@ -71,6 +85,20 @@
         "cites_id": "6364243302192327603"
       },
       "year": "2024"
+    },
+    {
+      "title": "Satellite Navigation and Control using Physics-Informed Artificial Potential Field and Sliding Mode Controller",
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:Y0pCki6q_DkC",
+      "citation_id": "naY3uPgAAAAJ:Y0pCki6q_DkC",
+      "authors": "RK Sahoo, P Choudhary, M Sinha",
+      "publication": "arXiv preprint arXiv:2510.08184, 2025",
+      "cited_by": {
+        "value": 1,
+        "link": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=3494592701285576766",
+        "serpapi_link": "https://serpapi.com/search.json?cites=3494592701285576766&engine=google_scholar&hl=en",
+        "cites_id": "3494592701285576766"
+      },
+      "year": "2025"
     },
     {
       "title": "Long-Range Rendezvous and Docking Maneuver Control of Satellite using Cross-Feedback Sliding Mode Controller",
@@ -100,33 +128,11 @@
       "year": "2020"
     },
     {
-      "title": "Satellite Navigation and Control using Physics-Informed Artificial Potential Field and Sliding Mode Controller",
-      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:Y0pCki6q_DkC",
-      "citation_id": "naY3uPgAAAAJ:Y0pCki6q_DkC",
-      "authors": "RK Sahoo, P Choudhary, M Sinha",
-      "publication": "arXiv preprint arXiv:2510.08184, 2025",
-      "cited_by": {
-        "value": null
-      },
-      "year": "2025"
-    },
-    {
       "title": "Coupled Rendezvous and Docking Maneuver of Satellite Using Visual-Haptic Guided Motion Planning",
       "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:eQOLeE2rZwMC",
       "citation_id": "naY3uPgAAAAJ:eQOLeE2rZwMC",
       "authors": "RK Sahoo, M Sinha",
       "publication": "International Mechanical Engineering Congress and Exposition-India 89169 …, 2025",
-      "cited_by": {
-        "value": null
-      },
-      "year": "2025"
-    },
-    {
-      "title": "Collision-Free Trajectory Planning and control of Robotic Manipulator using Energy-Based Artificial Potential Field (E-APF)",
-      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:zYLM7Y9cAGgC",
-      "citation_id": "naY3uPgAAAAJ:zYLM7Y9cAGgC",
-      "authors": "A Uppal, RK Sahoo, M Sinha",
-      "publication": "arXiv:2508.07323, 2025",
       "cited_by": {
         "value": null
       },
@@ -170,8 +176,8 @@
     "table": [
       {
         "citations": {
-          "all": 8,
-          "since_2020": 8
+          "all": 11,
+          "since_2020": 11
         }
       },
       {
@@ -194,7 +200,7 @@
       },
       {
         "year": 2025,
-        "citations": 7
+        "citations": 10
       }
     ]
   },
