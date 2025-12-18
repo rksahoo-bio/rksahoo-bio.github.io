@@ -1,13 +1,13 @@
 {
   "search_metadata": {
-    "id": "6942a42616a5a85785ab5752",
+    "id": "6943561f6838635d4f6accf4",
     "status": "Success",
-    "json_endpoint": "https://serpapi.com/searches/956c3c5e24083e17/6942a42616a5a85785ab5752.json",
-    "created_at": "2025-12-17 12:37:58 UTC",
-    "processed_at": "2025-12-17 12:37:58 UTC",
+    "json_endpoint": "https://serpapi.com/searches/956c3c5e24083e17/6943561f6838635d4f6accf4.json",
+    "created_at": "2025-12-18 01:17:19 UTC",
+    "processed_at": "2025-12-18 01:17:19 UTC",
     "google_scholar_author_url": "https://scholar.google.com/citations?user=naY3uPgAAAAJ&hl=en",
-    "raw_html_file": "https://serpapi.com/searches/956c3c5e24083e17/6942a42616a5a85785ab5752.html",
-    "total_time_taken": 3.83
+    "raw_html_file": "https://serpapi.com/searches/956c3c5e24083e17/6943561f6838635d4f6accf4.html",
+    "total_time_taken": 0.69
   },
   "search_parameters": {
     "engine": "google_scholar_author",
@@ -102,14 +102,15 @@
     },
     {
       "title": "Long-Range Rendezvous and Docking Maneuver Control of Satellite using Cross-Feedback Sliding Mode Controller",
-      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:IjCSPb-OGe4C",
-      "citation_id": "naY3uPgAAAAJ:IjCSPb-OGe4C",
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:_FxGoFyzp5QC",
+      "citation_id": "naY3uPgAAAAJ:_FxGoFyzp5QC",
       "authors": "VV Kini, DP Surya, RK Sahoo, M Sinha",
+      "publication": "arXiv preprint arXiv:2504.01203, 2025",
       "cited_by": {
         "value": 1,
-        "link": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=5203929120501197320,3486739243287796040",
-        "serpapi_link": "https://serpapi.com/search.json?cites=5203929120501197320%2C3486739243287796040&engine=google_scholar&hl=en",
-        "cites_id": "5203929120501197320,3486739243287796040"
+        "link": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=5203929120501197320",
+        "serpapi_link": "https://serpapi.com/search.json?cites=5203929120501197320&engine=google_scholar&hl=en",
+        "cites_id": "5203929120501197320"
       },
       "year": "2025"
     },
