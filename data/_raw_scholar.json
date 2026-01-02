@@ -1,13 +1,13 @@
 {
   "search_metadata": {
-    "id": "69571df69d26cfca2986511d",
+    "id": "6957bb845b92f81c4282a180",
     "status": "Success",
-    "json_endpoint": "https://serpapi.com/searches/956c3c5e24083e17/69571df69d26cfca2986511d.json",
-    "created_at": "2026-01-02 01:23:02 UTC",
-    "processed_at": "2026-01-02 01:23:02 UTC",
+    "json_endpoint": "https://serpapi.com/searches/956c3c5e24083e17/6957bb845b92f81c4282a180.json",
+    "created_at": "2026-01-02 12:35:16 UTC",
+    "processed_at": "2026-01-02 12:35:16 UTC",
     "google_scholar_author_url": "https://scholar.google.com/citations?user=naY3uPgAAAAJ&hl=en",
-    "raw_html_file": "https://serpapi.com/searches/956c3c5e24083e17/69571df69d26cfca2986511d.html",
-    "total_time_taken": 0.59
+    "raw_html_file": "https://serpapi.com/searches/956c3c5e24083e17/6957bb845b92f81c4282a180.html",
+    "total_time_taken": 0.31
   },
   "search_parameters": {
     "engine": "google_scholar_author",
@@ -65,7 +65,7 @@
       "authors": "A Uppal, RK Sahoo, M Sinha",
       "publication": "arXiv:2508.07323, 2025",
       "cited_by": {
-        "value": 2,
+        "value": 3,
         "link": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=18120591369754224915",
         "serpapi_link": "https://serpapi.com/search.json?cites=18120591369754224915&engine=google_scholar&hl=en",
         "cites_id": "18120591369754224915"
@@ -85,6 +85,20 @@
         "cites_id": "6364243302192327603"
       },
       "year": "2024"
+    },
+    {
+      "title": "Model-Less Feedback Control of Space-based Continuum Manipulators using Backbone Tension Optimization",
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:ufrVoPGSRksC",
+      "citation_id": "naY3uPgAAAAJ:ufrVoPGSRksC",
+      "authors": "S Rajneesh, N Pavle, RK Sahoo, M Sinha",
+      "publication": "arXiv preprint arXiv:2512.06754, 2025",
+      "cited_by": {
+        "value": 1,
+        "link": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=7362331651239143031",
+        "serpapi_link": "https://serpapi.com/search.json?cites=7362331651239143031&engine=google_scholar&hl=en",
+        "cites_id": "7362331651239143031"
+      },
+      "year": "2025"
     },
     {
       "title": "Satellite Navigation and Control using Physics-Informed Artificial Potential Field and Sliding Mode Controller",
@@ -127,17 +141,6 @@
         "cites_id": "3214994570949949061"
       },
       "year": "2020"
-    },
-    {
-      "title": "Model-Less Feedback Control of Space-based Continuum Manipulators using Backbone Tension Optimization",
-      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:ufrVoPGSRksC",
-      "citation_id": "naY3uPgAAAAJ:ufrVoPGSRksC",
-      "authors": "S Rajneesh, N Pavle, RK Sahoo, M Sinha",
-      "publication": "arXiv preprint arXiv:2512.06754, 2025",
-      "cited_by": {
-        "value": null
-      },
-      "year": "2025"
     },
     {
       "title": "Obstacle Avoidance of UAV in Dynamic Environments Using Direction and Velocity-Adaptive Artificial Potential Field",
@@ -199,8 +202,8 @@
     "table": [
       {
         "citations": {
-          "all": 11,
-          "since_2021": 11
+          "all": 13,
+          "since_2021": 13
         }
       },
       {
@@ -223,7 +226,7 @@
       },
       {
         "year": 2025,
-        "citations": 10
+        "citations": 12
       }
     ]
   },
