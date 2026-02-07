@@ -1,25 +1,16 @@
 {
-  "name": "Rakesh Kumar Sahoo",
-  "affiliation": "PhD Research Scholar at Indian Institute of Technology Kharagpur",
-  "photo": "https://scholar.googleusercontent.com/citations?view_op=view_photo&user=naY3uPgAAAAJ&citpid=1",
+  "name": null,
+  "affiliation": null,
+  "photo": null,
   "scholar_url": "https://scholar.google.com/citations?user=naY3uPgAAAAJ&hl=en",
   "metrics": {
-    "citations_all": 13,
+    "citations_all": null,
     "citations_5yr": null,
-    "h_index_all": 2,
+    "h_index_all": null,
     "h_index_5yr": null,
-    "i10_index_all": 0,
+    "i10_index_all": null,
     "i10_index_5yr": null
   },
-  "graph": [
-    {
-      "year": 2023,
-      "citations": 1
-    },
-    {
-      "year": 2025,
-      "citations": 12
-    }
-  ],
-  "updated_at": "2026-02-07T01:45:27.520Z"
+  "graph": [],
+  "updated_at": "2026-02-07T12:40:31.643Z"
 }
