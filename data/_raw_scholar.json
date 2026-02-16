@@ -1,13 +1,13 @@
 {
   "search_metadata": {
-    "id": "6991bf1ff9c5e9b17130e077",
+    "id": "6992787648c791b1c32a2132",
     "status": "Success",
-    "json_endpoint": "https://serpapi.com/searches/DQQj1cuokETp2nwEb38B8A/6991bf1ff9c5e9b17130e077.json",
-    "created_at": "2026-02-15 12:42:07 UTC",
-    "processed_at": "2026-02-15 12:42:07 UTC",
+    "json_endpoint": "https://serpapi.com/searches/DQQj1cuokETp2nwEb38B8A/6992787648c791b1c32a2132.json",
+    "created_at": "2026-02-16 01:52:54 UTC",
+    "processed_at": "2026-02-16 01:52:54 UTC",
     "google_scholar_author_url": "https://scholar.google.com/citations?user=naY3uPgAAAAJ&hl=en",
-    "raw_html_file": "https://serpapi.com/searches/DQQj1cuokETp2nwEb38B8A/6991bf1ff9c5e9b17130e077.html",
-    "total_time_taken": 1.03
+    "raw_html_file": "https://serpapi.com/searches/DQQj1cuokETp2nwEb38B8A/6992787648c791b1c32a2132.html",
+    "total_time_taken": 0.92
   },
   "search_parameters": {
     "engine": "google_scholar_author",
@@ -79,7 +79,7 @@
       "authors": "RK Sahoo, M Sinha",
       "publication": "IAF Astrodynamics Symposium, 1028-1042 (15 pages), 2024",
       "cited_by": {
-        "value": 2,
+        "value": 3,
         "link": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=6364243302192327603",
         "serpapi_link": "https://serpapi.com/search.json?cites=6364243302192327603&engine=google_scholar&hl=en",
         "cites_id": "6364243302192327603"
@@ -119,7 +119,7 @@
       "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:_FxGoFyzp5QC",
       "citation_id": "naY3uPgAAAAJ:_FxGoFyzp5QC",
       "authors": "VV Kini, DP Surya, RK Sahoo, M Sinha",
-      "publication": "arXiv preprint arXiv:2504.01203, 2025",
+      "publication": "2025 IEEE Space, Aerospace and Defence Conference (SPACE), 1-6, 2025",
       "cited_by": {
         "value": 1,
         "link": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=5203929120501197320",
@@ -202,14 +202,14 @@
     "table": [
       {
         "citations": {
-          "all": 13,
-          "since_2021": 13
+          "all": 14,
+          "since_2021": 14
         }
       },
       {
         "h_index": {
-          "all": 2,
-          "since_2021": 2
+          "all": 3,
+          "since_2021": 3
         }
       },
       {
@@ -226,7 +226,7 @@
       },
       {
         "year": 2025,
-        "citations": 12
+        "citations": 13
       }
     ]
   },
