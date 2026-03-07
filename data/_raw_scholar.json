@@ -1,13 +1,13 @@
 {
   "search_metadata": {
-    "id": "69aaccc5ab28c6770c8bec6f",
+    "id": "69ab82b9e171b9898befd59e",
     "status": "Success",
-    "json_endpoint": "https://serpapi.com/searches/DQQj1cuokETp2nwEb38B8A/69aaccc5ab28c6770c8bec6f.json",
-    "created_at": "2026-03-06 12:47:01 UTC",
-    "processed_at": "2026-03-06 12:47:01 UTC",
+    "json_endpoint": "https://serpapi.com/searches/DQQj1cuokETp2nwEb38B8A/69ab82b9e171b9898befd59e.json",
+    "created_at": "2026-03-07 01:43:21 UTC",
+    "processed_at": "2026-03-07 01:43:21 UTC",
     "google_scholar_author_url": "https://scholar.google.com/citations?user=naY3uPgAAAAJ&hl=en",
-    "raw_html_file": "https://serpapi.com/searches/DQQj1cuokETp2nwEb38B8A/69aaccc5ab28c6770c8bec6f.html",
-    "total_time_taken": 1.72
+    "raw_html_file": "https://serpapi.com/searches/DQQj1cuokETp2nwEb38B8A/69ab82b9e171b9898befd59e.html",
+    "total_time_taken": 1.03
   },
   "search_parameters": {
     "engine": "google_scholar_author",
@@ -130,8 +130,8 @@
     },
     {
       "title": "Study on the effect of manifold induction of acetylene in a dual-fuelled CI engine",
-      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:u5HHmVD_uO8C",
-      "citation_id": "naY3uPgAAAAJ:u5HHmVD_uO8C",
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:LkGwnXOMwfcC",
+      "citation_id": "naY3uPgAAAAJ:LkGwnXOMwfcC",
       "authors": "RK Sahoo, A Jaiswal, M Sivalingam",
       "publication": "SAE Technical Paper, 2020",
       "cited_by": {
@@ -188,8 +188,8 @@
     },
     {
       "title": "Forming Simulation of Bump Foils Used in Complaint Gas Foil Bearings",
-      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:W7OEmFMy1HYC",
-      "citation_id": "naY3uPgAAAAJ:W7OEmFMy1HYC",
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:roLk4NBRz8UC",
+      "citation_id": "naY3uPgAAAAJ:roLk4NBRz8UC",
       "authors": "RK Sahoo, D Mohapatra, SK Behera",
       "publication": "Recent Advances in Manufacturing Processes and Systems: Select Proceedings …, 2022",
       "cited_by": {
