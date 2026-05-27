@@ -6,6 +6,9 @@
   <title>Rakesh Kumar Sahoo — PhD Researcher | Spacecraft Dynamics & Control</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <!-- Satellite favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛸</text></svg>">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛸</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet"/>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -1028,6 +1031,9 @@
 
 <!-- ══ HERO ══ -->
 <section id="home-section">
+  <!-- EARTH IMAGE: place your Earth photo at images/earth.jpg
+       Format: square JPG/PNG, ideally 512×512px or larger.
+       Falls back to NASA Blue Marble → then to canvas-drawn Earth. -->
   <canvas id="heroCanvas"></canvas>
   <div class="hero-inner">
     <div class="hero-eyebrow">Hello!</div>
@@ -1800,6 +1806,37 @@ navAs.forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open'
   const ECX=()=>W<=860 ? W*0.5  : W*0.7;
   const ECY=()=>W<=860 ? H*0.28 : H*0.5;
 
+  // Earth image — primary: local file you can replace with your own
+  // To use your own Earth image: place it at images/earth.jpg
+  // Fallback 1: NASA Blue Marble (public domain, loads from NASA servers)
+  // Fallback 2: Canvas-drawn Earth (no network needed)
+  const earthImg = new Image();
+  let earthImgReady = false;
+
+  function loadEarthFallback(){
+    // Try NASA Blue Marble as fallback
+    const nasaImg = new Image();
+    nasaImg.crossOrigin = 'anonymous';
+    nasaImg.src = 'https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57735/land_ocean_ice_cloud_2048.jpg';
+    nasaImg.onload = ()=>{
+      earthImg.src = nasaImg.src;
+      earthImgReady = true;
+    };
+    // If NASA also fails, earthImgReady stays false → canvas fallback draws
+  }
+
+  // Try local file first (replace images/earth.jpg with your own photo)
+  const localImg = new Image();
+  localImg.src = 'images/earth.jpg';   // ← ADD YOUR EARTH IMAGE HERE
+  localImg.onload = ()=>{
+    earthImg.src = localImg.src;
+    earthImgReady = true;
+  };
+  localImg.onerror = ()=>{
+    // Local image not found → try NASA Blue Marble
+    loadEarthFallback();
+  };
+
   // Mix of circular (a≈b) and elliptical orbits at different inclinations
   const orbits=[
     {a:90, b:88, inc:.18,  speed:.013,  angle:0.0, r:6,  color:'#c9a84c', trail:[],tLen:70},
@@ -1842,115 +1879,72 @@ navAs.forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open'
 
   /* ── Earth: realistic NASA-style ocean blue with green landmasses ── */
   function drawEarth(cx,cy){
-    const R=46;
+    // Scale Earth radius with viewport — desktop R=72, mobile slightly smaller
+    const R = W<=860 ? Math.min(58, W*0.14) : Math.min(72, W*0.06);
 
-    // Deep space ambient glow
-    let g=ctx.createRadialGradient(cx,cy,R*.6,cx,cy,R*2.6);
-    g.addColorStop(0,'rgba(30,80,200,.0)');g.addColorStop(.5,'rgba(20,60,160,.07)');g.addColorStop(1,'rgba(10,30,80,.0)');
-    ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,R*2.6,0,Math.PI*2);ctx.fill();
+    // ── 1. Deep space ambient glow behind Earth ──
+    let g=ctx.createRadialGradient(cx,cy,R*.6,cx,cy,R*2.8);
+    g.addColorStop(0,'rgba(30,80,200,.0)');
+    g.addColorStop(.5,'rgba(20,60,160,.08)');
+    g.addColorStop(1,'rgba(10,30,80,.0)');
+    ctx.fillStyle=g;
+    ctx.beginPath();ctx.arc(cx,cy,R*2.8,0,Math.PI*2);ctx.fill();
 
-    // Thin blue atmosphere halo
-    g=ctx.createRadialGradient(cx,cy,R*.9,cx,cy,R*1.24);
-    g.addColorStop(0,'rgba(70,150,255,.0)');g.addColorStop(.5,'rgba(90,170,255,.28)');g.addColorStop(1,'rgba(70,150,255,.0)');
-    ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,R*1.24,0,Math.PI*2);ctx.fill();
+    // ── 2. Draw real NASA Blue Marble image clipped to circle ──
+    ctx.save();
+    ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.clip();
 
-    // ── Ocean: deep NASA-blue radial gradient ──
-    g=ctx.createRadialGradient(cx-R*.3,cy-R*.25,0,cx,cy,R);
-    g.addColorStop(0,'#1b6fbc');  // bright sunlit ocean
-    g.addColorStop(.3,'#1055a0'); // Atlantic blue
-    g.addColorStop(.65,'#09337a');// deep ocean
-    g.addColorStop(.88,'#041850');// dark rim
-    g.addColorStop(1,'#010820'); // limb black
-    ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.fill();
-
-    // ── Landmasses clipped inside sphere ──
-    ctx.save();ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.clip();
-
-    const lGreen='#3d7a2f';   // forest/vegetation green
-    const lGreen2='#4e8c38';  // lighter green
-    const lDesert='#b8935a';  // Sahara/arid brown
-    const lSnow='rgba(240,248,255,.75)';
-
-    // Eurasia body
-    ctx.fillStyle=lGreen;
-    ctx.beginPath();
-    ctx.moveTo(cx+12,cy-30);
-    ctx.bezierCurveTo(cx+24,cy-32,cx+36,cy-24,cx+38,cy-14);
-    ctx.bezierCurveTo(cx+40,cy-4,cx+34,cy+2,cx+26,cy+4);
-    ctx.bezierCurveTo(cx+16,cy+6,cx+8,cy+2,cx+6,cy-8);
-    ctx.bezierCurveTo(cx+4,cy-18,cx+4,cy-28,cx+12,cy-30);
-    ctx.fill();
-    // Sahara desert over Eurasia
-    ctx.fillStyle=lDesert;
-    ctx.beginPath();ctx.ellipse(cx+20,cy-6,10,5,.35,0,Math.PI*2);ctx.fill();
-    // India subcontinent
-    ctx.fillStyle=lGreen2;
-    ctx.beginPath();
-    ctx.moveTo(cx+18,cy+8);ctx.bezierCurveTo(cx+24,cy+6,cx+28,cy+12,cx+26,cy+20);
-    ctx.bezierCurveTo(cx+24,cy+26,cx+16,cy+28,cx+14,cy+20);
-    ctx.bezierCurveTo(cx+12,cy+14,cx+14,cy+10,cx+18,cy+8);ctx.fill();
-
-    // Africa
-    ctx.fillStyle=lGreen;
-    ctx.beginPath();
-    ctx.moveTo(cx+2,cy-16);ctx.bezierCurveTo(cx+10,cy-18,cx+16,cy-10,cx+14,cy-2);
-    ctx.bezierCurveTo(cx+16,cy+8,cx+14,cy+20,cx+10,cy+28);
-    ctx.bezierCurveTo(cx+6,cy+34,cx-2,cy+32,cx-4,cy+24);
-    ctx.bezierCurveTo(cx-6,cy+14,cx-4,cy+4,cx-2,cy-4);
-    ctx.bezierCurveTo(cx+0,cy-10,cx+0,cy-14,cx+2,cy-16);ctx.fill();
-    // Sahara over Africa
-    ctx.fillStyle=lDesert;ctx.beginPath();ctx.ellipse(cx+6,cy-2,9,5,.1,0,Math.PI*2);ctx.fill();
-
-    // Americas
-    ctx.fillStyle=lGreen;
-    ctx.beginPath();
-    ctx.moveTo(cx-22,cy-24);ctx.bezierCurveTo(cx-14,cy-28,cx-8,cy-22,cx-8,cy-12);
-    ctx.bezierCurveTo(cx-8,cy-4,cx-14,cy+4,cx-18,cy+6);
-    ctx.bezierCurveTo(cx-22,cy+8,cx-28,cy+2,cx-28,cy-8);
-    ctx.bezierCurveTo(cx-30,cy-16,cx-28,cy-22,cx-22,cy-24);ctx.fill();
-    ctx.fillStyle=lGreen2;
-    ctx.beginPath();
-    ctx.moveTo(cx-14,cy+10);ctx.bezierCurveTo(cx-8,cy+8,cx-4,cy+14,cx-6,cy+24);
-    ctx.bezierCurveTo(cx-8,cy+34,cx-16,cy+38,cx-20,cy+30);
-    ctx.bezierCurveTo(cx-22,cy+20,cx-20,cy+14,cx-14,cy+10);ctx.fill();
-
-    // Australia
-    ctx.fillStyle=lDesert;ctx.beginPath();ctx.ellipse(cx+32,cy+20,10,6,-.2,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle=lGreen;ctx.beginPath();ctx.ellipse(cx+29,cy+17,4,4,0,0,Math.PI*2);ctx.fill();
-
-    // Ice caps
-    ctx.fillStyle=lSnow;
-    ctx.beginPath();ctx.ellipse(cx,cy-R+5,14,6,.05,0,Math.PI*2);ctx.fill();
-    ctx.beginPath();ctx.ellipse(cx,cy+R-4,R,5,0,0,Math.PI*2);ctx.fill();
-
-    // Cloud wisps
-    ctx.fillStyle='rgba(255,255,255,.15)';
-    ctx.beginPath();ctx.ellipse(cx-8,cy-12,20,4,.25,0,Math.PI*2);ctx.fill();
-    ctx.beginPath();ctx.ellipse(cx+12,cy+8,14,3,-.2,0,Math.PI*2);ctx.fill();
-    ctx.beginPath();ctx.ellipse(cx-22,cy+2,11,3,.1,0,Math.PI*2);ctx.fill();
-
+    if(earthImgReady){
+      // Rotate earth slowly — angle based on time for subtle spin
+      const spinAngle = (Date.now()%120000)/120000 * Math.PI*2;
+      const imgW=R*2, imgH=R*2;
+      // Translate to centre, rotate, draw full sphere texture
+      ctx.translate(cx,cy);
+      ctx.rotate(spinAngle);
+      ctx.drawImage(earthImg, -imgW/2, -imgH/2, imgW, imgH);
+    } else {
+      // Fallback: painted canvas Earth
+      g=ctx.createRadialGradient(cx-R*.3,cy-R*.25,0,cx,cy,R);
+      g.addColorStop(0,'#1b6fbc');g.addColorStop(.3,'#1055a0');
+      g.addColorStop(.65,'#09337a');g.addColorStop(.88,'#041850');g.addColorStop(1,'#010820');
+      ctx.fillStyle=g;ctx.fillRect(cx-R,cy-R,R*2,R*2);
+    }
     ctx.restore();
 
-    // Night-side terminator
-    g=ctx.createRadialGradient(cx+R*.52,cy,0,cx+R*.52,cy,R*1.42);
-    g.addColorStop(0,'rgba(0,0,0,.0)');g.addColorStop(.5,'rgba(0,0,0,.20)');g.addColorStop(1,'rgba(0,0,0,.50)');
-    ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.fill();
+    // ── 3. Atmosphere halo (thin blue limb glow) ──
+    g=ctx.createRadialGradient(cx,cy,R*.88,cx,cy,R*1.22);
+    g.addColorStop(0,'rgba(70,150,255,.0)');
+    g.addColorStop(.4,'rgba(100,190,255,.32)');
+    g.addColorStop(.75,'rgba(60,130,255,.15)');
+    g.addColorStop(1,'rgba(70,150,255,.0)');
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,R*1.22,0,Math.PI*2);ctx.fill();
 
-    // Sun glint
-    g=ctx.createRadialGradient(cx-R*.36,cy-R*.35,0,cx-R*.28,cy-R*.28,R*.52);
-    g.addColorStop(0,'rgba(255,255,255,.22)');g.addColorStop(.5,'rgba(255,255,255,.06)');g.addColorStop(1,'rgba(255,255,255,.0)');
-    ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.fill();
+    // ── 4. Night-side shadow (terminator) ──
+    const shadowG=ctx.createRadialGradient(cx+R*.55,cy,R*.1,cx+R*.7,cy,R*1.1);
+    shadowG.addColorStop(0,'rgba(0,0,0,0)');
+    shadowG.addColorStop(.5,'rgba(0,0,8,.35)');
+    shadowG.addColorStop(1,'rgba(0,0,8,.72)');
+    ctx.fillStyle=shadowG;
+    ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.fill();
 
-    // Equatorial ring
+    // ── 5. Specular highlight (sun glint top-left) ──
+    const specG=ctx.createRadialGradient(cx-R*.38,cy-R*.38,0,cx-R*.25,cy-R*.25,R*.6);
+    specG.addColorStop(0,'rgba(255,255,255,.18)');
+    specG.addColorStop(.5,'rgba(255,255,255,.05)');
+    specG.addColorStop(1,'rgba(255,255,255,.0)');
+    ctx.fillStyle=specG;ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.fill();
+
+    // ── 6. Blue atmosphere limb stroke ──
+    ctx.strokeStyle='rgba(80,160,255,.5)';ctx.lineWidth=1.8;
+    ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.stroke();
+
+    // ── 7. Equatorial ring ──
     ctx.save();ctx.translate(cx,cy);ctx.scale(1,.28);
-    ctx.setLineDash([3,4]);ctx.strokeStyle='rgba(201,168,76,.2)';ctx.lineWidth=.8;
+    ctx.setLineDash([3,5]);ctx.strokeStyle='rgba(201,168,76,.18)';ctx.lineWidth=.8;
     ctx.beginPath();ctx.arc(0,0,R,0,Math.PI*2);ctx.stroke();
     ctx.restore();ctx.setLineDash([]);
-
-    // Atmosphere limb glow
-    ctx.strokeStyle='rgba(80,160,255,.42)';ctx.lineWidth=1.8;
-    ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.stroke();
   }
+
 
   function drawSat(p,r,color,angle){
     ctx.save();ctx.translate(p.x,p.y);ctx.rotate(angle+Math.PI*.5);
@@ -2022,6 +2016,13 @@ navAs.forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open'
   const S=46,cx=S/2,cy=S/2,R=8,OA=17,OB=9;
   let angle=0;
 
+  // Load real Earth image for nav orbit canvas
+  const navEarthImg=new Image();
+  navEarthImg.crossOrigin='anonymous';
+  navEarthImg.src='https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57735/land_ocean_ice_cloud_2048.jpg';
+  let navEarthReady=false;
+  navEarthImg.onload=()=>{navEarthReady=true;};
+
   // Scroll-velocity tracking (same pattern as hero)
   let scrollVelocity=0;
   let lastSY=window.scrollY;
@@ -2039,22 +2040,27 @@ navAs.forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open'
   function drawNavOrbit(){
     ctx.clearRect(0,0,S,S);
 
-    // Earth
-    const gE=ctx.createRadialGradient(cx-2,cy-2,0,cx,cy,R);
-    gE.addColorStop(0,'#1a5fbc');gE.addColorStop(.6,'#0a2a80');gE.addColorStop(1,'#040e2e');
-    ctx.fillStyle=gE;ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.fill();
-
-    // Continent blobs
-    ctx.save();ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.clip();
-    ctx.fillStyle='#2d7a3a';
-    ctx.beginPath();ctx.ellipse(cx+2,cy-1,3.5,5,.2,0,Math.PI*2);ctx.fill();
-    ctx.beginPath();ctx.ellipse(cx-4,cy-2,2.5,4,.1,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle='rgba(255,255,255,.22)';
-    ctx.beginPath();ctx.ellipse(cx,cy+R-.5,R,2.5,0,0,Math.PI*2);ctx.fill();
+    // Earth — real NASA Blue Marble image clipped to circle
+    ctx.save();
+    ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.clip();
+    if(navEarthReady){
+      // Slow spin
+      const spin=(Date.now()%120000)/120000*Math.PI*2;
+      ctx.translate(cx,cy);ctx.rotate(spin);
+      ctx.drawImage(navEarthImg,-R,-R,R*2,R*2);
+    } else {
+      // Fallback painted earth
+      const gF=ctx.createRadialGradient(cx-2,cy-2,0,cx,cy,R);
+      gF.addColorStop(0,'#1a5fbc');gF.addColorStop(.6,'#0a2a80');gF.addColorStop(1,'#040e2e');
+      ctx.fillStyle=gF;ctx.beginPath();ctx.arc(0,0,R,0,Math.PI*2);ctx.fill();
+    }
     ctx.restore();
-
+    // Night-side shadow
+    const navShad=ctx.createRadialGradient(cx+R*.5,cy,R*.1,cx+R*.6,cy,R*1.05);
+    navShad.addColorStop(0,'rgba(0,0,0,0)');navShad.addColorStop(.6,'rgba(0,0,8,.45)');navShad.addColorStop(1,'rgba(0,0,8,.7)');
+    ctx.fillStyle=navShad;ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.fill();
     // Atmosphere ring
-    ctx.strokeStyle='rgba(100,180,255,.35)';ctx.lineWidth=1.2;
+    ctx.strokeStyle='rgba(100,180,255,.4)';ctx.lineWidth=1.2;
     ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.stroke();
 
     // Orbit ellipse path
