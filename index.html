@@ -510,6 +510,9 @@
       .about-grid,.resume-cols,.contact-grid{grid-template-columns:1fr;gap:38px}
       .about-top{flex-direction:column;align-items:center;text-align:center}
       .hero-inner{padding:0 5vw}
+      /* On mobile: push hero text to lower 55% so Earth shows in upper area */
+      #home-section{align-items:flex-end;padding-bottom:8vh}
+      .hero-inner{padding-bottom:0;max-width:100%}
       .section-wrap{padding:68px 5vw}
       .domain-cards{grid-template-columns:1fr}
       footer{flex-direction:column;align-items:center;text-align:center;gap:18px;padding:24px 5vw}
@@ -1792,8 +1795,10 @@ navAs.forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open'
 
   function resize(){W=canvas.width=canvas.parentElement.offsetWidth;H=canvas.height=canvas.parentElement.offsetHeight;}
 
-  const ECX=()=>W*.7;
-  const ECY=()=>H*.5;
+  // Earth centre — desktop: right-centre (70% w, 50% h)
+  // Mobile (≤860px): upper-centre (50% w, 28% h) matching the red circle position
+  const ECX=()=>W<=860 ? W*0.5  : W*0.7;
+  const ECY=()=>W<=860 ? H*0.28 : H*0.5;
 
   // Mix of circular (a≈b) and elliptical orbits at different inclinations
   const orbits=[
@@ -1812,9 +1817,12 @@ navAs.forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open'
   });
 
   function satPos(o,ang,cx,cy){
+    // Scale orbits down on mobile so satellites stay on screen
+    const scale = W<=860 ? Math.min(1, W/520) : 1;
+    const a = o.a*scale, b = o.b*scale;
     const cosI=Math.cos(o.inc),sinI=Math.sin(o.inc);
-    const x0=o.a*Math.cos(ang);
-    const y0=o.b*Math.sin(ang);
+    const x0=a*Math.cos(ang);
+    const y0=b*Math.sin(ang);
     return{x:cx+x0, y:cy+y0*cosI-x0*sinI*.15};
   }
 
