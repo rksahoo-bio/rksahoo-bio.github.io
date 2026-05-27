@@ -1,13 +1,13 @@
 {
   "search_metadata": {
-    "id": "6a16643110b5cf751b09fc07",
+    "id": "6a170e18a2897101eb94b42e",
     "status": "Success",
-    "json_endpoint": "https://serpapi.com/searches/DQQj1cuokETp2nwEb38B8A/6a16643110b5cf751b09fc07.json",
-    "created_at": "2026-05-27 03:25:37 UTC",
-    "processed_at": "2026-05-27 03:25:37 UTC",
+    "json_endpoint": "https://serpapi.com/searches/DQQj1cuokETp2nwEb38B8A/6a170e18a2897101eb94b42e.json",
+    "created_at": "2026-05-27 15:30:32 UTC",
+    "processed_at": "2026-05-27 15:30:32 UTC",
     "google_scholar_author_url": "https://scholar.google.com/citations?user=naY3uPgAAAAJ&hl=en",
-    "raw_html_file": "https://serpapi.com/searches/DQQj1cuokETp2nwEb38B8A/6a16643110b5cf751b09fc07.html",
-    "total_time_taken": 6.07
+    "raw_html_file": "https://serpapi.com/searches/DQQj1cuokETp2nwEb38B8A/6a170e18a2897101eb94b42e.html",
+    "total_time_taken": 0.57
   },
   "search_parameters": {
     "engine": "google_scholar_author",
@@ -18,7 +18,7 @@
     "name": "Rakesh Kumar Sahoo",
     "affiliations": "PhD Research Scholar at Indian Institute of Technology Kharagpur",
     "email": "Verified email at kgpian.iitkgp.ac.in",
-    "website": "https://rksahoo-bio.github.io/",
+    "website": "https://www.rksahoo.dev/",
     "interests": [
       {
         "title": "Satellite Dynamics",
