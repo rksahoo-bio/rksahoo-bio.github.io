@@ -165,19 +165,35 @@
     #publications-section{background:rgba(5,8,15,.72)}
     .pub-list{border:1px solid rgba(201,168,76,.1)}
     .pub-item{
-      padding:24px 28px;border-bottom:1px solid rgba(201,168,76,.07);
+      padding:24px 28px;
+      border-bottom:1px solid rgba(201,168,76,.07);
+      border-left:2px solid transparent;
       display:grid;grid-template-columns:32px 1fr 22px;gap:18px;align-items:start;
-      text-decoration:none;transition:background .22s;
+      text-decoration:none;
       position:relative;overflow:hidden;
+      transition:
+        background .28s ease,
+        transform  .28s cubic-bezier(.22,1,.36,1),
+        box-shadow .28s ease,
+        border-left-color .28s ease;
     }
     .pub-item:last-child{border-bottom:none}
+    .pub-item:hover{
+      transform: translateY(-3px);
+      background: rgba(201,168,76,.055);
+      border-left-color: var(--gold);
+      box-shadow:
+        0 8px 28px rgba(0,0,0,.45),
+        0 0 0 1px rgba(201,168,76,.18),
+        inset 0 0 0 1px rgba(201,168,76,.06);
+    }
+    /* Gold top-line sweep on hover */
     .pub-item::before{
       content:'';position:absolute;top:0;left:0;right:0;height:1px;
       background:linear-gradient(90deg,transparent,var(--gold),transparent);
       transform:scaleX(0);transform-origin:left;transition:transform .4s;
     }
     .pub-item:hover::before{transform:scaleX(1)}
-    .pub-item:hover{background:rgba(201,168,76,.04)}
     /* Big faded number reveal on hover */
     .pub-bg-num{
       position:absolute;right:44px;top:50%;transform:translateY(-50%);
@@ -498,7 +514,23 @@
       .domain-cards{grid-template-columns:1fr}
       footer{flex-direction:column;align-items:center;text-align:center;gap:18px;padding:24px 5vw}
       .f-motto-text{font-size:clamp(.7rem,3.5vw,.9rem)}
-      .coauthor-layout{grid-template-columns:1fr}
+      /* Coauthor: stack year filter below wheel, prevent overlap */
+      .coauthor-layout{grid-template-columns:1fr;gap:20px}
+      .coauthor-filters{position:static;display:flex;flex-wrap:wrap;gap:6px;padding:12px;align-items:center}
+      .cf-year{border-bottom:none;padding:3px 8px;border:1px solid rgba(201,168,76,.15);border-radius:4px}
+      .coauthor-filters > .section-num{display:none}
+      #chordCanvas{max-width:100%;height:auto!important}
+      .chord-canvas-outer{padding:10px}
+      /* Citations: centre metrics on mobile */
+      .cit-metrics{justify-content:center}
+      .cit-metric{min-width:140px;flex:0 1 auto;justify-content:center}
+      /* Research badges: centre on mobile */
+      .research-badges{justify-content:center;margin-bottom:16px}
+      /* Research focus chips: centre on mobile */
+      .rfc-chips{justify-content:center}
+      .rfc-label{text-align:center}
+      /* Citations block full width on mobile */
+      .cit-block{margin-left:0;margin-right:0}
       .citation-grid{grid-template-columns:1fr 1fr}
       .gallery-stage{height:240px}
       .gallery-thumbs{gap:5px}
@@ -522,6 +554,13 @@
       .hud-row{gap:6px}
       .resume-cols{gap:28px}
       .about-grid{gap:28px}
+      /* Narrow phone: citations stack single column */
+      .cit-metrics{flex-direction:column;align-items:stretch}
+      .cit-metric{flex:1;min-width:unset;justify-content:flex-start}
+      .cit-divider{width:100%;height:1px}
+      /* Research badges wrap and centre on very small screens */
+      .research-badges{gap:6px}
+      .rbadge{font-size:.58rem;padding:4px 10px}
       .section-wrap{padding:52px 4vw}
       .domain-cards{grid-template-columns:1fr}
       .nav-logo-text{font-size:.9rem}
@@ -622,16 +661,6 @@
     .hero-stat-num {
       font-variant-numeric: tabular-nums;
       letter-spacing: -.02em;
-    }
-
-    /* ── PUBLICATION ITEMS — hover lift ── */
-    .pub-item {
-      transition: background .22s, transform .22s, border-color .22s;
-    }
-    .pub-item:hover {
-      transform: translateX(4px);
-      border-left-color: rgba(201,168,76,.5);
-      background: rgba(201,168,76,.04);
     }
 
     /* ── TIMELINE — refined dot pulse ── */
@@ -907,6 +936,21 @@
     .gkbd{font-family:var(--mono);font-size:.52rem;letter-spacing:.06em;border:1px solid rgba(201,168,76,.3);padding:2px 7px;color:var(--gold)}
     .gkbd-sep{font-family:var(--mono);font-size:.52rem;color:var(--mist)}
 
+  
+    @media(min-width:1200px){
+      body{font-size:17px}
+      .section-title{font-size:clamp(2.2rem,3.5vw,3.2rem)}
+      .hero-greeting{font-size:clamp(3rem,6vw,5rem)}
+      .pub-title{font-size:.95rem}
+      .tl-role{font-size:.95rem}
+      .tl-desc{font-size:.88rem}
+      .about-bio{font-size:.98rem}
+      .section-wrap{padding:112px 8vw}
+    }
+    @media(min-width:1600px){
+      body{font-size:18px}
+      .section-title{font-size:clamp(2.5rem,4vw,4rem)}
+    }
   </style>
 </head>
 <body>
@@ -3122,8 +3166,14 @@ const PUBLICATIONS_DATA=[
     if(cfTotalEl)cfTotalEl.textContent=totalCoAuthors;
 
     const DPR=window.devicePixelRatio||1;
-    const SIZE=Math.min(560, canvas.parentElement.parentElement.clientWidth-340);
-    const S=Math.max(320,SIZE);
+    const isMobile=window.innerWidth<=860;
+    const containerW=canvas.parentElement.parentElement.clientWidth;
+    // On mobile: sidebar stacks below, so use full container width
+    // On desktop: subtract 340px for the sidebar
+    const SIZE=isMobile
+      ? Math.min(360, containerW-24)
+      : Math.min(560, containerW-340);
+    const S=Math.max(260,SIZE);
     canvas.style.width=S+'px';canvas.style.height=S+'px';
     canvas.width=S*DPR;canvas.height=S*DPR;
     ctx.setTransform(DPR,0,0,DPR,0,0);
