@@ -1031,7 +1031,7 @@
 
 <!-- ══ HERO ══ -->
 <section id="home-section">
-  <!-- EARTH IMAGE: place your Earth photo at images/globe.png
+  <!-- EARTH IMAGE: place your Earth photo at images/earth.jpg
        Format: square JPG/PNG, ideally 512×512px or larger.
        Falls back to NASA Blue Marble → then to canvas-drawn Earth. -->
   <canvas id="heroCanvas"></canvas>
@@ -1807,7 +1807,7 @@ navAs.forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open'
   const ECY=()=>W<=860 ? H*0.28 : H*0.5;
 
   // Earth image — primary: local file you can replace with your own
-  // To use your own Earth image: place it at images/globe.png
+  // To use your own Earth image: place it at images/earth.jpg
   // Fallback 1: NASA Blue Marble (public domain, loads from NASA servers)
   // Fallback 2: Canvas-drawn Earth (no network needed)
   const earthImg = new Image();
@@ -1825,9 +1825,9 @@ navAs.forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open'
     // If NASA also fails, earthImgReady stays false → canvas fallback draws
   }
 
-  // Try local file first (replace images/globe.png with your own photo)
+  // Try local file first (replace images/earth.jpg with your own photo)
   const localImg = new Image();
-  localImg.src = 'images/globe.png';   // ← ADD YOUR EARTH IMAGE HERE
+  localImg.src = 'images/earth.jpg';   // ← ADD YOUR EARTH IMAGE HERE
   localImg.onload = ()=>{
     earthImg.src = localImg.src;
     earthImgReady = true;
@@ -2006,32 +2006,42 @@ navAs.forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open'
 
 /* ══════════════════════════════════════════════════
    6. NAV ORBIT CANVAS — tiny satellite in navbar
-      TRUE scroll-driven: only moves while scrolling.
-      CW = scroll down, CCW = scroll up.
+      Earth uses real NASA Blue Marble image.
+      Deep space glow behind sphere, atmosphere halo,
+      night-side shadow, specular highlight.
 ══════════════════════════════════════════════════ */
 (function(){
   const canvas=document.getElementById('navOrbitCanvas');
   if(!canvas)return;
   const ctx=canvas.getContext('2d');
-  const S=46,cx=S/2,cy=S/2,R=8,OA=17,OB=9;
+
+  // Upscale canvas for crisp rendering on retina/HiDPI screens
+  const DPR=window.devicePixelRatio||1;
+  const SIZE=46;
+  canvas.width  = SIZE*DPR;
+  canvas.height = SIZE*DPR;
+  canvas.style.width  = SIZE+'px';
+  canvas.style.height = SIZE+'px';
+  ctx.scale(DPR,DPR);
+
+  // Layout constants (in CSS px — DPR handled by ctx.scale)
+  const S=SIZE, cx=S/2, cy=S/2;
+  const R=11;     // Earth radius — larger so image detail shows
+  const OA=19, OB=10; // orbit semi-axes
   let angle=0;
 
-  // Load real Earth image for nav orbit canvas
+  // Load NASA Blue Marble
   const navEarthImg=new Image();
   navEarthImg.crossOrigin='anonymous';
   navEarthImg.src='https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57735/land_ocean_ice_cloud_2048.jpg';
   let navEarthReady=false;
-  navEarthImg.onload=()=>{navEarthReady=true;};
+  navEarthImg.onload=()=>{ navEarthReady=true; };
 
-  // Scroll-velocity tracking (same pattern as hero)
-  let scrollVelocity=0;
-  let lastSY=window.scrollY;
-  let scrollTimeout=null;
-
+  // Scroll-velocity tracking
+  let scrollVelocity=0, lastSY=window.scrollY, scrollTimeout=null;
   window.addEventListener('scroll',()=>{
     const sy=window.scrollY;
-    const delta=sy-lastSY;
-    scrollVelocity=delta*0.22;
+    scrollVelocity=(sy-lastSY)*0.22;
     lastSY=sy;
     clearTimeout(scrollTimeout);
     scrollTimeout=setTimeout(()=>{scrollVelocity=0;},120);
@@ -2040,59 +2050,94 @@ navAs.forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open'
   function drawNavOrbit(){
     ctx.clearRect(0,0,S,S);
 
-    // Earth — real NASA Blue Marble image clipped to circle
+    // ── 1. Deep space glow (large soft blue radial behind sphere) ──
+    const glow=ctx.createRadialGradient(cx,cy,R*0.6,cx,cy,R*3.2);
+    glow.addColorStop(0,'rgba(20,80,200,.0)');
+    glow.addColorStop(0.35,'rgba(30,100,220,.14)');
+    glow.addColorStop(0.65,'rgba(20,70,180,.09)');
+    glow.addColorStop(1,'rgba(10,40,120,.0)');
+    ctx.fillStyle=glow;
+    ctx.beginPath();ctx.arc(cx,cy,R*3.2,0,Math.PI*2);ctx.fill();
+
+    // ── 2. Earth sphere — NASA Blue Marble image clipped to circle ──
     ctx.save();
     ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.clip();
     if(navEarthReady){
-      // Slow spin
+      // Very slow rotation — 1 full revolution every 2 minutes
       const spin=(Date.now()%120000)/120000*Math.PI*2;
-      ctx.translate(cx,cy);ctx.rotate(spin);
-      ctx.drawImage(navEarthImg,-R,-R,R*2,R*2);
+      ctx.translate(cx,cy);
+      ctx.rotate(spin);
+      // Draw slightly oversized so rotation edges don't show gaps
+      ctx.drawImage(navEarthImg,-R*1.05,-R*1.05,R*2.1,R*2.1);
     } else {
-      // Fallback painted earth
-      const gF=ctx.createRadialGradient(cx-2,cy-2,0,cx,cy,R);
-      gF.addColorStop(0,'#1a5fbc');gF.addColorStop(.6,'#0a2a80');gF.addColorStop(1,'#040e2e');
-      ctx.fillStyle=gF;ctx.beginPath();ctx.arc(0,0,R,0,Math.PI*2);ctx.fill();
+      // Fallback — painted Earth
+      const gF=ctx.createRadialGradient(cx-R*.3,cy-R*.3,0,cx,cy,R);
+      gF.addColorStop(0,'#1b6fbc');gF.addColorStop(.4,'#1055a0');
+      gF.addColorStop(.75,'#09337a');gF.addColorStop(1,'#010820');
+      ctx.fillStyle=gF;ctx.fillRect(-R*1.1,-R*1.1,R*2.2,R*2.2);
     }
     ctx.restore();
-    // Night-side shadow
-    const navShad=ctx.createRadialGradient(cx+R*.5,cy,R*.1,cx+R*.6,cy,R*1.05);
-    navShad.addColorStop(0,'rgba(0,0,0,0)');navShad.addColorStop(.6,'rgba(0,0,8,.45)');navShad.addColorStop(1,'rgba(0,0,8,.7)');
-    ctx.fillStyle=navShad;ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.fill();
-    // Atmosphere ring
-    ctx.strokeStyle='rgba(100,180,255,.4)';ctx.lineWidth=1.2;
+
+    // ── 3. Thin atmosphere halo (outside sphere edge) ──
+    const atm=ctx.createRadialGradient(cx,cy,R*0.88,cx,cy,R*1.28);
+    atm.addColorStop(0,'rgba(70,150,255,0)');
+    atm.addColorStop(0.4,'rgba(100,190,255,.32)');
+    atm.addColorStop(0.75,'rgba(60,140,255,.14)');
+    atm.addColorStop(1,'rgba(70,150,255,0)');
+    ctx.fillStyle=atm;
+    ctx.beginPath();ctx.arc(cx,cy,R*1.28,0,Math.PI*2);ctx.fill();
+
+    // ── 4. Night-side terminator shadow ──
+    const shad=ctx.createRadialGradient(cx+R*.6,cy,R*.05,cx+R*.75,cy,R*1.05);
+    shad.addColorStop(0,'rgba(0,0,0,0)');
+    shad.addColorStop(0.45,'rgba(0,0,8,.3)');
+    shad.addColorStop(1,'rgba(0,0,8,.68)');
+    ctx.fillStyle=shad;
+    ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.fill();
+
+    // ── 5. Specular highlight (top-left sun glint) ──
+    const spec=ctx.createRadialGradient(cx-R*.38,cy-R*.38,0,cx-R*.25,cy-R*.22,R*.55);
+    spec.addColorStop(0,'rgba(255,255,255,.22)');
+    spec.addColorStop(0.5,'rgba(255,255,255,.06)');
+    spec.addColorStop(1,'rgba(255,255,255,0)');
+    ctx.fillStyle=spec;
+    ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.fill();
+
+    // ── 6. Atmosphere limb ring ──
+    ctx.strokeStyle='rgba(80,160,255,.55)';ctx.lineWidth=1.4;
     ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.stroke();
 
-    // Orbit ellipse path
+    // ── 7. Orbit ellipse path ──
     ctx.save();ctx.translate(cx,cy);ctx.scale(1,.52);
-    ctx.setLineDash([2,3]);ctx.strokeStyle='rgba(201,168,76,.25)';ctx.lineWidth=.7;
+    ctx.setLineDash([2,3]);
+    ctx.strokeStyle='rgba(201,168,76,.28)';ctx.lineWidth=.7;
     ctx.beginPath();ctx.ellipse(0,0,OA,OA,0,0,Math.PI*2);ctx.stroke();
     ctx.restore();ctx.setLineDash([]);
 
-    // Satellite position
+    // ── 8. Satellite position ──
     const px=cx+OA*Math.cos(angle);
     const py=cy+OB*Math.sin(angle);
 
-    // Trail (behind current position based on direction)
-    const trailLen=12;
-    const dir=scrollVelocity>=0?1:-1;
+    // Trail
+    const trailLen=12, dir=scrollVelocity>=0?1:-1;
     for(let i=trailLen;i>0;i--){
       const ta=angle-i*.18*dir;
-      const tx=cx+OA*Math.cos(ta),ty=cy+OB*Math.sin(ta);
+      const tx=cx+OA*Math.cos(ta), ty=cy+OB*Math.sin(ta);
       const a=(trailLen-i)/trailLen*.4;
       ctx.fillStyle=`rgba(201,168,76,${a})`;
       ctx.beginPath();ctx.arc(tx,ty,1,0,Math.PI*2);ctx.fill();
     }
 
-    // Glow
+    // Satellite glow
     const gl=ctx.createRadialGradient(px,py,0,px,py,5);
-    gl.addColorStop(0,'rgba(201,168,76,.7)');gl.addColorStop(1,'rgba(201,168,76,.0)');
+    gl.addColorStop(0,'rgba(201,168,76,.7)');gl.addColorStop(1,'rgba(201,168,76,0)');
     ctx.fillStyle=gl;ctx.beginPath();ctx.arc(px,py,5,0,Math.PI*2);ctx.fill();
 
     // Satellite dot
-    ctx.fillStyle='#f0c842';ctx.beginPath();ctx.arc(px,py,2.2,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#f0c842';
+    ctx.beginPath();ctx.arc(px,py,2.2,0,Math.PI*2);ctx.fill();
 
-    // Only advance angle if scrolling
+    // Advance angle only while scrolling
     if(scrollVelocity!==0){
       angle+=0.06*Math.sign(scrollVelocity)*Math.min(Math.abs(scrollVelocity),1.5);
     }
