@@ -1031,7 +1031,7 @@
 
 <!-- ══ HERO ══ -->
 <section id="home-section">
-  <!-- EARTH IMAGE: place your Earth photo at images/earth.jpg
+  <!-- EARTH IMAGE: place your Earth photo at images/globe.png
        Format: square JPG/PNG, ideally 512×512px or larger.
        Falls back to NASA Blue Marble → then to canvas-drawn Earth. -->
   <canvas id="heroCanvas"></canvas>
@@ -1807,7 +1807,7 @@ navAs.forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open'
   const ECY=()=>W<=860 ? H*0.28 : H*0.5;
 
   // Earth image — primary: local file you can replace with your own
-  // To use your own Earth image: place it at images/earth.jpg
+  // To use your own Earth image: place it at images/globe.png
   // Fallback 1: NASA Blue Marble (public domain, loads from NASA servers)
   // Fallback 2: Canvas-drawn Earth (no network needed)
   const earthImg = new Image();
@@ -1825,9 +1825,9 @@ navAs.forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open'
     // If NASA also fails, earthImgReady stays false → canvas fallback draws
   }
 
-  // Try local file first (replace images/earth.jpg with your own photo)
+  // Try local file first (replace images/globe.png with your own photo)
   const localImg = new Image();
-  localImg.src = 'images/earth.jpg';   // ← ADD YOUR EARTH IMAGE HERE
+  localImg.src = 'images/globe.png';   // ← ADD YOUR EARTH IMAGE HERE
   localImg.onload = ()=>{
     earthImg.src = localImg.src;
     earthImgReady = true;
