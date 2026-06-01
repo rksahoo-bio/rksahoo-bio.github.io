@@ -2666,7 +2666,7 @@ navAs.forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open'
    4. TYPEWRITER
 ══════════════════════════════════════════════════ */
 (function(){
-  const words=['Researcher','Educator','PhD Scholar','Engineer','Aerospace Scientist','Control Theorist'];
+  const words=['Researcher','PhD Scholar','Engineer','Control Theorist'];
   const el=document.getElementById('typeWord');
   let wi=0,ci=0,del=false;
   function tick(){const w=words[wi];el.textContent=del?w.slice(0,ci--):w.slice(0,ci++);let d=del?50:90;if(!del&&ci>w.length){d=1900;del=true;}if(del&&ci<0){del=false;ci=0;wi=(wi+1)%words.length;d=260;}setTimeout(tick,d);}
@@ -3505,27 +3505,35 @@ document.querySelectorAll('.proj-card video').forEach(v=>{
     /* ── To add publisher logos: place image files in images/pub/ folder.
        Supported filenames: ieee.png, iaf.png, springer.png, sae.png, arxiv.png
        Images can be PNG, JPG or SVG. Recommended size: 80×40px.        ── */
-    {n:'01', href:'https://doi.org/10.1109/SPACE65882.2025.11170894',
+
+    {n:'01', href:'https://doi.org/10.48550/arXiv.2508.07323',
+     venue:'IEEE ICC · 2026',   logoKey:'ieee',
+     title:'Collision-Free Trajectory Planning and Control of Robotic Manipulator using Energy-Based Artificial Potential Field (E-APF)'},
+    
+    {n:'02', href:'https://doi.org/10.1109/SPACE65882.2025.11170894',
      venue:'IEEE SPACE · 2025', logoKey:'ieee',
      title:'Long-range Rendezvous and Docking Maneuver Control of Satellite using Cross-Feedback Sliding Mode Controller'},
-    {n:'02', href:'https://doi.org/10.1109/SPACE65882.2025.11170848',
+    
+    {n:'03', href:'https://doi.org/10.1109/SPACE65882.2025.11170848',
      venue:'IEEE SPACE · 2025', logoKey:'ieee',
      title:'Satellite Navigation and Control using Discrete-APF and Fixed-Time Sliding Mode Controller'},
-    {n:'03', href:'https://doi.org/10.48550/arXiv.2508.07323',
-     venue:'IEEE ICC · 2025',   logoKey:'ieee',
-     title:'Collision-Free Trajectory Planning and Control of Robotic Manipulator using Energy-Based Artificial Potential Field (E-APF)'},
+    
     {n:'04', href:'https://doi.org/10.48550/arXiv.2502.09517',
      venue:'AMLURAIM · 2025',   logoKey:'arxiv',
      title:'Coupled Rendezvous and Docking Maneuver Control using Reinforcement Learning-based Adaptive Fixed-Time Sliding Mode Controller'},
+    
     {n:'05', href:'https://dl.iafastro.directory/event/IAC-2024/paper/88778/',
      venue:'IAC · 2024',        logoKey:'iaf',
      title:'A Novel Machine-Learning Approach for Detection and Avoidance of Space Debris Collisions'},
+    
     {n:'06', href:'https://dl.iafastro.directory/event/IAC-2024/paper/86384/',
      venue:'IAC · 2024',        logoKey:'iaf',
      title:'Coupled Rendezvous and Docking Maneuver Control of Spacecraft using Fast Fixed-Time Sliding Mode Controller'},
+    
     {n:'07', href:'https://link.springer.com/chapter/10.1007/978-981-16-7787-8_41',
      venue:'RAM International · 2021', logoKey:'springer',
      title:'Forming Simulation of Bump Foils Used in Complaint Gas Foil Bearings'},
+    
     {n:'08', href:'https://www.sae.org/publications/technical-papers/content/2020-01-0817/',
      venue:'WCX SAE · 2020',    logoKey:'sae',
      title:'Study on the Effect of Manifold Induction of Acetylene in a Dual-Fuelled CI Engine'},
