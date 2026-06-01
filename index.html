@@ -1655,7 +1655,7 @@
 
 <!-- ══ HERO ══ -->
 <section id="home-section">
-  <!-- EARTH IMAGE: place your Earth photo at images/earth.jpg
+  <!-- EARTH IMAGE: place your Earth photo at images/globe.png
        Format: square JPG/PNG, ideally 512×512px or larger.
        Falls back to NASA Blue Marble → then to canvas-drawn Earth. -->
   <canvas id="heroCanvas"></canvas>
@@ -2691,7 +2691,7 @@ navAs.forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open'
   const ECY=()=>W<=860 ? H*0.28 : H*0.5;
 
   // Earth image — primary: local file you can replace with your own
-  // To use your own Earth image: place it at images/earth.jpg
+  // To use your own Earth image: place it at images/globe.png
   // Fallback 1: NASA Blue Marble (public domain, loads from NASA servers)
   // Fallback 2: Canvas-drawn Earth (no network needed)
   const earthImg = new Image();
@@ -2709,9 +2709,9 @@ navAs.forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open'
     // If NASA also fails, earthImgReady stays false → canvas fallback draws
   }
 
-  // Try local file first (replace images/earth.jpg with your own photo)
+  // Try local file first (replace images/globe.png with your own photo)
   const localImg = new Image();
-  localImg.src = 'images/earth.jpg';   // ← ADD YOUR EARTH IMAGE HERE
+  localImg.src = 'images/globe.png';   // ← ADD YOUR EARTH IMAGE HERE
   localImg.onload = ()=>{
     earthImg.src = localImg.src;
     earthImgReady = true;
@@ -3756,15 +3756,15 @@ document.querySelectorAll('.proj-card video').forEach(v=>{
 ══════════════════════════════════════════════════ */
 (function(){
   const certs=[
-    {name:'NPTEL TA Certificate — Space Flight Mechanics',issuer:'IIT Kharagpur / NPTEL',year:'2023',img:'images/cert1.jpg'},
-    {name:'Best Paper Certificate — AMLURAIM',issuer:'AMLURAIM Conference',year:'2025',img:'images/cert2.jpg'},
-    {name:'Certificate of Presentation — ASME IMECE 2025',issuer:'ASME',year:'2025',img:'images/cert3.jpg'},
-    {name:'Certificate — Robotics in Space',issuer:'International Workshop',year:'2024',img:'images/cert4.jpg'},
-    {name:'Certificate — C2O: Computing, Control & Optimization',issuer:'IIT Kharagpur',year:'2023',img:'images/cert5.jpg'},
-    {name:'Certificate of Presentation — AMLURAIM',issuer:'AMLURAIM Conference',year:'2025',img:'images/cert6.jpg'},
-    {name:'Certificate of Presentation — IWSCFF 2024',issuer:'IWSCFF',year:'2024',img:'images/cert7.jpg'},
-    {name:'Certificate of Presentation — IAC 2024',issuer:'International Astronautical Federation',year:'2024',img:'images/cert8.jpg'},
-    {name:'Certificate of Participation — Formula Bharat',issuer:'Formula Bharat',year:'2019',img:'images/cert9.jpg'},
+    {name:'NPTEL TA Certificate — Space Flight Mechanics',issuer:'IIT Kharagpur / NPTEL',year:'2023',img:'images/NPTEL TA Certificate.jpg'},
+    {name:'Best Paper Certificate — AMLURAIM',issuer:'AMLURAIM Conference',year:'2025',img:'images/AMLURAIM Best Paper Certificate.jpg'},
+    {name:'Certificate of Presentation — ASME IMECE 2025',issuer:'ASME',year:'2025',img:'images/ASME Certificate.jpg'},
+    {name:'Certificate — Robotics in Space',issuer:'International Workshop',year:'2024',img:'images/RobIS.jpg'},
+    {name:'Certificate — C2O: Computing, Control & Optimization',issuer:'IIT Kharagpur',year:'2023',img:'images/C2O.jpg'},
+    {name:'Certificate of Presentation — AMLURAIM',issuer:'AMLURAIM Conference',year:'2025',img:'images/AMLURAIM Certificate.jpg'},
+    {name:'Certificate of Presentation — IWSCFF 2024',issuer:'IWSCFF',year:'2024',img:'images/IWSCFF Certificate.jpg'},
+    {name:'Certificate of Presentation — IAC 2024',issuer:'International Astronautical Federation',year:'2024',img:'images/IAC Cerificate.jpg'},
+    {name:'Certificate of Participation — Formula Bharat',issuer:'Formula Bharat',year:'2019',img:'images/FB Certificate.jpg'},
   ];
   const grid=document.getElementById('certGrid');
   const overlay=document.getElementById('certOverlay');
