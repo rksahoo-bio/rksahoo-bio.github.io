@@ -6,9 +6,9 @@
   <title>Rakesh Kumar Sahoo — PhD Researcher | Spacecraft Dynamics & Control</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <!-- Satellite favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛸</text></svg>">
-  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛸</text></svg>">
+  <!-- Earth favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet"/>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -25,6 +25,13 @@
     body{background:var(--void);color:var(--star);font-family:var(--sans);font-size:16px;line-height:1.7;overflow-x:hidden;cursor:none}
 
     /* ── CURSOR ── */
+    /* ── PARTICLE FIELD + SHOOTING STARS ── */
+    #particleCanvas{
+      position:fixed;inset:0;
+      width:100vw;height:100vh;
+      pointer-events:none;
+      z-index:0;
+    }
     .cursor-dot{width:8px;height:8px;background:var(--gold);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
     .cursor-ring{width:34px;height:34px;border:1.5px solid rgba(201,168,76,.5);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .22s cubic-bezier(.22,1,.36,1),height .22s cubic-bezier(.22,1,.36,1),border-color .18s,opacity .18s}
     body:has(a:hover) .cursor-ring,body:has(button:hover) .cursor-ring{width:50px;height:50px;border-color:var(--gold)}
@@ -36,6 +43,9 @@
     nav.scrolled{background:rgba(0,0,0,.93);backdrop-filter:blur(22px);border-bottom-color:rgba(201,168,76,.12)}
     /* Nav logo with tiny orbit canvas inside */
     .nav-logo-wrap{display:flex;align-items:center;gap:10px;text-decoration:none;position:relative}
+    /* Prevent blue link-coloured RKS flash before JS animation initialises */
+    #rksText{opacity:0;color:var(--gold-bright)}
+    .rks-capsule{color:var(--gold-bright)}
     #navOrbitCanvas{display:block;flex-shrink:0}
     .nav-logo-text{font-family:var(--sans);font-size:1.08rem;font-weight:700;letter-spacing:.02em;color:var(--white)}
     .nav-logo-text span{color:var(--gold)}
@@ -171,7 +181,7 @@
       padding:24px 28px;
       border-bottom:1px solid rgba(201,168,76,.07);
       border-left:2px solid transparent;
-      display:grid;grid-template-columns:32px 1fr 22px;gap:18px;align-items:start;
+      display:grid;grid-template-columns:30px 56px 1fr 22px;gap:16px;align-items:center;min-width:0;
       text-decoration:none;
       position:relative;overflow:hidden;
       transition:
@@ -522,8 +532,36 @@
       .f-motto-text{font-size:clamp(.7rem,3.5vw,.9rem)}
       /* Coauthor: stack year filter below wheel, prevent overlap */
       .coauthor-layout{grid-template-columns:1fr;gap:20px}
-      .coauthor-filters{position:static;display:flex;flex-wrap:wrap;gap:6px;padding:12px;align-items:center}
-      .cf-year{border-bottom:none;padding:3px 8px;border:1px solid rgba(201,168,76,.15);border-radius:4px}
+      /* Stack everything vertically in filters on mobile */
+      .coauthor-filters{
+        position:static;
+        display:flex;
+        flex-direction:column;
+        gap:8px;
+        padding:14px;
+        align-items:flex-start;
+      }
+      /* Line 1: "8  CO-AUTHORS" — number + label together */
+      .cf-stats-row{
+        display:flex;
+        align-items:baseline;
+        gap:8px;
+        width:100%;
+      }
+      /* Line 2: "YEARS" title — full width block */
+      .cf-title{
+        width:100%;
+        margin-bottom:0;
+      }
+      /* Line 3: year checkboxes wrap */
+      .cf-years-row{
+        display:flex;
+        flex-wrap:wrap;
+        gap:6px;
+        width:100%;
+      }
+      .cf-year{border-bottom:none;padding:3px 10px;border:1px solid rgba(201,168,76,.15);border-radius:4px}
+      .cf-divider{display:none}
       .coauthor-filters > .section-num{display:none}
       #chordCanvas{max-width:100%;height:auto!important}
       .chord-canvas-outer{padding:10px}
@@ -543,8 +581,6 @@
       .gthumb{width:60px;height:40px}
       .proj-grid{grid-template-columns:1fr}
       .cert-grid{grid-template-columns:1fr 1fr}
-      .pub-item{grid-template-columns:28px 1fr 18px;padding:18px 16px;gap:10px}
-      .pub-bg-num{font-size:3.5rem}
       .hero-greeting{font-size:clamp(2rem,10vw,3.5rem)}
       .hero-cta{flex-wrap:wrap;gap:10px}
       .btn-gold,.btn-ghost{padding:10px 20px;font-size:.72rem}
@@ -571,7 +607,6 @@
       .domain-cards{grid-template-columns:1fr}
       .nav-logo-text{font-size:.9rem}
       #navOrbitCanvas{width:36px;height:36px}
-      .pub-item{padding:14px 12px}
       .gallery-controls{flex-direction:column;gap:10px;align-items:flex-start}
     }
   
@@ -957,12 +992,601 @@
       body{font-size:18px}
       .section-title{font-size:clamp(2.5rem,4vw,4rem)}
     }
+  
+    
+
+    /* ── PAGE LOAD CINEMATIC INTRO ── */
+    #pageIntro{
+      position:fixed;inset:0;
+      background:#000;
+      z-index:10000;
+      display:flex;align-items:center;justify-content:center;
+      flex-direction:column;gap:16px;
+      transition:opacity .9s ease;
+    }
+    #pageIntro.hidden{opacity:0;pointer-events:none}
+    /* Page is fully hidden during intro — use a separate dark mask */
+    #pageRevealMask{
+      position:fixed;inset:0;z-index:8999;
+      background:#000;pointer-events:none;
+      transition:opacity 2.2s cubic-bezier(.4,0,.2,1);
+    }
+    #pageRevealMask.fade{opacity:0}
+    #pageRevealMask.gone{display:none}
+    .intro-logo{
+      font-family:var(--mono);font-size:1.4rem;font-weight:700;
+      color:var(--gold-bright);letter-spacing:.4em;
+      animation:introFade 1.2s ease forwards;
+    }
+    .intro-sub{
+      font-family:var(--mono);font-size:.6rem;letter-spacing:.3em;
+      color:rgba(201,168,76,.55);
+      animation:introFade 1.2s ease .3s forwards;opacity:0;
+    }
+    .intro-bar{
+      width:120px;height:1px;
+      background:linear-gradient(to right,transparent,var(--gold),transparent);
+      animation:introBar 1s ease .6s forwards;transform:scaleX(0);
+    }
+    @keyframes introFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+    @keyframes introBar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+    /* ── SECTION EYEBROW COUNTER — auto-increments ── */
+    .section-num{
+      display:flex;align-items:center;gap:8px;
+      font-family:var(--mono);font-size:.58rem;
+      letter-spacing:.28em;color:rgba(201,168,76,.65);
+      text-transform:uppercase;
+    }
+    .section-num::before{
+      content:'';width:18px;height:1px;
+      background:var(--gold);flex-shrink:0;
+    }
+
+    /* ── AMBIENT SECTION SPOTLIGHT — faint radial on enter ── */
+    .section-spotlight{
+      position:absolute;top:0;left:50%;transform:translateX(-50%);
+      width:60%;height:2px;pointer-events:none;
+      background:linear-gradient(to right,transparent,rgba(201,168,76,.18),transparent);
+      border-radius:0;
+    }
+
+    /* ── NAV ACTIVE INDICATOR — animated pill ── */
+    .nav-links a.active{color:var(--gold-bright)}
+
+    /* ── SCROLL-TO-TOP BUTTON ── */
+    #scrollTop{
+      position:fixed;bottom:30px;left:50%;
+      transform:translateX(-50%) translateY(16px);
+      width:38px;height:38px;
+      border:1.5px solid rgba(201,168,76,.35);
+      background:rgba(6,9,20,.85);
+      border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      cursor:pointer;
+      opacity:0;
+      transition:opacity .3s,transform .3s,border-color .25s,background .25s;
+      z-index:200;
+      backdrop-filter:blur(8px);
+      font-size:1rem;color:var(--gold);
+      pointer-events:none;
+    }
+    #scrollTop.visible{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto}
+    #scrollTop:hover{border-color:var(--gold);background:rgba(201,168,76,.12)}
+
+    /* ── CARD AMBIENT GLOW on hover ── */
+    .cert-card::after,.cit-block::after{
+      content:'';position:absolute;inset:-1px;border-radius:inherit;
+      background:radial-gradient(ellipse at var(--mx,.5) var(--my,.5),rgba(201,168,76,.08) 0%,transparent 65%);
+      pointer-events:none;opacity:0;transition:opacity .3s;
+    }
+    .cert-card:hover::after,.cit-block:hover::after{opacity:1}
+
+    /* ── TIMELINE ── refined glow on active dot ── */
+    .tl-dot::after{
+      content:'';position:absolute;inset:-4px;border-radius:50%;
+      border:1px solid rgba(201,168,76,.0);
+      transition:border-color .3s;
+    }
+    .tl-item:hover .tl-dot::after{border-color:rgba(201,168,76,.4)}
+
+  
+    /* ── SCROLL ASTRONAUT ── */
+
+  
+    /* ── SPACE HISTORY TIMELINE ── */
+    #space-history-section{
+      position:relative;overflow:hidden;
+      background:var(--void);padding-bottom:40px;
+    }
+    .sh-sub{font-family:var(--mono);font-size:.7rem;color:var(--mist);letter-spacing:.08em;margin-top:10px;opacity:.7}
+
+    /* Year slider */
+    .sh-slider-row{
+      display:flex;align-items:center;gap:14px;
+      margin-top:24px;padding:0 2px;
+    }
+    .sh-slider-yr{
+      font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;
+      color:rgba(201,168,76,.55);white-space:nowrap;
+    }
+    .sh-slider-wrap{position:relative;flex:1;}
+    .sh-slider-track{
+      height:2px;background:rgba(201,168,76,.12);
+      border-radius:1px;position:absolute;
+      top:50%;transform:translateY(-50%);
+      left:0;right:0;pointer-events:none;
+    }
+    .sh-slider-fill{
+      height:100%;background:linear-gradient(to right,var(--gold-dim),var(--gold-bright));
+      border-radius:1px;width:0%;
+      transition:width .08s linear;
+    }
+    .sh-slider{
+      -webkit-appearance:none;appearance:none;
+      width:100%;height:20px;background:transparent;
+      cursor:pointer;position:relative;z-index:2;
+      outline:none;
+    }
+    .sh-slider::-webkit-slider-thumb{
+      -webkit-appearance:none;appearance:none;
+      width:16px;height:16px;border-radius:50%;
+      background:var(--gold-bright);
+      border:2px solid rgba(6,9,20,.8);
+      box-shadow:0 0 8px rgba(201,168,76,.5);
+      transition:transform .15s,box-shadow .15s;
+    }
+    .sh-slider:hover::-webkit-slider-thumb{
+      transform:scale(1.3);box-shadow:0 0 16px rgba(201,168,76,.7);
+    }
+    .sh-slider::-moz-range-thumb{
+      width:16px;height:16px;border-radius:50%;
+      background:var(--gold-bright);border:2px solid rgba(6,9,20,.8);
+      cursor:pointer;
+    }
+    /* Floating year tooltip above thumb */
+    .sh-slider-tooltip{
+      position:absolute;top:-28px;
+      font-family:var(--mono);font-size:.56rem;letter-spacing:.12em;
+      color:var(--gold-bright);
+      background:rgba(6,9,20,.88);border:1px solid rgba(201,168,76,.3);
+      padding:2px 7px;pointer-events:none;
+      transform:translateX(-50%);
+      white-space:nowrap;
+      transition:left .08s linear;
+    }
+
+    /* Outer wrap for side arrows */
+    .sh-outer-wrap{
+      position:relative;display:flex;align-items:stretch;
+    }
+    .sh-arrow{
+      position:sticky;
+      top:50%;
+      flex-shrink:0;
+      width:44px;
+      align-self:center;
+      background:rgba(6,9,20,.82);
+      border:1px solid rgba(201,168,76,.2);
+      color:var(--gold);
+      font-size:1.8rem;line-height:1;
+      cursor:pointer;
+      z-index:10;
+      transition:background .2s,border-color .2s,transform .18s;
+      display:flex;align-items:center;justify-content:center;
+      padding:0;height:52px;
+      backdrop-filter:blur(8px);
+    }
+    .sh-arrow:hover{
+      background:rgba(201,168,76,.1);
+      border-color:rgba(201,168,76,.5);
+      transform:scale(1.08);
+    }
+    .sh-arrow-l{border-radius:0 4px 4px 0;margin-right:-1px}
+    .sh-arrow-r{border-radius:4px 0 0 4px;margin-left:-1px}
+
+    /* Scrollable strip wrapper */
+    .sh-strip-wrap{
+      width:100%;overflow-x:auto;overflow-y:hidden;
+      scrollbar-width:none;cursor:grab;
+      padding:0;
+      position:relative;
+    }
+    .sh-strip-wrap::-webkit-scrollbar{display:none}
+    .sh-strip-wrap.dragging{cursor:grabbing}
+
+    /* Year ruler */
+    .sh-ruler{
+      display:flex;align-items:flex-end;
+      padding:20px 8vw 0;
+      width:max-content;
+      min-width:100%;
+      gap:0;
+      border-bottom:1px solid rgba(201,168,76,.15);
+      margin-bottom:0;
+    }
+    .sh-ruler-yr{
+      font-family:var(--mono);font-size:.52rem;letter-spacing:.12em;
+      color:rgba(201,168,76,.4);white-space:nowrap;
+      padding-right:0;
+      transition:color .2s;
+      cursor:pointer;
+      position:relative;
+    }
+    .sh-ruler-yr.has-events::after{
+      content:'';position:absolute;
+      bottom:-5px;left:50%;transform:translateX(-50%);
+      width:4px;height:4px;border-radius:50%;
+      background:rgba(201,168,76,.35);
+    }
+    .sh-ruler-yr.active{color:var(--gold-bright)}
+    .sh-ruler-yr.active::after{background:var(--gold);width:6px;height:6px;bottom:-6px}
+
+    /* Cards strip */
+    .sh-strip{
+      display:flex;gap:0;
+      padding:0 8vw 32px;
+      width:max-content;
+      min-width:100%;
+      align-items:flex-start;
+    }
+
+    /* Year group within strip */
+    .sh-year-group{
+      display:flex;flex-direction:column;gap:10px;
+      padding:16px 16px 16px 0;
+      min-width:300px;
+      max-width:340px;
+      flex-shrink:0;
+      border-right:1px solid rgba(201,168,76,.07);
+    }
+    .sh-year-heading{
+      font-family:var(--mono);font-size:1.4rem;font-weight:800;
+      color:rgba(201,168,76,.18);letter-spacing:-.02em;
+      padding:0 2px 6px;
+      border-bottom:1px solid rgba(201,168,76,.1);
+      margin-bottom:4px;
+    }
+
+    /* Individual event card */
+    .sh-event{
+      padding:14px 16px;
+      border:1px solid rgba(201,168,76,.08);
+      background:rgba(6,9,20,.7);
+      cursor:pointer;
+      transition:border-color .22s,background .22s,transform .22s;
+      position:relative;
+    }
+    .sh-event::before{
+      content:'';position:absolute;
+      left:0;top:0;bottom:0;width:2px;
+      background:transparent;
+      transition:background .22s;
+    }
+    .sh-event:hover{
+      border-color:rgba(201,168,76,.28);
+      background:rgba(201,168,76,.05);
+      transform:translateX(3px);
+    }
+    .sh-event:hover::before{background:var(--gold)}
+    .sh-event.success .sh-event-dot{background:#4ade80}
+    .sh-event.failure .sh-event-dot{background:#f87171}
+    .sh-event.milestone .sh-event-dot{background:var(--gold)}
+    .sh-event-head{display:flex;align-items:flex-start;gap:8px;margin-bottom:6px}
+    .sh-event-dot{
+      width:7px;height:7px;border-radius:50%;
+      flex-shrink:0;margin-top:4px;
+    }
+    .sh-event-date{
+      font-family:var(--mono);font-size:.52rem;letter-spacing:.1em;
+      color:var(--cyan);opacity:.65;margin-bottom:2px;
+    }
+    .sh-event-title{
+      font-size:.82rem;font-weight:700;color:var(--white);
+      letter-spacing:-.01em;line-height:1.3;
+    }
+    .sh-event-agency{
+      font-family:var(--mono);font-size:.5rem;letter-spacing:.13em;
+      color:var(--mist);opacity:.55;margin-top:3px;
+    }
+    .sh-event-desc{
+      font-size:.72rem;color:var(--mist);line-height:1.6;
+      opacity:.8;margin-top:4px;
+      display:-webkit-box;-webkit-line-clamp:3;
+      -webkit-box-orient:vertical;overflow:hidden;
+    }
+    .sh-event-tag{
+      display:inline-block;margin-top:7px;
+      font-family:var(--mono);font-size:.46rem;letter-spacing:.1em;
+      padding:2px 6px;border-radius:2px;
+    }
+    .sh-event-tag.s{background:rgba(74,222,128,.1);color:#4ade80}
+    .sh-event-tag.f{background:rgba(248,113,113,.1);color:#f87171}
+    .sh-event-tag.m{background:rgba(201,168,76,.1);color:var(--gold)}
+
+    /* Progress bar */
+    .sh-progress-wrap{
+      height:2px;background:rgba(201,168,76,.08);
+      margin:0 8vw;
+    }
+    .sh-progress-bar{
+      height:100%;width:0%;
+      background:linear-gradient(to right,var(--gold-dim),var(--gold-bright));
+      transition:width .15s linear;
+    }
+
+    /* Detail panel */
+    .sh-detail{
+      margin:16px 8vw 0;
+      padding:20px 24px;
+      border:1px solid rgba(201,168,76,.2);
+      background:rgba(6,9,20,.88);
+      backdrop-filter:blur(12px);
+      animation:shDetailIn .25s ease;
+    }
+    @keyframes shDetailIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+    .sh-detail-title{font-size:1rem;font-weight:700;color:var(--white);margin-bottom:6px}
+    .sh-detail-meta{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;color:var(--cyan);opacity:.7;margin-bottom:12px}
+    .sh-detail-body{font-size:.8rem;color:var(--mist);line-height:1.68}
+
+    @media(max-width:860px){
+      .sh-year-group{min-width:260px;max-width:290px}
+      .sh-slider-row{gap:8px}
+      .sh-arrow{width:36px;height:44px;font-size:1.4rem}
+    }
+
+        /* ── SCROLL ASTRONAUT ── */
+
+  
+    /* ── SPACE HISTORY TIMELINE ── */
+    #space-history-section{
+      background:var(--void);
+      position:relative;overflow:hidden;
+      padding:0;
+    }
+    #space-history-section .section-wrap{padding-bottom:32px}
+    .sh-sub{font-family:var(--mono);font-size:.68rem;color:var(--mist);letter-spacing:.08em;margin-top:10px;opacity:.65}
+    /* Track outer — full viewport width, no overflow */
+    .sh-track-outer{
+      width:100%;overflow:hidden;
+      position:relative;
+      padding-bottom:48px;
+    }
+    .sh-track{
+      display:flex;
+      transition:transform .6s cubic-bezier(.4,0,.2,1);
+      will-change:transform;
+    }
+    /* Individual event card */
+    .sh-card{
+      flex:0 0 min(440px,92vw);
+      min-height:360px;
+      padding:44px 40px 36px 40px;
+      position:relative;
+      border-right:1px solid rgba(201,168,76,.07);
+      display:flex;flex-direction:column;
+      gap:10px;
+      overflow:hidden;
+      cursor:pointer;
+      transition:background .3s;
+    }
+    .sh-card::before{
+      content:'';
+      position:absolute;top:0;left:0;bottom:0;width:2.5px;
+      background:linear-gradient(to bottom,transparent,var(--gold),transparent);
+      opacity:0;transition:opacity .4s;
+    }
+    .sh-card.active{background:rgba(201,168,76,.028)}
+    .sh-card.active::before{opacity:1}
+    /* Decorative background glow per card */
+    .sh-card-glow{
+      position:absolute;inset:0;
+      background:radial-gradient(ellipse 70% 50% at var(--gx,50%) var(--gy,30%),
+        var(--gc,rgba(77,217,240,.06)) 0%,transparent 70%);
+      pointer-events:none;
+    }
+    /* Top date bar */
+    .sh-date{
+      font-family:var(--mono);
+      font-size:.58rem;letter-spacing:.22em;
+      color:rgba(201,168,76,.55);
+      text-transform:uppercase;
+      margin-bottom:2px;
+    }
+    .sh-card.active .sh-date{color:var(--gold)}
+    /* Big year */
+    .sh-year{
+      font-family:var(--sans);
+      font-size:3.2rem;font-weight:800;
+      color:rgba(255,255,255,.07);
+      line-height:1;
+      letter-spacing:-.03em;
+      margin-bottom:6px;
+      position:absolute;
+      right:32px;top:32px;
+    }
+    .sh-card.active .sh-year{color:rgba(201,168,76,.12)}
+    /* Mission icon + name row */
+    .sh-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:4px}
+    .sh-icon-wrap{
+      width:48px;height:48px;flex-shrink:0;
+      border:1px solid rgba(201,168,76,.2);
+      border-radius:12px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.4rem;
+      background:rgba(201,168,76,.05);
+      transition:border-color .3s,background .3s;
+    }
+    .sh-card.active .sh-icon-wrap{border-color:rgba(201,168,76,.45);background:rgba(201,168,76,.1)}
+    .sh-title-col{flex:1;min-width:0}
+    .sh-mission{
+      font-family:var(--sans);
+      font-size:1.05rem;font-weight:700;
+      color:var(--white);
+      line-height:1.2;
+      margin-bottom:4px;
+    }
+    .sh-tags{display:flex;gap:5px;flex-wrap:wrap}
+    .sh-tag{
+      font-family:var(--mono);font-size:.5rem;
+      letter-spacing:.12em;text-transform:uppercase;
+      padding:2px 7px;border-radius:2px;
+      border:1px solid rgba(201,168,76,.18);
+      color:rgba(201,168,76,.6);
+    }
+    .sh-tag.tag-cyan{border-color:rgba(77,217,240,.25);color:rgba(77,217,240,.7)}
+    .sh-tag.tag-red{border-color:rgba(255,90,90,.25);color:rgba(255,90,90,.6)}
+    /* Divider */
+    .sh-rule{height:1px;background:rgba(201,168,76,.08);margin:8px 0}
+    /* Description */
+    .sh-desc{
+      font-size:.8rem;color:var(--mist);line-height:1.7;
+      flex:1;
+    }
+    /* Stats row at bottom */
+    .sh-stats{
+      display:flex;gap:16px;margin-top:auto;padding-top:12px;
+      border-top:1px solid rgba(201,168,76,.06);
+    }
+    .sh-stat{font-family:var(--mono);font-size:.58rem;color:rgba(201,168,76,.45)}
+    .sh-stat strong{display:block;color:var(--gold-bright);font-size:.7rem;margin-bottom:1px}
+    /* Navigation */
+    .sh-nav{
+      display:flex;align-items:center;justify-content:center;
+      gap:14px;padding:0 0 8px;
+    }
+    .sh-nav-btn{
+      width:40px;height:40px;
+      border:1px solid rgba(201,168,76,.25);background:none;
+      color:var(--gold);font-size:1rem;cursor:pointer;
+      border-radius:50%;
+      transition:border-color .2s,background .2s,transform .18s;
+    }
+    .sh-nav-btn:hover:not(:disabled){
+      border-color:var(--gold);background:rgba(201,168,76,.08);
+      transform:scale(1.08);
+    }
+    .sh-nav-btn:disabled{opacity:.22;cursor:not-allowed}
+    .sh-dots{display:flex;gap:5px;align-items:center}
+    .sh-dot{
+      width:5px;height:5px;border-radius:50%;
+      background:rgba(201,168,76,.2);cursor:pointer;
+      transition:background .25s,width .25s,border-radius .25s;
+      border:none;
+    }
+    .sh-dot.active{background:var(--gold);width:16px;border-radius:3px}
+    .sh-counter{
+      font-family:var(--mono);font-size:.6rem;
+      color:rgba(201,168,76,.45);
+      min-width:52px;text-align:center;
+    }
+
+  
+    /* ── SPACE HISTORY IFRAME ── */
+    #space-history-section{background:var(--void)}
+    .sh-sub{font-family:var(--mono);font-size:.7rem;color:var(--mist);letter-spacing:.08em;margin-top:10px;opacity:.7}
+    .sh-iframe-wrap{padding:0 8vw 60px;margin-top:36px}
+    .sh-iframe-chrome{
+      border:1px solid rgba(201,168,76,.2);
+      border-radius:12px;
+      overflow:hidden;
+      background:#040810;
+      box-shadow:0 24px 80px rgba(0,0,0,.6),0 0 0 1px rgba(201,168,76,.08);
+    }
+    .sh-iframe-bar{
+      background:rgba(10,15,28,.95);
+      border-bottom:1px solid rgba(201,168,76,.12);
+      padding:10px 16px;
+      display:flex;align-items:center;gap:10px;
+    }
+    .sh-chrome-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+    .sh-chrome-url{
+      flex:1;
+      font-family:var(--mono);font-size:.62rem;
+      color:rgba(200,218,255,.4);letter-spacing:.05em;
+      margin-left:8px;
+    }
+    .sh-chrome-open{
+      font-family:var(--mono);font-size:.6rem;
+      color:var(--cyan);letter-spacing:.06em;
+      text-decoration:none;white-space:nowrap;
+      opacity:.7;transition:opacity .2s;
+    }
+    .sh-chrome-open:hover{opacity:1}
+    #spaceHistoryFrame{
+      display:block;width:100%;
+      height:min(680px,75vh);
+      border:none;
+    }
+    .sh-iframe-fallback{
+      display:none;
+      padding:60px 20px;
+      text-align:center;
+      align-items:center;justify-content:center;
+    }
+    @media(max-width:860px){
+      .sh-iframe-wrap{padding:0 3vw 40px}
+      #spaceHistoryFrame{height:min(520px,70vh)}
+    }
+  
+    /* ── PUB ITEM — desktop + responsive ── */
+    .pub-idx{font-family:var(--mono);font-size:.6rem;color:var(--gold-dim);padding-top:3px;position:relative;z-index:1}
+    .pub-bg-num{
+      position:absolute;right:44px;top:50%;transform:translateY(-50%);
+      font-family:var(--mono);font-size:4.5rem;font-weight:800;
+      color:rgba(201,168,76,.04);letter-spacing:-.04em;
+      pointer-events:none;z-index:0;line-height:1;
+    }
+    .pub-content{min-width:0;}
+    .pub-logo-wrap{
+      display:flex;align-items:center;justify-content:center;
+      width:52px;height:44px;
+      border:1px solid rgba(201,168,76,.1);
+      background:rgba(255,255,255,.03);
+      overflow:hidden;flex-shrink:0;
+      transition:border-color .25s;
+      align-self:center;
+    }
+    .pub-item:hover .pub-logo-wrap{border-color:rgba(201,168,76,.28);}
+    .pub-logo-img{max-width:44px;max-height:34px;object-fit:contain;display:block;}
+    .pub-logo-fallback{
+      display:none;align-items:center;justify-content:center;
+      font-family:var(--mono);font-size:.5rem;font-weight:700;
+      letter-spacing:.08em;color:var(--gold-dim);text-align:center;width:100%;
+    }
+    @media(max-width:860px){
+      .pub-item{
+        grid-template-columns:22px 1fr 16px !important;
+        gap:10px;padding:14px 12px;align-items:start;
+      }
+      .pub-logo-wrap{display:none !important;}
+      .pub-bg-num{font-size:3rem;}
+      .pub-venue{font-size:.58rem;letter-spacing:.06em;}
+      .pub-title{font-size:.86rem;line-height:1.48;}
+    }
+    @media(max-width:480px){
+      .pub-item{grid-template-columns:18px 1fr 12px !important;gap:8px;padding:12px 10px;}
+      .pub-bg-num{font-size:2.4rem;}
+      .pub-venue{font-size:.54rem;}
+      .pub-title{font-size:.8rem;}
+    }
+
   </style>
 </head>
 <body>
 
+<canvas id="particleCanvas" aria-hidden="true"></canvas>
 <div id="readProgress"></div>
+<!-- ── PAGE INTRO OVERLAY ── -->
+<div id="pageRevealMask"></div>
+<div id="pageIntro">
+  <div class="intro-logo">RKS</div>
+  <div class="intro-bar"></div>
+  <div class="intro-sub">Rakesh Kumar Sahoo · IIT Kharagpur</div>
+</div>
+
 <div class="cursor-dot" id="cursorDot"></div>
+<button id="scrollTop" aria-label="Scroll to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 <div class="cursor-ring" id="cursorRing"></div>
 
 <!-- Certificate popup -->
@@ -1031,7 +1655,7 @@
 
 <!-- ══ HERO ══ -->
 <section id="home-section">
-  <!-- EARTH IMAGE: place your Earth photo at images/globe.png
+  <!-- EARTH IMAGE: place your Earth photo at images/earth.jpg
        Format: square JPG/PNG, ideally 512×512px or larger.
        Falls back to NASA Blue Marble → then to canvas-drawn Earth. -->
   <canvas id="heroCanvas"></canvas>
@@ -1196,6 +1820,16 @@
       <h2 class="section-title">Research <em>Published</em></h2>
 
     </div>
+    <!-- ── PUBLISHER LOGOS ──────────────────────────────────
+         Place logo image files in the images/pub/ folder:
+           images/pub/ieee.png     → IEEE papers
+           images/pub/iaf.png      → IAC/IAF papers
+           images/pub/springer.png → Springer papers
+           images/pub/sae.png      → SAE papers
+           images/pub/arxiv.png    → arXiv preprints
+         Recommended: PNG/SVG, ~80×40px, transparent background.
+         If the file is missing, a text label shows as fallback.
+    ────────────────────────────────────────────────────────── -->
     <!-- pub-list rendered by JS pagination -->
     <div class="pub-list reveal" id="pubList"></div>
     <div class="pub-pagination" id="pubPagination"></div>
@@ -1212,13 +1846,20 @@
       <h2 class="section-title">Co-author <em>Network</em></h2>
     </div>
     <div class="coauthor-layout reveal">
-      <!-- Filter panel (left) -->
+      <!-- Filter panel -->
       <div class="coauthor-filters" id="coauthorFilters">
+        <!-- LINE 1 (mobile): "8  CO-AUTHORS" -->
+        <div class="cf-stats-row">
+          <div class="cf-total" id="cfTotalNum">0</div>
+          <div class="cf-total-lbl">Co-authors</div>
+        </div>
+        <!-- LINE 2 (mobile): "YEARS" -->
         <div class="cf-title">Years</div>
-        <div class="cf-total" id="cfTotalNum">0</div>
-        <div class="cf-total-lbl">Co-authors</div>
         <div class="cf-divider"></div>
-        <!-- Year rows injected by JS -->
+        <!-- LINE 3 (mobile): year checkboxes -->
+        <div class="cf-years-row" id="cfYearsRow">
+          <!-- injected by JS -->
+        </div>
       </div>
       <!-- Chord wheel (right) -->
       <div class="chord-wrap">
@@ -1657,8 +2298,46 @@
   </div>
 </section>
 
-<div class="divider"></div>
 
+<!-- ══ SPACE HISTORY TIMELINE ══ -->
+<section id="space-history-section">
+  <div class="section-wrap">
+    <div class="section-header reveal">
+      <div class="section-num">// Space Exploration</div>
+      <h2 class="section-title">History of <em>Space</em></h2>
+      <p class="sh-sub reveal">Every milestone — from V-2 rockets to interstellar probes</p>
+    </div>
+    <!-- Year slider navigation -->
+    <div class="sh-slider-row reveal">
+      <span class="sh-slider-yr" id="shSliderYrLeft">1944</span>
+      <div class="sh-slider-wrap">
+        <div class="sh-slider-track">
+          <div class="sh-slider-fill" id="shSliderFill"></div>
+        </div>
+        <input type="range" class="sh-slider" id="shYearSlider" min="1944" max="2024" step="1" value="1944" aria-label="Jump to year">
+        <div class="sh-slider-tooltip" id="shSliderTip">1944</div>
+      </div>
+      <span class="sh-slider-yr" id="shSliderYrRight">2024</span>
+    </div>
+  </div>
+  <!-- Scrollable strip with fixed side-arrow navigation -->
+  <div class="sh-outer-wrap">
+    <button class="sh-arrow sh-arrow-l" id="shArrowL" aria-label="Scroll left">&#8249;</button>
+    <div class="sh-strip-wrap" id="shStripWrap">
+      <div class="sh-ruler" id="shRuler"></div>
+      <div class="sh-strip" id="shStrip"></div>
+    </div>
+    <button class="sh-arrow sh-arrow-r" id="shArrowR" aria-label="Scroll right">&#8250;</button>
+  </div>
+  <!-- Progress bar -->
+  <div class="sh-progress-wrap">
+    <div class="sh-progress-bar" id="shProgressBar"></div>
+  </div>
+  <!-- Detail panel -->
+  <div class="sh-detail" id="shDetail" style="display:none"></div>
+</section>
+
+<div class="divider"></div>
 <section id="contact-section">
   <div class="section-wrap">
     <div class="section-header reveal">
@@ -1694,7 +2373,7 @@
 <footer>
   <div class="f-copy">© 2025 Rakesh Kumar Sahoo · IIT Kharagpur</div>
   <div class="f-motto-text">
-    <span class="f-motto-gold">SPACE</span>
+    <span class="f-motto-gold"><span id="spaceS">S</span>PACE</span>
     <span class="f-motto-white"> has no </span>
     <span class="f-motto-gold">LIMIT</span>
   </div>
@@ -1755,6 +2434,211 @@ document.addEventListener('keydown',function(e){
     });
   });
 })();
+/* ══════════════════════════════════════════════════
+   PARTICLE FIELD — mouse-reactive drifting stars
+   + SHOOTING STARS — streak across on section enter
+══════════════════════════════════════════════════ */
+(function(){
+  const cv  = document.getElementById('particleCanvas');
+  if(!cv) return;
+  const ctx = cv.getContext('2d');
+  let W, H, DPR;
+
+  // Mouse position (global, updated below)
+  let mx = -9999, my = -9999;
+  window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; }, {passive:true});
+  // Touch support
+  window.addEventListener('touchmove', e => {
+    mx = e.touches[0].clientX; my = e.touches[0].clientY;
+  }, {passive:true});
+
+  // ── Resize ────────────────────────────────────
+  function resize(){
+    DPR = window.devicePixelRatio || 1;
+    W   = window.innerWidth;
+    H   = window.innerHeight;
+    cv.width  = W * DPR;
+    cv.height = H * DPR;
+    cv.style.width  = W + 'px';
+    cv.style.height = H + 'px';
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    buildParticles();
+  }
+
+  // ── Particles ─────────────────────────────────
+  let particles = [];
+
+  function buildParticles(){
+    const count = Math.round(W * H / 7000); // density scales with screen size
+    particles = Array.from({length: count}, () => ({
+      x:  Math.random() * W,
+      y:  Math.random() * H,
+      bvx: (Math.random() - 0.5) * 0.18,
+      bvy: (Math.random() - 0.5) * 0.14,
+      ox: 0,
+      oy: 0,
+      r:   0.25 + Math.random() * 0.95,
+      base_o: 0.12 + Math.random() * 0.52,
+      phase:  Math.random() * Math.PI * 2,
+      speed:  0.0003 + Math.random() * 0.001,
+      warm:   Math.random() < 0.14,
+    }));
+  }
+
+  const PUSH_R   = 90;   // repulsion radius
+  const PUSH_F   = 2.4;  // force multiplier
+  const OX_DECAY = 0.91; // how fast repulsion fades
+  const OY_DECAY = 0.91;
+
+  // ── Shooting stars ────────────────────────────
+  let shooters = [];
+
+  function spawnShooter(){
+    // Start from a random point on the left/top edge
+    const fromTop = Math.random() < 0.45;
+    const sx = fromTop ? Math.random() * W * 0.8 : 0;
+    const sy = fromTop ? 0                        : Math.random() * H * 0.5;
+    const angle = (15 + Math.random() * 25) * Math.PI / 180; // shallow diagonal
+    const speed = 9 + Math.random() * 7;
+    shooters.push({
+      x: sx, y: sy,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed,
+      trail: [],
+      life:  1,
+      len:   24 + Math.floor(Math.random() * 20),
+    });
+  }
+
+  // Watch sections — fire a shooter when a new section enters viewport
+  const sections = document.querySelectorAll('section');
+  const seenSections = new Set();
+
+  const sectionObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting && !seenSections.has(e.target)){
+        seenSections.add(e.target);
+        // Fire 1–2 shooting stars with a tiny stagger
+        spawnShooter();
+        if(Math.random() < 0.55){
+          setTimeout(spawnShooter, 180 + Math.random() * 240);
+        }
+      }
+    });
+  }, {threshold: 0.18});
+
+  sections.forEach(s => sectionObs.observe(s));
+
+  // ── Draw loop ─────────────────────────────────
+  let lastT = performance.now();
+
+  function loop(t){
+    const dt = Math.min(40, t - lastT); lastT = t;
+    ctx.clearRect(0, 0, W, H);
+
+    // ── Draw particles ──────────────────────────
+    particles.forEach(p => {
+      // Repulsion from cursor
+      const dx = p.x - mx, dy = p.y - my;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if(dist < PUSH_R && dist > 0.1){
+        const f = ((PUSH_R - dist) / PUSH_R) * PUSH_F;
+        p.ox += (dx / dist) * f;
+        p.oy += (dy / dist) * f;
+      }
+
+      // Decay repulsion offset back to zero (spring return)
+      p.ox *= OX_DECAY;
+      p.oy *= OY_DECAY;
+
+      // Move
+      p.x += (p.bvx + p.ox) * (dt / 16.7);
+      p.y += (p.bvy + p.oy) * (dt / 16.7);
+
+      // Wrap edges seamlessly
+      if(p.x < -2)  p.x = W + 1;
+      if(p.x > W+2) p.x = -1;
+      if(p.y < -2)  p.y = H + 1;
+      if(p.y > H+2) p.y = -1;
+
+      // Twinkle
+      const twinkle = 0.55 + 0.45 * Math.sin(t * p.speed + p.phase);
+      const alpha   = p.base_o * twinkle;
+      const col     = p.warm ? '255,240,190' : '210,228,255';
+
+      // Soft glow for brighter particles
+      if(p.r > 0.65 && alpha > 0.3){
+        const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 4);
+        g.addColorStop(0, `rgba(${col},${(alpha * 0.45).toFixed(3)})`);
+        g.addColorStop(1, `rgba(${col},0)`);
+        ctx.fillStyle = g;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 4, 0, Math.PI * 2); ctx.fill();
+      }
+
+      // Core dot
+      ctx.fillStyle = `rgba(${col},${alpha.toFixed(3)})`;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+
+      // Cross-spike on brightest
+      if(p.r > 0.85 && alpha > 0.62){
+        const sp = p.r * 5;
+        ctx.strokeStyle = `rgba(${col},${(alpha * 0.22).toFixed(3)})`;
+        ctx.lineWidth   = 0.5;
+        ctx.beginPath(); ctx.moveTo(p.x - sp, p.y); ctx.lineTo(p.x + sp, p.y); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(p.x, p.y - sp); ctx.lineTo(p.x, p.y + sp); ctx.stroke();
+      }
+    });
+
+    // ── Draw shooting stars ─────────────────────
+    shooters = shooters.filter(s => {
+      // Advance position
+      s.x += s.vx * (dt / 16.7);
+      s.y += s.vy * (dt / 16.7);
+      s.life -= 0.022 * (dt / 16.7);
+
+      // Keep trail capped
+      s.trail.push({x: s.x, y: s.y, l: s.life});
+      if(s.trail.length > s.len) s.trail.shift();
+
+      // Draw gradient trail
+      if(s.trail.length > 1){
+        for(let i = 1; i < s.trail.length; i++){
+          const pct   = i / s.trail.length;
+          const alpha = pct * s.trail[i].l * 0.85;
+          const width = pct * 1.8;
+          ctx.strokeStyle = `rgba(255,255,248,${alpha.toFixed(3)})`;
+          ctx.lineWidth   = width;
+          ctx.lineCap     = 'round';
+          ctx.beginPath();
+          ctx.moveTo(s.trail[i-1].x, s.trail[i-1].y);
+          ctx.lineTo(s.trail[i].x,   s.trail[i].y);
+          ctx.stroke();
+        }
+      }
+
+      // Bright head
+      if(s.life > 0.1){
+        ctx.fillStyle = `rgba(255,255,255,${(s.life * 0.9).toFixed(3)})`;
+        ctx.beginPath(); ctx.arc(s.x, s.y, 1.4, 0, Math.PI * 2); ctx.fill();
+        // Tiny glow at head
+        const hg = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, 8);
+        hg.addColorStop(0, `rgba(220,235,255,${(s.life * 0.35).toFixed(3)})`);
+        hg.addColorStop(1, 'rgba(220,235,255,0)');
+        ctx.fillStyle = hg;
+        ctx.beginPath(); ctx.arc(s.x, s.y, 8, 0, Math.PI * 2); ctx.fill();
+      }
+
+      return s.life > 0 && s.x < W + 80 && s.y < H + 80;
+    });
+
+    requestAnimationFrame(loop);
+  }
+
+  resize();
+  window.addEventListener('resize', resize, {passive: true});
+  requestAnimationFrame(loop);
+})();
+
 const $dot=document.getElementById('cursorDot'),$ring=document.getElementById('cursorRing');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
@@ -1807,7 +2691,7 @@ navAs.forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open'
   const ECY=()=>W<=860 ? H*0.28 : H*0.5;
 
   // Earth image — primary: local file you can replace with your own
-  // To use your own Earth image: place it at images/globe.png
+  // To use your own Earth image: place it at images/earth.jpg
   // Fallback 1: NASA Blue Marble (public domain, loads from NASA servers)
   // Fallback 2: Canvas-drawn Earth (no network needed)
   const earthImg = new Image();
@@ -1825,9 +2709,9 @@ navAs.forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open'
     // If NASA also fails, earthImgReady stays false → canvas fallback draws
   }
 
-  // Try local file first (replace images/globe.png with your own photo)
+  // Try local file first (replace images/earth.jpg with your own photo)
   const localImg = new Image();
-  localImg.src = 'images/globe.png';   // ← ADD YOUR EARTH IMAGE HERE
+  localImg.src = 'images/earth.jpg';   // ← ADD YOUR EARTH IMAGE HERE
   localImg.onload = ()=>{
     earthImg.src = localImg.src;
     earthImgReady = true;
@@ -2006,42 +2890,25 @@ navAs.forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open'
 
 /* ══════════════════════════════════════════════════
    6. NAV ORBIT CANVAS — tiny satellite in navbar
-      Earth uses real NASA Blue Marble image.
-      Deep space glow behind sphere, atmosphere halo,
-      night-side shadow, specular highlight.
+      TRUE scroll-driven: only moves while scrolling.
+      CW = scroll down, CCW = scroll up.
 ══════════════════════════════════════════════════ */
 (function(){
   const canvas=document.getElementById('navOrbitCanvas');
   if(!canvas)return;
   const ctx=canvas.getContext('2d');
-
-  // Upscale canvas for crisp rendering on retina/HiDPI screens
-  const DPR=window.devicePixelRatio||1;
-  const SIZE=46;
-  canvas.width  = SIZE*DPR;
-  canvas.height = SIZE*DPR;
-  canvas.style.width  = SIZE+'px';
-  canvas.style.height = SIZE+'px';
-  ctx.scale(DPR,DPR);
-
-  // Layout constants (in CSS px — DPR handled by ctx.scale)
-  const S=SIZE, cx=S/2, cy=S/2;
-  const R=11;     // Earth radius — larger so image detail shows
-  const OA=19, OB=10; // orbit semi-axes
+  const S=46,cx=S/2,cy=S/2,R=8,OA=17,OB=9;
   let angle=0;
 
-  // Load NASA Blue Marble
-  const navEarthImg=new Image();
-  navEarthImg.crossOrigin='anonymous';
-  navEarthImg.src='https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57735/land_ocean_ice_cloud_2048.jpg';
-  let navEarthReady=false;
-  navEarthImg.onload=()=>{ navEarthReady=true; };
+  // Scroll-velocity tracking (same pattern as hero)
+  let scrollVelocity=0;
+  let lastSY=window.scrollY;
+  let scrollTimeout=null;
 
-  // Scroll-velocity tracking
-  let scrollVelocity=0, lastSY=window.scrollY, scrollTimeout=null;
   window.addEventListener('scroll',()=>{
     const sy=window.scrollY;
-    scrollVelocity=(sy-lastSY)*0.22;
+    const delta=sy-lastSY;
+    scrollVelocity=delta*0.22;
     lastSY=sy;
     clearTimeout(scrollTimeout);
     scrollTimeout=setTimeout(()=>{scrollVelocity=0;},120);
@@ -2050,94 +2917,54 @@ navAs.forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open'
   function drawNavOrbit(){
     ctx.clearRect(0,0,S,S);
 
-    // ── 1. Deep space glow (large soft blue radial behind sphere) ──
-    const glow=ctx.createRadialGradient(cx,cy,R*0.6,cx,cy,R*3.2);
-    glow.addColorStop(0,'rgba(20,80,200,.0)');
-    glow.addColorStop(0.35,'rgba(30,100,220,.14)');
-    glow.addColorStop(0.65,'rgba(20,70,180,.09)');
-    glow.addColorStop(1,'rgba(10,40,120,.0)');
-    ctx.fillStyle=glow;
-    ctx.beginPath();ctx.arc(cx,cy,R*3.2,0,Math.PI*2);ctx.fill();
+    // Earth
+    const gE=ctx.createRadialGradient(cx-2,cy-2,0,cx,cy,R);
+    gE.addColorStop(0,'#1a5fbc');gE.addColorStop(.6,'#0a2a80');gE.addColorStop(1,'#040e2e');
+    ctx.fillStyle=gE;ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.fill();
 
-    // ── 2. Earth sphere — NASA Blue Marble image clipped to circle ──
-    ctx.save();
-    ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.clip();
-    if(navEarthReady){
-      // Very slow rotation — 1 full revolution every 2 minutes
-      const spin=(Date.now()%120000)/120000*Math.PI*2;
-      ctx.translate(cx,cy);
-      ctx.rotate(spin);
-      // Draw slightly oversized so rotation edges don't show gaps
-      ctx.drawImage(navEarthImg,-R*1.05,-R*1.05,R*2.1,R*2.1);
-    } else {
-      // Fallback — painted Earth
-      const gF=ctx.createRadialGradient(cx-R*.3,cy-R*.3,0,cx,cy,R);
-      gF.addColorStop(0,'#1b6fbc');gF.addColorStop(.4,'#1055a0');
-      gF.addColorStop(.75,'#09337a');gF.addColorStop(1,'#010820');
-      ctx.fillStyle=gF;ctx.fillRect(-R*1.1,-R*1.1,R*2.2,R*2.2);
-    }
+    // Continent blobs
+    ctx.save();ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.clip();
+    ctx.fillStyle='#2d7a3a';
+    ctx.beginPath();ctx.ellipse(cx+2,cy-1,3.5,5,.2,0,Math.PI*2);ctx.fill();
+    ctx.beginPath();ctx.ellipse(cx-4,cy-2,2.5,4,.1,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='rgba(255,255,255,.22)';
+    ctx.beginPath();ctx.ellipse(cx,cy+R-.5,R,2.5,0,0,Math.PI*2);ctx.fill();
     ctx.restore();
 
-    // ── 3. Thin atmosphere halo (outside sphere edge) ──
-    const atm=ctx.createRadialGradient(cx,cy,R*0.88,cx,cy,R*1.28);
-    atm.addColorStop(0,'rgba(70,150,255,0)');
-    atm.addColorStop(0.4,'rgba(100,190,255,.32)');
-    atm.addColorStop(0.75,'rgba(60,140,255,.14)');
-    atm.addColorStop(1,'rgba(70,150,255,0)');
-    ctx.fillStyle=atm;
-    ctx.beginPath();ctx.arc(cx,cy,R*1.28,0,Math.PI*2);ctx.fill();
-
-    // ── 4. Night-side terminator shadow ──
-    const shad=ctx.createRadialGradient(cx+R*.6,cy,R*.05,cx+R*.75,cy,R*1.05);
-    shad.addColorStop(0,'rgba(0,0,0,0)');
-    shad.addColorStop(0.45,'rgba(0,0,8,.3)');
-    shad.addColorStop(1,'rgba(0,0,8,.68)');
-    ctx.fillStyle=shad;
-    ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.fill();
-
-    // ── 5. Specular highlight (top-left sun glint) ──
-    const spec=ctx.createRadialGradient(cx-R*.38,cy-R*.38,0,cx-R*.25,cy-R*.22,R*.55);
-    spec.addColorStop(0,'rgba(255,255,255,.22)');
-    spec.addColorStop(0.5,'rgba(255,255,255,.06)');
-    spec.addColorStop(1,'rgba(255,255,255,0)');
-    ctx.fillStyle=spec;
-    ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.fill();
-
-    // ── 6. Atmosphere limb ring ──
-    ctx.strokeStyle='rgba(80,160,255,.55)';ctx.lineWidth=1.4;
+    // Atmosphere ring
+    ctx.strokeStyle='rgba(100,180,255,.35)';ctx.lineWidth=1.2;
     ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.stroke();
 
-    // ── 7. Orbit ellipse path ──
+    // Orbit ellipse path
     ctx.save();ctx.translate(cx,cy);ctx.scale(1,.52);
-    ctx.setLineDash([2,3]);
-    ctx.strokeStyle='rgba(201,168,76,.28)';ctx.lineWidth=.7;
+    ctx.setLineDash([2,3]);ctx.strokeStyle='rgba(201,168,76,.25)';ctx.lineWidth=.7;
     ctx.beginPath();ctx.ellipse(0,0,OA,OA,0,0,Math.PI*2);ctx.stroke();
     ctx.restore();ctx.setLineDash([]);
 
-    // ── 8. Satellite position ──
+    // Satellite position
     const px=cx+OA*Math.cos(angle);
     const py=cy+OB*Math.sin(angle);
 
-    // Trail
-    const trailLen=12, dir=scrollVelocity>=0?1:-1;
+    // Trail (behind current position based on direction)
+    const trailLen=12;
+    const dir=scrollVelocity>=0?1:-1;
     for(let i=trailLen;i>0;i--){
       const ta=angle-i*.18*dir;
-      const tx=cx+OA*Math.cos(ta), ty=cy+OB*Math.sin(ta);
+      const tx=cx+OA*Math.cos(ta),ty=cy+OB*Math.sin(ta);
       const a=(trailLen-i)/trailLen*.4;
       ctx.fillStyle=`rgba(201,168,76,${a})`;
       ctx.beginPath();ctx.arc(tx,ty,1,0,Math.PI*2);ctx.fill();
     }
 
-    // Satellite glow
+    // Glow
     const gl=ctx.createRadialGradient(px,py,0,px,py,5);
-    gl.addColorStop(0,'rgba(201,168,76,.7)');gl.addColorStop(1,'rgba(201,168,76,0)');
+    gl.addColorStop(0,'rgba(201,168,76,.7)');gl.addColorStop(1,'rgba(201,168,76,.0)');
     ctx.fillStyle=gl;ctx.beginPath();ctx.arc(px,py,5,0,Math.PI*2);ctx.fill();
 
     // Satellite dot
-    ctx.fillStyle='#f0c842';
-    ctx.beginPath();ctx.arc(px,py,2.2,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#f0c842';ctx.beginPath();ctx.arc(px,py,2.2,0,Math.PI*2);ctx.fill();
 
-    // Advance angle only while scrolling
+    // Only advance angle if scrolling
     if(scrollVelocity!==0){
       angle+=0.06*Math.sign(scrollVelocity)*Math.min(Math.abs(scrollVelocity),1.5);
     }
@@ -2145,6 +2972,8 @@ navAs.forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open'
   }
   drawNavOrbit();
 })();
+
+
 
 /* ══════════════════════════════════════════════════
    RKS CAPSULE ANIMATION
@@ -2493,20 +3322,20 @@ navAs.forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open'
 
       // Stop rAF after last letter fully done: 2×180 stagger + compDuration + small buffer
       setTimeout(()=>{ compDone = true; syncBorder(); }, 2*180 + compDuration + 60);
-    }, holdEnd + 5000);
+    }, holdEnd + 15000);
 
     /* Fade text — 2s pause after compression finishes, then fade */
     setTimeout(()=>{
       textEl.style.cssText = 'opacity:0;transition:opacity .35s ease';
-    }, holdEnd + 5000 + 2*180 + 520 + 2040);
+    }, holdEnd + 15000 + 2*180 + 520 + 2040);
 
     /* Border anti-clockwise draw-out */
     setTimeout(()=>{
       animateBorder(1, 0, 620, null);
-    }, holdEnd + 5000 + 2*180 + 520 + 2380);
+    }, holdEnd + 15000 + 2*180 + 520 + 2380);
 
     /* 1000ms pause → loop */
-    setTimeout(runCycle, holdEnd + 5000 + 2*180 + 520 + 2380 + 620 + 1000);
+    setTimeout(runCycle, holdEnd + 15000 + 2*180 + 520 + 2380 + 620 + 1000);
   }
 
   if(document.readyState === 'complete' || document.readyState === 'interactive'){
@@ -2595,6 +3424,77 @@ document.querySelectorAll('.proj-card video').forEach(v=>{
 })();
 
 /* ══════════════════════════════════════════════════
+   ASTRONAUT — cursor follower with poses
+   • Orbits outside the cursor ring with spring physics
+   • Cycles through poses: float, wave, victory, point
+   • Limbs animate smoothly between poses
+   • Mobile: drifts through blank space (avoids text)
+   • No free-tumble — body stays upright-ish
+══════════════════════════════════════════════════ */
+
+
+
+(function(){
+  const el   = document.getElementById('pageIntro');
+  const mask = document.getElementById('pageRevealMask');
+  if(!el) return;
+
+  // Force scroll to top — prevents cert/gallery flash from scroll restore
+  window.scrollTo(0,0);
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+  // Lock scroll during intro
+  document.body.style.overflow = 'hidden';
+
+  setTimeout(()=>{
+    // Fade out the intro overlay
+    el.classList.add('hidden');
+    // Fade out the black mask so the website becomes visible
+    if(mask) mask.classList.add('fade');
+    // Restore scroll
+    document.body.style.overflow = '';
+    // Remove both elements after transition finishes
+    setTimeout(()=>{
+      if(el.parentNode)   el.parentNode.removeChild(el);
+      if(mask && mask.parentNode){
+        mask.classList.add('gone');
+        mask.parentNode.removeChild(mask);
+      }
+    }, 1100);
+  }, 3000);
+})();
+
+/* ══════════════════════════════════════════════════
+   SCROLL-TO-TOP BUTTON
+══════════════════════════════════════════════════ */
+(function(){
+  const btn=document.getElementById('scrollTop');
+  if(!btn)return;
+  window.addEventListener('scroll',()=>{
+    btn.classList.toggle('visible',window.scrollY>400);
+  },{passive:true});
+})();
+
+/* ══════════════════════════════════════════════════
+   CARD MOUSE-TRACKING GLOW
+   Tracks mouse position on cert/cit cards and updates
+   a CSS var so a radial gradient follows the cursor
+══════════════════════════════════════════════════ */
+(function(){
+  document.querySelectorAll('.cert-card,.cit-block').forEach(el=>{
+    el.addEventListener('mousemove',e=>{
+      const r=el.getBoundingClientRect();
+      const mx=((e.clientX-r.left)/r.width*100).toFixed(1)+'%';
+      const my=((e.clientY-r.top)/r.height*100).toFixed(1)+'%';
+      el.style.setProperty('--mx',mx);
+      el.style.setProperty('--my',my);
+    });
+  });
+})();
+
+
+
+/* ══════════════════════════════════════════════════
    PUBLICATIONS — 5-per-page pagination with animation
    Add new papers to PUBS array; everything else auto-updates.
    Keyboard: ← → to navigate when section is in view.
@@ -2602,15 +3502,46 @@ document.querySelectorAll('.proj-card video').forEach(v=>{
 (function(){
   const PER_PAGE = 5;
   const PUBS = [
-    {n:'01',href:'https://doi.org/10.1109/SPACE65882.2025.11170894',       venue:'IEEE SPACE · 2025',    title:'Long-range Rendezvous and Docking Maneuver Control of Satellite using Cross-Feedback Sliding Mode Controller'},
-    {n:'02',href:'https://doi.org/10.1109/SPACE65882.2025.11170848',       venue:'IEEE SPACE · 2025',    title:'Satellite Navigation and Control using Discrete-APF and Fixed-Time Sliding Mode Controller'},
-    {n:'03',href:'https://doi.org/10.48550/arXiv.2508.07323',              venue:'IEEE ICC · 2025',      title:'Collision-Free Trajectory Planning and Control of Robotic Manipulator using Energy-Based Artificial Potential Field (E-APF)'},
-    {n:'04',href:'https://doi.org/10.48550/arXiv.2502.09517',              venue:'AMLURAIM · 2025',      title:'Coupled Rendezvous and Docking Maneuver Control using Reinforcement Learning-based Adaptive Fixed-Time Sliding Mode Controller'},
-    {n:'05',href:'https://dl.iafastro.directory/event/IAC-2024/paper/88778/',venue:'IAC · 2024',          title:'A Novel Machine-Learning Approach for Detection and Avoidance of Space Debris Collisions'},
-    {n:'06',href:'https://dl.iafastro.directory/event/IAC-2024/paper/86384/',venue:'IAC · 2024',          title:'Coupled Rendezvous and Docking Maneuver Control of Spacecraft using Fast Fixed-Time Sliding Mode Controller'},
-    {n:'07',href:'https://link.springer.com/chapter/10.1007/978-981-16-7787-8_41',venue:'RAM International · 2021',title:'Forming Simulation of Bump Foils Used in Complaint Gas Foil Bearings'},
-    {n:'08',href:'https://www.sae.org/publications/technical-papers/content/2020-01-0817/',venue:'WCX SAE · 2020',title:'Study on the Effect of Manifold Induction of Acetylene in a Dual-Fuelled CI Engine'},
+    /* ── To add publisher logos: place image files in images/pub/ folder.
+       Supported filenames: ieee.png, iaf.png, springer.png, sae.png, arxiv.png
+       Images can be PNG, JPG or SVG. Recommended size: 80×40px.        ── */
+    {n:'01', href:'https://doi.org/10.1109/SPACE65882.2025.11170894',
+     venue:'IEEE SPACE · 2025', logoKey:'ieee',
+     title:'Long-range Rendezvous and Docking Maneuver Control of Satellite using Cross-Feedback Sliding Mode Controller'},
+    {n:'02', href:'https://doi.org/10.1109/SPACE65882.2025.11170848',
+     venue:'IEEE SPACE · 2025', logoKey:'ieee',
+     title:'Satellite Navigation and Control using Discrete-APF and Fixed-Time Sliding Mode Controller'},
+    {n:'03', href:'https://doi.org/10.48550/arXiv.2508.07323',
+     venue:'IEEE ICC · 2025',   logoKey:'ieee',
+     title:'Collision-Free Trajectory Planning and Control of Robotic Manipulator using Energy-Based Artificial Potential Field (E-APF)'},
+    {n:'04', href:'https://doi.org/10.48550/arXiv.2502.09517',
+     venue:'AMLURAIM · 2025',   logoKey:'arxiv',
+     title:'Coupled Rendezvous and Docking Maneuver Control using Reinforcement Learning-based Adaptive Fixed-Time Sliding Mode Controller'},
+    {n:'05', href:'https://dl.iafastro.directory/event/IAC-2024/paper/88778/',
+     venue:'IAC · 2024',        logoKey:'iaf',
+     title:'A Novel Machine-Learning Approach for Detection and Avoidance of Space Debris Collisions'},
+    {n:'06', href:'https://dl.iafastro.directory/event/IAC-2024/paper/86384/',
+     venue:'IAC · 2024',        logoKey:'iaf',
+     title:'Coupled Rendezvous and Docking Maneuver Control of Spacecraft using Fast Fixed-Time Sliding Mode Controller'},
+    {n:'07', href:'https://link.springer.com/chapter/10.1007/978-981-16-7787-8_41',
+     venue:'RAM International · 2021', logoKey:'springer',
+     title:'Forming Simulation of Bump Foils Used in Complaint Gas Foil Bearings'},
+    {n:'08', href:'https://www.sae.org/publications/technical-papers/content/2020-01-0817/',
+     venue:'WCX SAE · 2020',    logoKey:'sae',
+     title:'Study on the Effect of Manifold Induction of Acetylene in a Dual-Fuelled CI Engine'},
   ];
+
+  /* Publisher logo fallback labels shown when image file is missing */
+  const PUB_LABELS = {
+    ieee:'IEEE', iaf:'IAF', springer:'Springer', sae:'SAE', arxiv:'arXiv'
+  };
+
+    function pubLogoHTML(key){
+    const label = PUB_LABELS[key] || key.toUpperCase();
+    const img = '<img src="images/pub/'+key+'.png" alt="'+label+'" class="pub-logo-img" data-fallback="'+label+'">';
+    const fb  = '<span class="pub-logo-fallback">'+label+'</span>';
+    return img + fb;
+  };;
 
   const listEl  = document.getElementById('pubList');
   const pagEl   = document.getElementById('pubPagination');
@@ -2631,7 +3562,8 @@ document.querySelectorAll('.proj-card video').forEach(v=>{
         <a class="pub-item" href="${p.href}" target="_blank">
           <span class="pub-bg-num">${p.n}</span>
           <span class="pub-idx">${p.n}</span>
-          <div>
+          <div class="pub-logo-wrap">${pubLogoHTML(p.logoKey)}</div>
+          <div class="pub-content">
             <div class="pub-venue">${p.venue}</div>
             <div class="pub-title">${p.title}</div>
           </div>
@@ -2682,6 +3614,15 @@ document.querySelectorAll('.proj-card video').forEach(v=>{
 
   // Initial render
   showPage(1, 1);
+
+  // Handle missing logo images — show fallback text label
+  document.addEventListener('error', function(e){
+    if(e.target.classList && e.target.classList.contains('pub-logo-img')){
+      e.target.style.display='none';
+      const fb=e.target.nextElementSibling;
+      if(fb) fb.style.display='flex';
+    }
+  }, true);
 })();
 
 /* ══════════════════════════════════════════════════
@@ -2933,7 +3874,7 @@ h2{font-size:11pt;font-weight:700;text-transform:uppercase;letter-spacing:.12em;
 .pubs-list{list-style:none}
 .pubs-list li{font-size:9pt;margin-bottom:6px;padding-left:16px;position:relative;color:#333}
 .pubs-list li::before{content:'▸';position:absolute;left:0;color:#c9a84c}
-.pub-venue{color:#b8860b;font-weight:700}
+
 @media print{
   body{padding:16px 24px;max-width:100%}
   h2{break-after:avoid}
@@ -3151,6 +4092,7 @@ const PUBLICATIONS_DATA=[
 (function(){
   const canvas=document.getElementById('chordCanvas');
   const filtersDiv=document.getElementById('coauthorFilters');
+  const yearsRow=document.getElementById('cfYearsRow');
   const tooltip=document.getElementById('chordTooltip');
   const badge=document.getElementById('chordBadge');
   const cfTotalEl=document.getElementById('cfTotalNum');
@@ -3170,6 +4112,7 @@ const PUBLICATIONS_DATA=[
 
   /* ── Build filter panel ── */
   (function buildFilters(){
+    const target = yearsRow || filtersDiv; // append to years row if available
     allYears.forEach(y=>{
       const cnt=PUBLICATIONS_DATA.filter(p=>p.year===y).length;
       const row=document.createElement('div');row.className='cf-year';
@@ -3182,7 +4125,7 @@ const PUBLICATIONS_DATA=[
         else{activeYears.add(y);box.classList.add('on');box.textContent='✓';}
         renderChord();
       });
-      filtersDiv.appendChild(row);
+      target.appendChild(row);
     });
   })();
 
@@ -5796,6 +6739,303 @@ window.selectGame=function(name){
     if(e.code==='KeyR')startLanderGame();
   });
   window.addEventListener('resize',()=>{if(gameActive&&LS)LS.terrain=buildTerrain(W(),H());});
+})();
+
+
+
+
+/* ══════════════════════════════════════════════════
+   CURSOR COMPANION ASTRONAUT
+   Drifts toward mouse with zero-g lag.
+   Points at hovered links. Waves when idle 3s.
+   Types section facts on section entry.
+══════════════════════════════════════════════════ */
+
+
+/* ══════════════════════════════════════════════════
+   SPACE HISTORY TIMELINE — text-only, all events
+   Grouped by year, era tabs for jump nav,
+   drag-scroll horizontal strip, detail panel on click.
+   Status: ✓ success  ✗ failure  ★ milestone
+══════════════════════════════════════════════════ */
+(function(){
+  const strip    = document.getElementById('shStrip');
+  const ruler    = document.getElementById('shRuler');
+  const wrap     = document.getElementById('shStripWrap');
+
+  const detail   = document.getElementById('shDetail');
+  const progress = document.getElementById('shProgressBar');
+  if(!strip) return;
+
+  // type: 'm'=milestone, 's'=success, 'f'=failure
+  const EVENTS = [
+    // 1940s
+    {y:1944,date:'Jun 20',    mission:'V-2 MW 18014 — First Space Boundary Cross', agency:'Germany',  type:'m', era:'1940s-1950s', desc:'A V-2 rocket crosses 100km altitude for the first time in a vertical test launch at Peenemünde — becoming the first human-made object to reach space (by the modern definition of the Kármán line).'},
+    {y:1946,date:'May 10',    mission:'First Space Photography (V-2)',              agency:'USA',       type:'m', era:'1940s-1950s', desc:'A captured V-2 rocket carries a 35mm motion-picture camera to 105km altitude over White Sands, returning the first photographs of Earth from space.'},
+    {y:1947,date:'Feb 20',    mission:'First Animals in Space (Fruit Flies)',       agency:'USA',       type:'s', era:'1940s-1950s', desc:'Fruit flies are launched aboard a V-2 rocket to 108km, becoming the first living creatures in space. They are recovered alive after parachuting back.'},
+    {y:1949,date:'Jun 14',    mission:'Albert II — First Primate in Space',         agency:'USA',       type:'s', era:'1940s-1950s', desc:'A rhesus monkey named Albert II reaches 134km altitude aboard a V-2 rocket. He survived the flight but died on impact due to parachute failure.'},
+    // 1950s
+    {y:1957,date:'Oct 4',     mission:'Sputnik 1',                                  agency:'USSR',      type:'m', era:'1940s-1950s', desc:'The first artificial satellite. A polished aluminium sphere 58cm across, orbiting every 96 minutes at 7.9 km/s. Its radio beeps could be received worldwide and stunned the West into the Space Race.'},
+    {y:1957,date:'Nov 3',     mission:'Sputnik 2 — Laika',                          agency:'USSR',      type:'s', era:'1940s-1950s', desc:'Laika, a stray dog from Moscow, becomes the first living creature to orbit Earth. Sent with no return plan — she survived only hours due to overheating. Her mission proved living organisms could survive launch and orbital conditions.'},
+    {y:1958,date:'Jan 31',    mission:'Explorer 1',                                  agency:'USA',       type:'m', era:'1940s-1950s', desc:'America\'s first successful satellite, designed in 84 days. Its Geiger counter discovered the Van Allen radiation belts — the first major scientific discovery of the Space Age.'},
+    {y:1958,date:'Mar 17',    mission:'Vanguard 1',                                  agency:'USA',       type:'s', era:'1940s-1950s', desc:'The oldest artificial satellite still in space. Measuring Earth\'s shape precisely, it revealed Earth is slightly pear-shaped. Still in orbit after 67 years, it will remain for ~240 years.'},
+    {y:1958,date:'Oct 1',     mission:'NASA Founded',                                agency:'USA',       type:'m', era:'1940s-1950s', desc:'The National Aeronautics and Space Administration is officially established, replacing NACA. President Eisenhower signs the Space Act into law, setting the stage for all US civilian space exploration.'},
+    {y:1959,date:'Jan 2',     mission:'Luna 1 — Earth Escape',                       agency:'USSR',      type:'m', era:'1940s-1950s', desc:'First spacecraft to escape Earth orbit. Missed the Moon but became the first artificial object to reach heliocentric orbit, also discovering the solar wind.'},
+    {y:1959,date:'Sep 14',    mission:'Luna 2 — Moon Impact',                        agency:'USSR',      type:'m', era:'1940s-1950s', desc:'First spacecraft to reach another celestial body, deliberately impacting the Moon carrying Soviet pennants. First delivery of an object from Earth to another world.'},
+    {y:1959,date:'Oct 7',     mission:'Luna 3 — Far Side of Moon',                   agency:'USSR',      type:'m', era:'1940s-1950s', desc:'First photographs of the far side of the Moon. The images revealed a surface dramatically different from the near side — fewer maria (dark plains), more craters — changing our understanding of the Moon forever.'},
+    // 1960s
+    {y:1960,date:'May 15',    mission:'Sputnik 4 (Korabl-Sputnik 1)',               agency:'USSR',      type:'s', era:'1960s', desc:'First test of the Vostok spacecraft design with a mannequin aboard. Tested life-support and re-entry systems for the upcoming crewed flights.'},
+    {y:1960,date:'Aug 19',    mission:'Sputnik 5 — First Animals Returned',         agency:'USSR',      type:'m', era:'1960s', desc:'Belka and Strelka become the first animals to orbit Earth and return alive. They spent a day in orbit before being safely recovered, proving the round-trip was survivable.'},
+    {y:1961,date:'Apr 12',    mission:'Vostok 1 — Gagarin',                         agency:'USSR',      type:'m', era:'1960s', desc:'"Poyekhali!" Yuri Gagarin becomes the first human in space, completing one orbit in 108 minutes at 27,400 km/h. He ejected at 7km and parachuted separately — a fact hidden from the public for decades to preserve the flight record.'},
+    {y:1961,date:'May 5',     mission:'Freedom 7 — Shepard',                        agency:'USA',       type:'s', era:'1960s', desc:'Alan Shepard becomes the first American in space on a 15-minute suborbital flight reaching 187km. Unlike Gagarin, Shepard manually controlled his capsule during re-entry, demonstrating pilot authority in space.'},
+    {y:1961,date:'May 25',    mission:'Kennedy Moon Declaration',                   agency:'USA',       type:'m', era:'1960s', desc:'President Kennedy addresses Congress: "I believe that this nation should commit itself to achieving the goal, before this decade is out, of landing a man on the Moon and returning him safely to Earth."'},
+    {y:1962,date:'Feb 20',    mission:'Friendship 7 — Glenn',                       agency:'USA',       type:'s', era:'1960s', desc:'John Glenn becomes the first American to orbit Earth, completing three orbits. A faulty sensor warning that his heat shield was loose forced Mission Control to keep the retrorocket package attached — it burned away harmlessly but the risk was real.'},
+    {y:1962,date:'Aug 27',    mission:'Mariner 2 — Venus Flyby',                    agency:'USA',       type:'m', era:'1960s', desc:'First successful interplanetary spacecraft. Flew past Venus on December 14 confirming surface temperatures of ~425°C — ruling out any surface life and setting the stage for comparative planetology.'},
+    {y:1963,date:'Jun 16',    mission:'Vostok 6 — Tereshkova',                      agency:'USSR',      type:'m', era:'1960s', desc:'Valentina Tereshkova becomes the first woman in space, orbiting Earth 48 times over nearly 3 days — more cumulative orbital experience than all US astronauts combined to that date. She remains the only woman to fly a solo mission.'},
+    {y:1965,date:'Mar 18',    mission:'Voskhod 2 — Leonov EVA',                     agency:'USSR',      type:'m', era:'1960s', desc:'Alexei Leonov performs the first spacewalk — 12 minutes outside the spacecraft. His suit inflated in the vacuum, preventing him from re-entering. He had to release air pressure from his suit to squeeze back in, risking decompression sickness.'},
+    {y:1965,date:'Jul 14',    mission:'Mariner 4 — Mars Flyby',                     agency:'USA',       type:'m', era:'1960s', desc:'First successful Mars flyby, returning 22 photographs. They revealed a cratered, Moon-like surface — dashing hopes of a life-bearing Mars. Atmospheric pressure was measured at just 0.5% of Earth\'s.'},
+    {y:1966,date:'Feb 3',     mission:'Luna 9 — First Lunar Soft Landing',          agency:'USSR',      type:'m', era:'1960s', desc:'First spacecraft to soft-land on another world and transmit photographs from the surface. The images proved the Moon\'s surface was solid enough to support a lander — and eventually humans.'},
+    {y:1966,date:'Mar 1',     mission:'Venera 3 — Venus Impact',                    agency:'USSR',      type:'m', era:'1960s', desc:'First spacecraft to impact another planet. Venera 3 crashed into Venus on March 1, 1966 — contact had been lost before arrival, so no data was returned, but it delivered an Earth pennant to the surface of Venus.'},
+    {y:1967,date:'Jan 27',    mission:'Apollo 1 — Launch Pad Fire',                 agency:'USA',       type:'f', era:'1960s', desc:'A cabin fire during a launch rehearsal test kills astronauts Gus Grissom, Ed White, and Roger Chaffee. The disaster leads to a complete redesign of the Apollo capsule, delaying the programme by 21 months.'},
+    {y:1967,date:'Apr 24',    mission:'Soyuz 1 — Komarov Crash',                   agency:'USSR',      type:'f', era:'1960s', desc:'Vladimir Komarov dies when his Soyuz 1 parachute fails during re-entry — the first in-flight space fatality. The spacecraft had 203 documented design faults. Komarov reportedly knew the mission was dangerous.'},
+    {y:1968,date:'Dec 21',    mission:'Apollo 8 — First Lunar Orbit',              agency:'USA',       type:'m', era:'1960s', desc:'First humans to leave Earth orbit and orbit the Moon. Frank Borman, Jim Lovell, and William Anders orbit the Moon 10 times on Christmas Eve. Their "Earthrise" photograph becomes one of the most influential images ever taken.'},
+    {y:1969,date:'Jul 20',    mission:'Apollo 11 — First Moon Landing',            agency:'USA',       type:'m', era:'1960s', desc:'"One small step for man, one giant leap for mankind." Neil Armstrong and Buzz Aldrin spend 2h 31m on the lunar surface at Tranquility Base. 600 million people — 1 in 5 humans alive — watch live on television.'},
+    {y:1969,date:'Nov 19',    mission:'Apollo 12 — Precision Landing',             agency:'USA',       type:'s', era:'1960s', desc:'Pete Conrad and Alan Bean land within 200m of the Surveyor 3 probe. They retrieve parts of the probe, showing hardware can survive years on the lunar surface — critical data for future missions.'},
+    // 1970s
+    {y:1970,date:'Apr 11',    mission:'Apollo 13 — "Successful Failure"',          agency:'USA',       type:'f', era:'1970s', desc:'An oxygen tank explosion 56 hours into the flight forces the crew to use the Lunar Module as a lifeboat. Mission controllers improvise a CO2 scrubber fix using only items onboard. The crew splashes down safely after looping around the Moon — 56 hours, 54,000 miles away at farthest point.'},
+    {y:1970,date:'Sep 12',    mission:'Luna 16 — First Robot Sample Return',       agency:'USSR',      type:'m', era:'1970s', desc:'First robotic mission to land on the Moon and return samples to Earth. Returned 101 grams of lunar material — proving automated sample return was feasible and far cheaper than crewed missions.'},
+    {y:1970,date:'Nov 17',    mission:'Lunokhod 1 — First Rover',                  agency:'USSR',      type:'m', era:'1970s', desc:'First rover to operate on another world. Operated for 10 months, travelling 10.5km — far beyond its planned 3-month lifespan. Controlled from Earth with an 2.5-second signal delay.'},
+    {y:1971,date:'Apr 19',    mission:'Salyut 1 — First Space Station',            agency:'USSR',      type:'m', era:'1970s', desc:'Humanity\'s first space station. The Soyuz 11 crew lived aboard for 23 days — but all three cosmonauts died during re-entry when a pressure equalisation valve opened prematurely.'},
+    {y:1971,date:'Nov 13',    mission:'Mariner 9 — First Mars Orbit',              agency:'USA',       type:'m', era:'1970s', desc:'First spacecraft to orbit another planet. Arrived during a global dust storm but mapped 85% of the Martian surface. Discovered Olympus Mons, Valles Marineris, and evidence of ancient river valleys.'},
+    {y:1972,date:'Mar 2',     mission:'Pioneer 10 — Asteroid Belt & Beyond',       agency:'USA',       type:'m', era:'1970s', desc:'First spacecraft to traverse the Asteroid Belt (emerging safely — disproving fears it was impassable) and to fly by Jupiter. Carried the famous gold-anodised plaque with a message from humanity.'},
+    {y:1972,date:'Dec 7',     mission:'Blue Marble — Apollo 17',                   agency:'USA',       type:'m', era:'1970s', desc:'"The Blue Marble" — astronaut Harrison Schmitt photographs Earth fully illuminated from 29,000km. Arguably the most reproduced photograph in history, it catalysed the global environmental movement.'},
+    {y:1973,date:'Apr 5',     mission:'Pioneer 11 — Jupiter & Saturn',             agency:'USA',       type:'m', era:'1970s', desc:'Second spacecraft to reach Jupiter and the first to visit Saturn. Pioneer 11 discovered a second radiation belt at Jupiter and confirmed Saturn\'s magnetic field.'},
+    {y:1973,date:'May 14',    mission:'Skylab — US Space Station',                 agency:'USA',       type:'s', era:'1970s', desc:'America\'s first space station, assembled from modified Saturn V hardware. Three crews lived aboard for 28, 59, and 84 days — all records at the time. Re-entered 1979 with debris landing in Australia.'},
+    {y:1974,date:'Nov 3',     mission:'Mariner 10 — First Mercury Flyby',          agency:'USA',       type:'m', era:'1970s', desc:'First spacecraft to visit Mercury and first to use a gravity assist to reach another planet. Made three flybys of Mercury, mapping 45% of its surface and discovering its magnetic field.'},
+    {y:1975,date:'Jul 17',    mission:'Apollo–Soyuz — Cold War Handshake',         agency:'USA/USSR',  type:'m', era:'1970s', desc:'First international crewed mission. US Apollo and Soviet Soyuz dock in orbit. Astronaut Tom Stafford and cosmonaut Aleksei Leonov shake hands through the docking tunnel — a landmark moment of Cold War détente.'},
+    {y:1975,date:'Oct 22',    mission:'Venera 9 — First Venus Surface Photos',     agency:'USSR',      type:'m', era:'1970s', desc:'First spacecraft to orbit Venus and first to transmit photographs from the surface of another planet. Images showed angular rocks suggesting geologically young surface activity.'},
+    {y:1976,date:'Jul 20',    mission:'Viking 1 — First Mars Landing',             agency:'USA',       type:'m', era:'1970s', desc:'First successful Mars lander. Returned the first photographs from the Martian surface and conducted biology experiments searching for life. Results were ambiguous — the debate continues to this day.'},
+    {y:1977,date:'Aug 20',    mission:'Voyager 2 — Grand Tour',                    agency:'USA',       type:'m', era:'1970s', desc:'Launched to take advantage of a rare planetary alignment allowing a Grand Tour of all four outer planets (Jupiter, Saturn, Uranus, Neptune) — an opportunity that won\'t recur until 2153.'},
+    {y:1977,date:'Sep 5',     mission:'Voyager 1 — Now in Interstellar Space',     agency:'USA',       type:'m', era:'1970s', desc:'The most distant human-made object, currently over 23 billion km from Earth. Launched on a faster trajectory than Voyager 2. Crossed the heliopause in 2012, entering interstellar space. Still transmitting data.'},
+    {y:1978,date:'May 20',    mission:'Pioneer Venus — First Venus Orbiter',       agency:'USA',       type:'s', era:'1970s', desc:'First American spacecraft to orbit Venus. Mapped 93% of the surface using radar and operated for 14 years — vastly exceeding its design life.'},
+    {y:1979,date:'Mar 5',     mission:'Voyager 1 — Jupiter Flyby',                 agency:'USA',       type:'m', era:'1970s', desc:'Voyager 1\'s Jupiter flyby discovered active volcanoes on Io — the first extraterrestrial volcanic activity ever observed. Also discovered a thin ring around Jupiter and revealed Europa\'s smooth icy surface hinting at a subsurface ocean.'},
+    // 1980s
+    {y:1980,date:'Nov 12',    mission:'Voyager 1 — Saturn Flyby',                  agency:'USA',       type:'m', era:'1980s', desc:'First close examination of Saturn\'s rings, revealing thousands of individual ringlets instead of a few bands. Titan\'s thick nitrogen atmosphere was detected, showing it might harbour organic chemistry.'},
+    {y:1981,date:'Apr 12',    mission:'STS-1 Columbia — First Shuttle Launch',     agency:'USA',       type:'m', era:'1980s', desc:'First launch of the Space Shuttle, on the 20th anniversary of Gagarin\'s flight. Columbia flew 27 missions before being lost in 2003. The Shuttle programme flew 135 missions over 30 years — the most complex vehicle ever built.'},
+    {y:1983,date:'Jun 13',    mission:'Pioneer 10 — Beyond Neptune',               agency:'USA',       type:'m', era:'1980s', desc:'First spacecraft to travel beyond the orbit of Neptune, entering truly uncharted space. Last successful contact in 2003, when Pioneer 10 was 12 billion km from Earth — faint, but still speaking.'},
+    {y:1983,date:'Jun 18',    mission:'Sally Ride — First US Woman in Space',      agency:'USA',       type:'m', era:'1980s', desc:'Sally Ride becomes the first American woman to fly in space on STS-7. At 32, she was also the youngest American astronaut. She later founded an organisation to promote science education for girls.'},
+    {y:1984,date:'Feb 7',     mission:'First Untethered Spacewalk (MMU)',           agency:'USA',       type:'m', era:'1980s', desc:'Bruce McCandless II performs the first untethered spacewalk using a Manned Manoeuvring Unit — a jet-powered backpack. The photograph of him floating freely 100m from the Shuttle, with Earth below, became iconic.'},
+    {y:1986,date:'Jan 28',    mission:'Challenger STS-51L — Disaster',             agency:'USA',       type:'f', era:'1980s', desc:'Space Shuttle Challenger breaks apart 73 seconds after launch, killing all 7 crew including teacher Christa McAuliffe. O-ring failure in cold weather caused the disaster. The programme was grounded for 32 months.'},
+    {y:1986,date:'Feb 19',    mission:'Mir — First Modular Space Station',         agency:'USSR',      type:'m', era:'1980s', desc:'The first modular space station, built over a decade as new modules were added. Operated for 15 years (3× its design life), hosting 125 cosmonauts/astronauts from 12 countries and conducting 23,000 experiments.'},
+    {y:1986,date:'Mar 13',    mission:'Giotto — First Comet Close-Up',             agency:'ESA',       type:'m', era:'1980s', desc:'ESA\'s Giotto flies through the coma of Halley\'s Comet, returning the first close-up images of a cometary nucleus. The nucleus was found to be 15km long, darker than coal, and far more irregular than expected.'},
+    {y:1989,date:'Aug 25',    mission:'Voyager 2 — Neptune Flyby',                 agency:'USA',       type:'m', era:'1980s', desc:'The only spacecraft ever to visit Neptune and Uranus. Voyager 2 discovered six new moons, active geysers on Triton, and a Great Dark Spot storm. After Neptune, both Voyagers headed for interstellar space.'},
+    // 1990s
+    {y:1990,date:'Apr 24',    mission:'Hubble Space Telescope — Launch',           agency:'NASA/ESA',  type:'m', era:'1990s', desc:'The most important space telescope in history, deployed at 540km altitude. An initial mirror flaw (1.3mm off specification) blurred early images but was corrected in 1993. Has made over 1.5 million observations, determined the expansion rate of the universe, and confirmed dark energy.'},
+    {y:1991,date:'Apr 5',     mission:'Compton Gamma Ray Observatory',             agency:'NASA',      type:'s', era:'1990s', desc:'The second of NASA\'s four Great Observatories. Surveyed the sky in gamma rays, discovering that gamma-ray bursts were uniformly distributed — proving they were extragalactic, from billions of light-years away.'},
+    {y:1992,date:'May 7',     mission:'ATLAS-1 — First Tethered Satellite',        agency:'NASA/ASI',  type:'f', era:'1990s', desc:'A tethered satellite experiment on STS-46 failed when the tether jammed after only 256m were deployed. A later attempt (STS-75, 1996) deployed 19.7km before the tether snapped — but confirmed that electrodynamic tethers could generate electricity in orbit.'},
+    {y:1993,date:'Dec 2',     mission:'Hubble Servicing Mission 1',                agency:'NASA',      type:'m', era:'1990s', desc:'STS-61 crew performs five spacewalks to install corrective optics, giving Hubble perfect vision. Described as "the repair job of the century" — restoring full scientific capability and public confidence in NASA.'},
+    {y:1994,date:'Jul 16',    mission:'Shoemaker-Levy 9 — Jupiter Impact',         agency:'Int\'l',    type:'m', era:'1990s', desc:'First observed collision of two solar system bodies. Comet Shoemaker-Levy 9 had broken into 21 fragments that struck Jupiter over 6 days, leaving impact scars larger than Earth. Transformed planetary defence understanding.'},
+    {y:1995,date:'Mar 22',    mission:'Polyakov — 437 Day Record',                  agency:'Russia',    type:'m', era:'1990s', desc:'Valeri Polyakov returns from Mir after 437.7 days — the longest single spaceflight ever. His mission proved that humans could physically survive a round-trip to Mars (estimated 500+ days). He was able to walk after landing.'},
+    {y:1995,date:'Dec 7',     mission:'Galileo — Jupiter Orbit',                   agency:'NASA',      type:'m', era:'1990s', desc:'First spacecraft to orbit Jupiter, studying it for nearly 8 years. An atmospheric probe released months earlier provided the first direct measurements of Jupiter\'s atmosphere — including winds at 700 km/h. Mission ended with deliberate impact to prevent contamination of Europa.'},
+    {y:1997,date:'Jul 4',     mission:'Pathfinder · Sojourner Rover',              agency:'NASA',      type:'m', era:'1990s', desc:'Sojourner became the first operational rover on another planet, studying the chemistry of Martian rocks. The mission pioneered airbag landing technology. Designed for 7 days, Sojourner operated for 85 days.'},
+    {y:1997,date:'Oct 15',    mission:'Cassini-Huygens — Saturn Mission',          agency:'NASA/ESA',  type:'m', era:'1990s', desc:'The most complex interplanetary spacecraft ever launched. Reached Saturn in 2004, orbited for 13 years, and released the Huygens probe to Titan. Discovered liquid methane lakes on Titan, active geysers on Enceladus, and the most detailed Saturn ring data ever collected.'},
+    {y:1998,date:'Nov 20',    mission:'ISS — Zarya (First Module)',                 agency:'NASA/RSA',  type:'m', era:'1990s', desc:'The first module of the International Space Station is launched. Zarya (Russian for "dawn") provided initial propulsion and power. The station has been continuously inhabited since November 2000 — over 24 years. Involves 15 nations.'},
+    {y:1999,date:'Jul 23',    mission:'Chandra X-Ray Observatory',                 agency:'NASA',      type:'m', era:'1990s', desc:'The third Great Observatory, still operating after 25 years. Has observed black holes, galaxy clusters, and supernova remnants, revealing the hot, energetic side of the universe invisible to optical telescopes.'},
+    // 2000s
+    {y:2001,date:'Feb 12',    mission:'NEAR Shoemaker — Asteroid Landing',         agency:'NASA',      type:'m', era:'2000s', desc:'First spacecraft to orbit and land on an asteroid (433 Eros). Not designed for landing, it executed a historic soft landing anyway and survived — transmitting data from the surface for 16 days.'},
+    {y:2001,date:'Apr 28',    mission:'First Space Tourist — Dennis Tito',          agency:'Russia',    type:'m', era:'2000s', desc:'Dennis Tito pays $20 million for a seat on a Soyuz to the ISS, becoming the first privately-funded space tourist. NASA initially resisted his flight, but Russia overrode their objections.'},
+    {y:2003,date:'Feb 1',     mission:'Columbia STS-107 — Disaster',               agency:'NASA',      type:'f', era:'2000s', desc:'Space Shuttle Columbia breaks apart during re-entry, killing all 7 crew. A foam impact on launch had damaged the heat shield tiles. The Shuttle was grounded for 29 months while 28 fixes were implemented.'},
+    {y:2003,date:'Oct 15',    mission:'Shenzhou 5 — First Chinese Crewed Flight',  agency:'CNSA',      type:'m', era:'2000s', desc:'Yang Liwei becomes China\'s first astronaut (taikonaut), making China the third nation to independently launch humans into space. He orbited for 21.5 hours in a capsule closely based on Soviet Soyuz technology.'},
+    {y:2004,date:'Jan 3',     mission:'Spirit Rover — Mars Landing',               agency:'NASA',      type:'m', era:'2000s', desc:'Spirit and its twin Opportunity land on opposite sides of Mars. Designed for 90 days, Opportunity operated for 14 years and 45km. Spirit became stuck in soft soil in 2009 and sent its last signal in 2011.'},
+    {y:2004,date:'Jun 21',    mission:'SpaceShipOne — First Private Spaceflight',  agency:'Scaled',    type:'m', era:'2000s', desc:'SpaceShipOne reaches space (112km) on a privately-funded flight, winning the $10 million Ansari X Prize — requiring two flights to 100km within 2 weeks. Proved commercial spaceflight was technically and financially feasible.'},
+    {y:2004,date:'Jul 1',     mission:'Cassini — Saturn Orbit Insertion',          agency:'NASA/ESA',  type:'m', era:'2000s', desc:'After a 7-year journey, Cassini executes a flawless Saturn orbit insertion — threading a gap between the planet\'s rings. The 97-minute engine burn was the most critical and dangerous manoeuvre of the mission.'},
+    {y:2005,date:'Jan 14',    mission:'Huygens — Titan Landing',                   agency:'ESA',       type:'m', era:'2000s', desc:'Most distant landing in the solar system. Huygens descends through Titan\'s thick orange atmosphere for 2.5 hours before landing in a muddy plain. Reveals rivers and seas of liquid methane — the only known world besides Earth with active surface liquids.'},
+    {y:2005,date:'Jul 4',     mission:'Deep Impact — Comet Strike',                agency:'NASA',      type:'m', era:'2000s', desc:'A 370kg copper impactor deliberately strikes Comet Tempel 1, creating a crater and ejecting a plume of water ice and dust. The world\'s first deliberate impact on a solar system body — a precursor to planetary defence experiments.'},
+    {y:2006,date:'Jan 15',    mission:'Stardust — Comet Sample Return',            agency:'NASA',      type:'m', era:'2000s', desc:'First return of cometary material to Earth. Brought back samples from Comet Wild 2 in an aerogel collector, revealing glycine (a building block of life) — suggesting life\'s ingredients are distributed throughout the cosmos.'},
+    {y:2006,date:'Jan 19',    mission:'New Horizons — Pluto Mission Launch',       agency:'NASA',      type:'s', era:'2000s', desc:'Launched on the fastest spacecraft in history at the time (58,536 km/h), New Horizons heads for Pluto on a 9.5-year journey. It becomes the first mission to a Kuiper Belt object.'},
+    {y:2007,date:'Sep 27',    mission:'DAWN — Asteroid Belt Mission',              agency:'NASA',      type:'s', era:'2000s', desc:'First mission to orbit two extraterrestrial targets. Dawn used ion propulsion to visit both Vesta (2011) and Ceres (2015) — the largest objects in the asteroid belt. Discovered bright salt deposits on Ceres suggesting geological activity.'},
+    {y:2008,date:'May 25',    mission:'Phoenix — Mars Polar Landing',              agency:'NASA',      type:'m', era:'2000s', desc:'First Mars landing in the polar region. Confirmed the presence of water ice just centimetres below the Martian surface — directly excavating and observing it. A crucial discovery for Mars colonisation planning.'},
+    {y:2009,date:'May 11',    mission:'Herschel & Planck Observatories',           agency:'ESA',       type:'s', era:'2000s', desc:'The largest infrared space telescope (Herschel) and most precise cosmic microwave background mapper (Planck) launched together. Planck produced the most detailed map of the early universe ever made, refining the age of the cosmos to 13.82 billion years.'},
+    // 2010s
+    {y:2012,date:'Aug 5',     mission:'Curiosity — Mars Science Laboratory',       agency:'NASA',      type:'m', era:'2010s', desc:'A car-sized nuclear rover (899kg) using a sky-crane landing system — the most complex Mars landing ever attempted. Still operating after 13 years, Curiosity has confirmed ancient lake environments, found organic molecules, and measured seasonal methane fluctuations.'},
+    {y:2012,date:'Aug 25',    mission:'Voyager 1 — Interstellar Space',            agency:'NASA',      type:'m', era:'2010s', desc:'Confirmed in 2013 to have entered interstellar space in August 2012 — the first human-made object to do so. Now over 23 billion km away, it receives commands and sends data on a 22+ hour round-trip signal delay.'},
+    {y:2014,date:'Nov 12',    mission:'Rosetta · Philae — Comet Landing',          agency:'ESA',       type:'m', era:'2010s', desc:'First soft landing on a comet (67P/Churyumov-Gerasimenko). Philae bounced twice before settling in a shadowed crater, limiting its battery life. Rosetta orbited the comet for 2 years, returning unprecedented detail of comet chemistry and structure.'},
+    {y:2015,date:'Jul 14',    mission:'New Horizons — Pluto Flyby',                agency:'NASA',      type:'m', era:'2010s', desc:'After 9.5 years, New Horizons flies 12,500km from Pluto, revealing a heart-shaped nitrogen glacier (Tombaugh Regio) the size of Texas, 3,500m tall ice mountains, and a layered blue atmosphere. Pluto was far more geologically active than anyone expected.'},
+    {y:2015,date:'Dec 21',    mission:'SpaceX Falcon 9 — First Booster Landing',   agency:'SpaceX',    type:'m', era:'2010s', desc:'First orbital rocket booster to successfully land and be recovered. The propulsive vertical landing — after delivering satellites to orbit — transformed launch economics. Reused boosters can save $40 million per flight.'},
+    {y:2016,date:'Sep 30',    mission:'Rosetta — Planned Comet Impact',            agency:'ESA',       type:'s', era:'2010s', desc:'ESA\'s Rosetta spacecraft ends its 12-year mission with a controlled impact on Comet 67P. The final images, transmitted at 3 bytes/second, show the comet\'s surface in extraordinary detail — right up to the moment of impact.'},
+    {y:2018,date:'Nov 26',    mission:'InSight — Mars Interior',                   agency:'NASA',      type:'s', era:'2010s', desc:'First mission dedicated to studying Mars\'s deep interior. Deployed a seismometer that detected hundreds of marsquakes, measured heat flow from the interior, and used radio signals to precisely measure Mars\'s wobble — revealing its core structure.'},
+    {y:2019,date:'Apr 10',    mission:'First Black Hole Image — M87*',             agency:'EHT',       type:'m', era:'2010s', desc:'The Event Horizon Telescope, a global network of radio telescopes acting as an Earth-sized dish, images M87* — a black hole 6.5 billion times the mass of the Sun, 55 million light-years away. The image matches Einstein\'s 1916 predictions perfectly.'},
+    {y:2019,date:'Jul 22',    mission:'Chandrayaan-2 — Moon Orbiter',              agency:'ISRO',      type:'s', era:'2010s', desc:'India\'s second Moon mission — the orbiter remains operational, but the Vikram lander crash-landed due to a software error in the final descent phase. Despite the partial failure, the orbiter continues to produce valuable lunar science.'},
+    // 2020s
+    {y:2020,date:'Feb 10',    mission:'Solar Orbiter — Sun Up Close',              agency:'ESA/NASA',  type:'s', era:'2020s', desc:'The spacecraft designed to image the Sun\'s poles for the first time. Has returned the closest images ever taken of the Sun, revealing "campfires" — small solar flares covering the surface — and providing new data on the solar wind\'s origin.'},
+    {y:2020,date:'May 30',    mission:'Crew Dragon — First Commercial Crew',       agency:'SpaceX/NASA',type:'m',era:'2020s', desc:'SpaceX Crew Dragon carries NASA astronauts to the ISS, ending a 9-year gap in US crewed orbital launches since the Shuttle retired in 2011. The first commercially operated crewed orbital spacecraft to dock with the ISS.'},
+    {y:2020,date:'Jul 19',    mission:'Hope Mars Mission — UAE',                   agency:'UAE',       type:'m', era:'2020s', desc:'The Arab world\'s first interplanetary mission. The Hope probe enters Mars orbit in February 2021, studying the Martian atmosphere and weather patterns. The UAE became the fifth country to successfully reach Mars.'},
+    {y:2021,date:'Feb 18',    mission:'Perseverance Rover + Ingenuity',            agency:'NASA',      type:'m', era:'2020s', desc:'Perseverance lands in Jezero Crater (an ancient lake bed) to search for biosignatures. Deploys Ingenuity, which achieves the first powered flight on another planet on April 19 — the Wright Brothers moment of interplanetary exploration.'},
+    {y:2021,date:'Jul 11',    mission:'First Civilian Spaceflights',               agency:'Virgin/Blue',type:'m',era:'2020s', desc:'Richard Branson (Virgin Galactic, Jul 11) and Jeff Bezos (Blue Origin, Jul 20) both reach space within 9 days. The commercial space tourism era begins in earnest. Bezos\'s crew included Wally Funk, 82 — the oldest person in space.'},
+    {y:2021,date:'Dec 25',    mission:'James Webb Space Telescope — Launch',       agency:'NASA/ESA',  type:'m', era:'2020s', desc:'Launched on Christmas Day from Kourou, Webb unfolds its 6.5m gold mirror — the most complex deployment in space history. Reached its L2 orbit 1.5 million km from Earth. First images (Jul 2022) showed galaxies from 300 million years after the Big Bang.'},
+    {y:2022,date:'Nov 16',    mission:'Artemis 1 — Return to the Moon',            agency:'NASA',      type:'m', era:'2020s', desc:'First flight of the Space Launch System (SLS) and Orion capsule — uncrewed. Orion flew a 25-day lunar orbit mission, travelling 430,000 km from Earth. A test of all systems before astronauts fly on Artemis 2 (2025).'},
+    {y:2023,date:'Aug 23',    mission:'Chandrayaan-3 — South Pole Landing',        agency:'ISRO',      type:'m', era:'2020s', desc:'India becomes the first country to land at the Moon\'s south pole — and only the fourth nation to soft-land on the Moon. Vikram lander detected moonquakes and confirmed sulphur and other elements at the south pole. A historic achievement.'},
+    {y:2023,date:'Sep 4',     mission:'OSIRIS-REx — Asteroid Sample Return',       agency:'NASA',      type:'m', era:'2020s', desc:'Returns 121.6 grams of material from asteroid Bennu — 4.5 billion years old, from the early solar system. Samples contain water-bearing minerals and organics, strengthening the theory that asteroids delivered life\'s building blocks to early Earth.'},
+    {y:2024,date:'Jun 6',     mission:'Voyager 1 — Signal Restored',               agency:'NASA',      type:'m', era:'2020s', desc:'After 5 months of garbled data from 24 billion km away, engineers trace the problem to a faulty chip in the flight data system and route around it — restoring full communication. Voyager 1 speaks clearly again, 47 years after launch.'},
+    {y:2024,date:'Oct 13',    mission:'SpaceX Starship — Booster Catch',           agency:'SpaceX',    type:'m', era:'2020s', desc:'The Super Heavy booster is caught by the launch tower\'s "chopstick" arms on its return — the first time a rocket booster has been mechanically caught rather than landing on legs. A fundamental step toward full rapid reusability.'},
+  ];
+
+  // Group by year
+  const byYear = {};
+  EVENTS.forEach(ev=>{
+    if(!byYear[ev.y]) byYear[ev.y]=[];
+    byYear[ev.y].push(ev);
+  });
+  const years = Object.keys(byYear).map(Number).sort((a,b)=>a-b);
+
+  // Build ruler and strip
+  years.forEach(yr=>{
+    // Ruler tick
+    const tick = document.createElement('div');
+    tick.className='sh-ruler-yr has-events';
+    tick.dataset.year=yr;
+    tick.textContent=yr;
+    tick.style.width='300px'; // matches card width
+    tick.style.flexShrink='0';
+    tick.addEventListener('click',()=>scrollToYear(yr));
+    ruler.appendChild(tick);
+
+    // Year group card column
+    const group = document.createElement('div');
+    group.className='sh-year-group';
+    group.id='shYear'+yr;
+    group.dataset.year=yr;
+    group.dataset.era=byYear[yr][0].era;
+
+    const heading = document.createElement('div');
+    heading.className='sh-year-heading';
+    heading.textContent=yr;
+    group.appendChild(heading);
+
+    byYear[yr].forEach(ev=>{
+      const card = document.createElement('div');
+      card.className='sh-event '+({m:'milestone',s:'success',f:'failure'}[ev.type]||'');
+      const tagLabel = {m:'★ MILESTONE',s:'✓ SUCCESS',f:'✗ FAILURE'}[ev.type]||'';
+      const tagClass = ev.type;
+      card.innerHTML=`
+        <div class="sh-event-date">${ev.date}, ${ev.y}</div>
+        <div class="sh-event-head">
+          <div class="sh-event-dot"></div>
+          <div>
+            <div class="sh-event-title">${ev.mission}</div>
+            <div class="sh-event-agency">${ev.agency}</div>
+          </div>
+        </div>
+        <div class="sh-event-desc">${ev.desc}</div>
+        <span class="sh-event-tag ${tagClass}">${tagLabel}</span>
+      `;
+      card.addEventListener('click',()=>showDetail(ev, card));
+      group.appendChild(card);
+    });
+    strip.appendChild(group);
+  });
+
+  // Detail panel
+  let activeCard = null;
+  function showDetail(ev, card){
+    if(activeCard===card && detail.style.display!=='none'){
+      detail.style.display='none'; activeCard=null; return;
+    }
+    activeCard=card;
+    detail.style.display='block';
+    detail.innerHTML=`
+      <div class="sh-detail-title">${ev.mission}</div>
+      <div class="sh-detail-meta">${ev.date}, ${ev.y} &nbsp;·&nbsp; ${ev.agency}</div>
+      <div class="sh-detail-body">${ev.desc}</div>
+    `;
+  }
+
+  // ── Year Slider ──────────────────────────────────
+  const slider   = document.getElementById('shYearSlider');
+  const sliderTip= document.getElementById('shSliderTip');
+  const sliderFill=document.getElementById('shSliderFill');
+  const allYears = years; // already built above
+  const minYr=allYears[0], maxYr=allYears[allYears.length-1];
+
+  function updateSliderUI(yr){
+    const pct=(yr-minYr)/(maxYr-minYr)*100;
+    if(sliderFill) sliderFill.style.width=pct+'%';
+    if(sliderTip){
+      sliderTip.textContent=yr;
+      sliderTip.style.left=pct+'%';
+    }
+  }
+
+  if(slider){
+    slider.min=minYr; slider.max=maxYr;
+    slider.value=minYr;
+    updateSliderUI(minYr);
+    slider.addEventListener('input',()=>{
+      const yr=+slider.value;
+      updateSliderUI(yr);
+      // Find nearest year in our data
+      const nearest=allYears.reduce((a,b)=>Math.abs(b-yr)<Math.abs(a-yr)?b:a);
+      const el=document.getElementById('shYear'+nearest);
+      if(el) el.scrollIntoView({behavior:'smooth',block:'nearest',inline:'start'});
+    });
+  }
+
+  // ── Side arrows ───────────────────────────────────
+  const arrowL=document.getElementById('shArrowL');
+  const arrowR=document.getElementById('shArrowR');
+  const ARROW_SCROLL=340;
+  if(arrowL) arrowL.addEventListener('click',()=>wrap.scrollBy({left:-ARROW_SCROLL,behavior:'smooth'}));
+  if(arrowR) arrowR.addEventListener('click',()=>wrap.scrollBy({left: ARROW_SCROLL,behavior:'smooth'}));
+
+  // Scroll to year
+  function scrollToYear(yr){
+    const el=document.getElementById('shYear'+yr);
+    if(el) el.scrollIntoView({behavior:'smooth',block:'nearest',inline:'start'});
+  }
+
+  // Progress bar + ruler + slider sync on scroll
+  wrap.addEventListener('scroll',()=>{
+    const sl=wrap.scrollLeft, sw=wrap.scrollWidth-wrap.clientWidth;
+    if(progress) progress.style.width=(sw>0?Math.round(sl/sw*100):0)+'%';
+    // Find active year
+    const stripRect=wrap.getBoundingClientRect();
+    let activeYr=null;
+    strip.querySelectorAll('.sh-year-group').forEach(g=>{
+      const r=g.getBoundingClientRect();
+      if(r.left<=stripRect.left+100) activeYr=+g.dataset.year;
+    });
+    if(activeYr){
+      ruler.querySelectorAll('.sh-ruler-yr').forEach(t=>{
+        t.classList.toggle('active',+t.dataset.year===activeYr);
+      });
+      // Sync slider
+      if(slider && activeYr>=minYr && activeYr<=maxYr){
+        slider.value=activeYr;
+        updateSliderUI(activeYr);
+      }
+    }
+  },{passive:true});
+
+  // Drag to scroll
+  let isDrag=false,dragStartX=0,dragScrollLeft=0;
+  wrap.addEventListener('mousedown',e=>{isDrag=true;dragStartX=e.pageX-wrap.offsetLeft;dragScrollLeft=wrap.scrollLeft;wrap.classList.add('dragging');});
+  wrap.addEventListener('mouseleave',()=>{isDrag=false;wrap.classList.remove('dragging');});
+  wrap.addEventListener('mouseup',  ()=>{isDrag=false;wrap.classList.remove('dragging');});
+  wrap.addEventListener('mousemove',e=>{if(!isDrag)return;e.preventDefault();wrap.scrollLeft=dragScrollLeft-(e.pageX-wrap.offsetLeft-dragStartX);});
+  // Touch
+  let tx=0;
+  wrap.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
+  wrap.addEventListener('touchend',  e=>{const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>40)wrap.scrollLeft-=dx*1.2;},{passive:true});
+
+  // Keyboard when in view
+  let inView=false;
+  new IntersectionObserver(e=>{inView=e[0].isIntersecting;},{threshold:.05})
+    .observe(document.getElementById('space-history-section'));
+  document.addEventListener('keydown',e=>{
+    if(!inView)return;
+    if(e.key==='ArrowRight'){e.preventDefault();wrap.scrollBy({left:320,behavior:'smooth'});}
+    if(e.key==='ArrowLeft') {e.preventDefault();wrap.scrollBy({left:-320,behavior:'smooth'});}
+  });
 })();
 
 
