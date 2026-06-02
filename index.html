@@ -524,8 +524,8 @@
       .about-top{flex-direction:column;align-items:center;text-align:center}
       .hero-inner{padding:0 5vw}
       /* On mobile: push hero text to lower 55% so Earth shows in upper area */
-      #home-section{align-items:flex-end;padding-bottom:8vh}
-      .hero-inner{padding-bottom:0;max-width:100%}
+      #home-section{align-items:flex-end;padding-bottom:6vh;min-height:100vh}
+      .hero-inner{padding-bottom:0;max-width:100%;padding-top:0}
       .section-wrap{padding:68px 5vw}
       .domain-cards{grid-template-columns:1fr}
       footer{flex-direction:column;align-items:center;text-align:center;gap:18px;padding:24px 5vw}
@@ -584,7 +584,7 @@
       .hero-greeting{font-size:clamp(2rem,10vw,3.5rem)}
       .hero-cta{flex-wrap:wrap;gap:10px}
       .btn-gold,.btn-ghost{padding:10px 20px;font-size:.72rem}
-      #heroCanvas{opacity:.5}
+      #heroCanvas{opacity:.1}
     }
     @media(max-width:480px){
       .cert-grid{grid-template-columns:1fr}
@@ -2690,7 +2690,7 @@ navAs.forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open'
   // Earth centre — desktop: right-centre (70% w, 50% h)
   // Mobile (≤860px): upper-centre (50% w, 28% h) matching the red circle position
   const ECX=()=>W<=860 ? W*0.5  : W*0.7;
-  const ECY=()=>W<=860 ? H*0.28 : H*0.5;
+  const ECY=()=>W<=860 ? H*0.25 : H*0.5;
 
   // Earth image — primary: local file you can replace with your own
   // To use your own Earth image: place it at images/globe.png
@@ -2741,7 +2741,7 @@ navAs.forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open'
 
   function satPos(o,ang,cx,cy){
     // Scale orbits down on mobile so satellites stay on screen
-    const scale = W<=860 ? Math.min(1, W/520) : 1;
+    const scale = W<=860 ? Math.min(1.2, W/520) : 1;
     const a = o.a*scale, b = o.b*scale;
     const cosI=Math.cos(o.inc),sinI=Math.sin(o.inc);
     const x0=a*Math.cos(ang);
