@@ -2782,7 +2782,7 @@ navAs.forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open'
 
     if(earthImgReady){
       // Rotate earth slowly — angle based on time for subtle spin
-      const spinAngle = (Date.now()%120000)/120000 * Math.PI*2;
+      const spinAngle = (Date.now()%30000)/30000 * Math.PI*2;
       const imgW=R*2, imgH=R*2;
       // Translate to centre, rotate, draw full sphere texture
       ctx.translate(cx,cy);
