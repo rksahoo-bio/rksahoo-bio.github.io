@@ -1541,18 +1541,18 @@
     .pub-logo-wrap{
       display:flex;align-items:center;justify-content:center;
       width:52px;height:44px;
-      border:1px solid rgba(201,168,76,.1);
+      border:1px solid rgba(201,168,76,.35);
       background:rgba(255,255,255,.03);
       overflow:hidden;flex-shrink:0;
-      transition:border-color .25s;
+      transition:border-color .25s,background .25s;
       align-self:center;
     }
     .pub-item:hover .pub-logo-wrap{border-color:rgba(201,168,76,.28);}
     .pub-logo-img{max-width:44px;max-height:34px;object-fit:contain;display:block;}
     .pub-logo-fallback{
       display:none;align-items:center;justify-content:center;
-      font-family:var(--mono);font-size:.5rem;font-weight:700;
-      letter-spacing:.08em;color:var(--gold-dim);text-align:center;width:100%;
+      font-family:var(--mono);font-size:.52rem;font-weight:800;
+      letter-spacing:.1em;color:#000;text-align:center;width:100%;
     }
     @media(max-width:860px){
       .pub-item{
@@ -3546,11 +3546,15 @@ document.querySelectorAll('.proj-card video').forEach(v=>{
     ieee:'IEEE', iaf:'IAF', springer:'Springer', sae:'SAE', arxiv:'arXiv'
   };
 
-    function pubLogoHTML(key){
+  function pubLogoHTML(key){
     const label = PUB_LABELS[key] || key.toUpperCase();
-    const img = '<img src="images/pub/'+key+'.png" alt="'+label+'" class="pub-logo-img" data-fallback="'+label+'">';
+    // Gold fill for IEEE, IAF, Springer — SAE and arXiv keep dark box
+    const gold = ['ieee','iaf','springer'].includes(key);
+    const wrapExtra = gold ? ' pub-logo-gold' : '';
+    const img = '<img src="images/pub/'+key+'.png" alt="'+label
+              + '" class="pub-logo-img" data-fallback="'+label+'">';
     const fb  = '<span class="pub-logo-fallback">'+label+'</span>';
-    return img + fb;
+    return '<span class="pub-logo-inner'+wrapExtra+'">'+img+fb+'</span>';
   };;
 
   const listEl  = document.getElementById('pubList');
