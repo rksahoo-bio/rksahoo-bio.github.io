@@ -2042,10 +2042,23 @@
       <div class="section-num">06 — Certificates</div>
       <h2 class="section-title">Recognition &amp; <em>Credentials</em></h2>
     </div>
-    <div class="cert-grid reveal" id="certGrid"></div>
+    <div class="gallery-track-wrap reveal">
+      <div class="gallery-stage" id="certStage">
+        <!-- Cert slides injected by JS -->
+      </div>
+      <div class="gallery-progress"><div class="gallery-progress-fill" id="certProgress"></div></div>
+      <div class="gallery-controls">
+        <div class="gallery-nav">
+          <button class="gallery-btn" id="certPrev">←</button>
+          <button class="gallery-btn" id="certNext">→</button>
+        </div>
+        <div class="gallery-dots" id="certDots"></div>
+        <div class="gallery-counter" id="certCounter">01 / 09</div>
+      </div>
+      <div class="gallery-thumbs" id="certThumbs"></div>
+    </div>
   </div>
 </section>
-
 <div class="divider"></div>
 
 <!-- ══ GAMES ══ -->
@@ -3802,7 +3815,7 @@ document.querySelectorAll('.proj-card video').forEach(v=>{
 })();
 
 /* ══════════════════════════════════════════════════
-   10. CERTIFICATES
+   10. CERTIFICATES — gallery-style slideshow
 ══════════════════════════════════════════════════ */
 (function(){
   const certs=[
@@ -3816,64 +3829,140 @@ document.querySelectorAll('.proj-card video').forEach(v=>{
     {name:'Certificate of Presentation — IAC 2024',issuer:'International Astronautical Federation',year:'2024',img:'images/IAC Cerificate.jpg'},
     {name:'Certificate of Participation — Formula Bharat',issuer:'Formula Bharat',year:'2019',img:'images/FB Certificate.jpg'},
   ];
-  const grid=document.getElementById('certGrid');
-  const overlay=document.getElementById('certOverlay');
-  const popup=document.getElementById('certPopup');
 
-  // Rebuild popup to include image
-  popup.innerHTML=`
-    <button class="cert-popup-close" id="certClose">✕ Close</button>
-    <div class="cert-popup-year" id="popupYear"></div>
-    <div class="cert-popup-title" id="popupTitle"></div>
-    <div class="cert-popup-issuer">Issued by: <span id="popupIssuer"></span></div>
-    <div class="cert-popup-img-wrap">
-      <img id="popupImg" src="" alt="Certificate" style="width:100%;margin-top:20px;border:1px solid rgba(201,168,76,.2);border-radius:2px;display:block;max-height:340px;object-fit:contain;background:#000"/>
-      <div id="popupImgFallback" style="display:none;padding:24px;text-align:center;font-family:var(--mono);font-size:.72rem;color:var(--mist);border:1px dashed rgba(201,168,76,.2);margin-top:20px">
-        📄 Certificate image not available.<br>Add image at the path shown in the card.
-      </div>
-    </div>
-    <div class="cert-popup-num" id="popupNum"></div>
-  `;
+  const stage      = document.getElementById('certStage');
+  const dotsWrap   = document.getElementById('certDots');
+  const thumbsWrap = document.getElementById('certThumbs');
+  const counterEl  = document.getElementById('certCounter');
+  const progressEl = document.getElementById('certProgress');
+  const overlay    = document.getElementById('certOverlay');
+  const popup      = document.getElementById('certPopup');
+  if(!stage) return;
 
-  const popTitle=document.getElementById('popupTitle');
-  const popIssuer=document.getElementById('popupIssuer');
-  const popYear=document.getElementById('popupYear');
-  const popNum=document.getElementById('popupNum');
-  const popImg=document.getElementById('popupImg');
-  const popImgFallback=document.getElementById('popupImgFallback');
+  let current=0, total=certs.length, autoTimer, isAnimating=false;
 
+  // Build slides + dots + thumbs
   certs.forEach((c,i)=>{
-    const card=document.createElement('div');
-    card.className='cert-card';
-    card.innerHTML=`
-      <div class="cert-expand">⊞</div>
-      <div class="cert-idx">${String(i+1).padStart(2,'0')}</div>
-      <div class="cert-year">${c.year}</div>
-      <div class="cert-name-text">${c.name}</div>
-      <div class="cert-issuer">${c.issuer}</div>
-    `;
-    card.addEventListener('click',()=>{
-      popTitle.textContent=c.name;
-      popIssuer.textContent=c.issuer;
-      popYear.textContent=c.year;
-      popNum.textContent=String(i+1).padStart(2,'0');
-      // Load the actual certificate image
-      popImg.style.display='block';
-      popImgFallback.style.display='none';
-      popImg.onload=()=>{popImg.style.display='block';popImgFallback.style.display='none';};
-      popImg.onerror=()=>{popImg.style.display='none';popImgFallback.style.display='block';};
-      popImg.src=c.img+'?t='+Date.now(); // cache-bust
-      overlay.classList.add('open');
-    });
-    grid.appendChild(card);
+    // Slide
+    const slide = document.createElement('div');
+    slide.className = 'gallery-slide' + (i===0 ? ' active' : '');
+    slide.innerHTML = `
+      <img src="${c.img}" alt="${c.name}"
+           style="width:100%;height:100%;object-fit:contain;background:#000;padding:12px"
+           onerror="this.style.opacity='.15'"/>
+      <div class="gallery-caption">
+        <div class="gallery-cap-label">${c.year} · ${c.issuer}</div>
+        <div class="gallery-cap-title">${c.name}</div>
+      </div>`;
+    slide.addEventListener('click', ()=>openPopup(c, i));
+    stage.appendChild(slide);
+
+    // Dot
+    const dot = document.createElement('button');
+    dot.className = 'gdot' + (i===0 ? ' active' : '');
+    dot.addEventListener('click', ()=>goTo(i));
+    dotsWrap.appendChild(dot);
+
+    // Thumb
+    if(thumbsWrap){
+      const thumb = document.createElement('div');
+      thumb.className = 'gthumb' + (i===0 ? ' active' : '');
+      thumb.innerHTML = `<img src="${c.img}" alt="${c.name}" onerror="this.style.opacity='.2'"/>`;
+      thumb.addEventListener('click', ()=>goTo(i));
+      thumbsWrap.appendChild(thumb);
+    }
   });
 
-  function close(){overlay.classList.remove('open');}
-  document.getElementById('certClose').addEventListener('click',close);
-  overlay.addEventListener('click',e=>{if(e.target===overlay)close();});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape')close();});
+  const slideEls = stage.querySelectorAll('.gallery-slide');
+  const dotEls   = dotsWrap.querySelectorAll('.gdot');
+  const thumbEls = thumbsWrap ? thumbsWrap.querySelectorAll('.gthumb') : [];
+
+  function updateUI(){
+    counterEl.textContent = String(current+1).padStart(2,'0')+' / '+String(total).padStart(2,'0');
+    progressEl.style.width = ((current+1)/total*100)+'%';
+    dotEls.forEach((d,i)=>d.classList.toggle('active', i===current));
+    thumbEls.forEach((t,i)=>t.classList.toggle('active', i===current));
+  }
+
+  function goTo(n){
+    if(isAnimating || n===current) return;
+    isAnimating = true;
+    const prev = current;
+    current = ((n % total) + total) % total;
+    slideEls[prev].classList.add('exit-left');
+    slideEls[prev].classList.remove('active');
+    slideEls[current].classList.add('active');
+    updateUI();
+    setTimeout(()=>{ slideEls[prev].classList.remove('exit-left'); isAnimating=false; }, 680);
+    resetAuto();
+  }
+
+  function next(){ goTo(current+1); }
+  function prev(){ goTo(current-1); }
+
+  document.getElementById('certNext').addEventListener('click', next);
+  document.getElementById('certPrev').addEventListener('click', prev);
+
+  // Keyboard when cert section in view
+  let certInView = false;
+  new IntersectionObserver(e=>{ certInView=e[0].isIntersecting; },{threshold:.1})
+    .observe(document.getElementById('certificates-section'));
+  document.addEventListener('keydown', e=>{
+    if(!certInView) return;
+    if(e.key==='ArrowRight') next();
+    if(e.key==='ArrowLeft')  prev();
+  });
+
+  // Touch swipe
+  let tx=0;
+  stage.addEventListener('touchstart', e=>{ tx=e.touches[0].clientX; },{passive:true});
+  stage.addEventListener('touchend',   e=>{
+    const dx = e.changedTouches[0].clientX - tx;
+    if(Math.abs(dx)>50) dx<0 ? next() : prev();
+  },{passive:true});
+
+  // Auto advance
+  function startAuto(){ autoTimer=setInterval(next, 4500); }
+  function resetAuto(){ clearInterval(autoTimer); startAuto(); }
+  startAuto();
+  updateUI();
+
+  // Pause on hover
+  stage.addEventListener('mouseenter', ()=>clearInterval(autoTimer));
+  stage.addEventListener('mouseleave', startAuto);
+
+  // Popup image viewer
+  function openPopup(c, i){
+    if(!overlay || !popup) return;
+    popup.innerHTML=`
+      <button class="cert-popup-close" id="certClose">✕ Close</button>
+      <div class="cert-popup-year">${c.year}</div>
+      <div class="cert-popup-title">${c.name}</div>
+      <div class="cert-popup-issuer">Issued by: <span style="color:var(--cyan)">${c.issuer}</span></div>
+      <div>
+        <img id="popupImg" src="${c.img}?t=${Date.now()}" alt="${c.name}"
+             style="width:100%;margin-top:20px;border:1px solid rgba(201,168,76,.2);
+                    border-radius:2px;display:block;max-height:340px;
+                    object-fit:contain;background:#000"/>
+        <div id="popupImgFallback" style="display:none;padding:24px;text-align:center;
+             font-family:var(--mono);font-size:.72rem;color:var(--mist);
+             border:1px dashed rgba(201,168,76,.2);margin-top:20px">
+          📄 Certificate image not available.
+        </div>
+      </div>`;
+    const img = popup.querySelector('#popupImg');
+    const fb  = popup.querySelector('#popupImgFallback');
+    img.onload  = ()=>{ img.style.display='block'; fb.style.display='none'; };
+    img.onerror = ()=>{ img.style.display='none';  fb.style.display='block'; };
+    overlay.classList.add('open');
+    popup.querySelector('#certClose').addEventListener('click', ()=>overlay.classList.remove('open'));
+    overlay.addEventListener('click', e=>{ if(e.target===overlay) overlay.classList.remove('open'); });
+  }
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape') overlay.classList.remove('open'); });
 })();
 
+
+  
 /* ══════════════════════════════════════════════════
    PROJECTS — trigger video play when scrolled into view
 ══════════════════════════════════════════════════ */
