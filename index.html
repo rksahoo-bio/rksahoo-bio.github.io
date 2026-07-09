@@ -514,7 +514,6 @@
     .rbadge-teal{border-color:rgba(0,200,180,.25);color:rgba(0,200,180,.8)}.rbadge-teal:hover{border-color:rgba(0,200,180,.6);color:#00c8b4}
     ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--void)}::-webkit-scrollbar-thumb{background:var(--gold-dim);border-radius:2px}
 
-
     /* ── PREMIUM UPGRADES ── */
 
     /* Smooth scroll with momentum feel */
@@ -1477,32 +1476,13 @@
     }
 
   
-    /* ── SPACE HISTORY INLINE EXPANSION ── */
-    .sh-event-expanded{
-      max-height:0;overflow:hidden;
-      transition:max-height .4s cubic-bezier(.4,0,.2,1), opacity .3s;
-      opacity:0;
-    }
-    .sh-event.open .sh-event-expanded{
-      max-height:300px;opacity:1;
-    }
-    .sh-event-full-desc{
-      font-size:.76rem;color:var(--mist);line-height:1.68;
-      padding:12px 0 4px;
-      border-top:1px solid rgba(201,168,76,.1);
-      margin-top:10px;
-    }
-    .sh-event-close{
-      font-family:var(--mono);font-size:.5rem;letter-spacing:.12em;
-      color:rgba(201,168,76,.5);margin-top:8px;display:inline-block;
-      cursor:pointer;
-    }
-    .sh-event{cursor:pointer;transition:border-color .22s,background .22s,transform .22s,box-shadow .22s}
-    .sh-event.open{
-      border-color:rgba(201,168,76,.4) !important;
-      background:rgba(201,168,76,.04);
-      box-shadow:0 4px 20px rgba(0,0,0,.3);
-    }
+    /* ── SPACE HISTORY INLINE EXPAND ── */
+    .sh-event-expanded{max-height:0;overflow:hidden;transition:max-height .42s cubic-bezier(.4,0,.2,1),opacity .3s;opacity:0}
+    .sh-event.sh-open .sh-event-expanded{max-height:400px;opacity:1}
+    .sh-event-full-body{font-size:.75rem;color:var(--mist);line-height:1.68;border-top:1px solid rgba(201,168,76,.12);padding:12px 0 4px;margin-top:8px}
+    .sh-event-collapse{font-family:var(--mono);font-size:.5rem;letter-spacing:.1em;color:rgba(201,168,76,.45);margin-top:8px;display:inline-block;cursor:pointer}
+    .sh-event{cursor:pointer}
+    .sh-event.sh-open{border-color:rgba(201,168,76,.38)!important;background:rgba(201,168,76,.04);box-shadow:0 4px 24px rgba(0,0,0,.3)}
 
   </style>
 </head>
@@ -1955,6 +1935,7 @@
     </div>
   </div>
 </section>
+
 <div class="divider"></div>
 
 <!-- ══ PERSONALISED SPACE FACT ══ -->
@@ -1987,7 +1968,7 @@
         <div class="sh-slider-track">
           <div class="sh-slider-fill" id="shSliderFill"></div>
         </div>
-        <input type="range" class="sh-slider" id="shYearSlider" min="1944" max="2024" step="1" value="1944" aria-label="Jump to year">
+        <input type="range" class="sh-slider" id="shYearSlider" min="1944" max="2026" step="1" value="1944" aria-label="Jump to year">
         <div class="sh-slider-tooltip" id="shSliderTip">1944</div>
       </div>
       <span class="sh-slider-yr" id="shSliderYrRight">2024</span>
@@ -4526,216 +4507,7 @@ const PUBLICATIONS_DATA=[
   window.addEventListener('resize',()=>{if(gameActive&&DS)resize4();});
 })();
 
-/* ══════════════════════════════════════════════════
-   GAME 5: PERSONALISED SPACE FACT (below games)
-   User enters name + DOB → shown curated space facts
-   from their birth year and nearby years.
-   Not a game — a personalised space story card.
-══════════════════════════════════════════════════ */
-(function(){
-  const container=document.getElementById('spacefactContainer');
-  if(!container)return;
 
-  // SPACE EVENTS — sourced from the History of Space section EVENTS array
-  // We build a lookup map from the shared EVENTS list
-  // This ensures Space Fact always reflects the latest history data
-  const SPACE_EVENTS_LOOKUP = {};
-
-  // Fallback built-in events for years not in history section
-  const BUILTIN_EVENTS = {
-    1957:{icon:'🛸',title:'Sputnik 1 — Dawn of the Space Age',body:'The Soviet Union launched Earth\'s first artificial satellite on Oct 4, 1957. Its radio beeps were heard worldwide. The Space Age had begun.',tag:'First Satellite'},
-    1961:{icon:'👨‍🚀',title:'Yuri Gagarin — First Human in Space',body:'"Poyekhali!" Gagarin orbited Earth once in 108 minutes. The world was electrified. Humanity had left the planet for the first time.',tag:'Historic First'},
-    1969:{icon:'🌕',title:'Apollo 11 — Humans Walk on the Moon',body:'"One small step for man, one giant leap for mankind." 600 million people watched live as Armstrong stepped onto the lunar surface.',tag:'Moon Landing'},
-    1981:{icon:'🛸',title:'Space Shuttle Era Begins',body:'Columbia lifted off on April 12 — the first reusable spacecraft. It would fly 135 missions over 30 years.',tag:'Reusable Spacecraft'},
-    1990:{icon:'🔭',title:'Hubble Space Telescope Deployed',body:'Hubble transformed astronomy, revealing the deep universe in breathtaking detail. Over 1.5 million observations and counting.',tag:'Astronomy'},
-    1998:{icon:'🌍',title:'ISS Construction Begins',body:'The first ISS module Zarya launched Nov 20. The station has been continuously inhabited since 2000 — over 24 years in space.',tag:'ISS'},
-    2012:{icon:'🤖',title:'Curiosity Rover Lands on Mars',body:'The sky-crane landing was flawless. Curiosity confirmed Mars once had liquid water, potentially habitable conditions.',tag:'Mars'},
-    2021:{icon:'🔭',title:'James Webb Space Telescope Launched',body:'Launched Christmas Day. Its first images showed galaxies from 300 million years after the Big Bang — the deepest view ever.',tag:'Space Telescope'},
-    2026:{icon:'🚀',title:'New Golden Age of Space',body:'Artemis astronauts return to the Moon, Starship heads for Mars, India joins the crewed spaceflight club. Humanity\'s greatest journey continues.',tag:'Future'},
-  };
-
-
-  function getEventsForYear(year){
-    // Try to pull from the shared History of Space EVENTS array (window.SH_EVENTS)
-    // Falls back to built-in events if not loaded yet
-    const histEvents = window.SH_EVENTS || [];
-    const lookup = {};
-    histEvents.forEach(ev=>{
-      if(!lookup[ev.y]) lookup[ev.y]=[];
-      lookup[ev.y].push({
-        icon: ev.type==='m'?'★':ev.type==='s'?'✓':'✗',
-        title: ev.mission,
-        body: ev.desc,
-        tag: ev.badge || ev.agency,
-      });
-    });
-    // Merge with builtin
-    Object.assign(lookup, BUILTIN_EVENTS);
-
-    if(lookup[year]) return [{...lookup[year][0] || lookup[year], matchYear:year, exact:true}];
-    // Find closest years
-    const years = Object.keys(lookup).map(Number);
-    years.sort((a,b)=>Math.abs(a-year)-Math.abs(b-year));
-    const closest = years.slice(0,2);
-    return closest.map(y=>({
-      ...(Array.isArray(lookup[y]) ? lookup[y][0] : lookup[y]),
-      matchYear:y, exact:false
-    }));
-  }
-
-  function render(){
-    container.innerHTML=`
-      <div class="sf-form">
-        <div class="sf-field">
-          <label class="sf-label">Your First Name</label>
-          <input class="sf-input" id="sfName" type="text" placeholder="e.g. Rakesh" maxlength="28"/>
-        </div>
-        <div class="sf-field">
-          <label class="sf-label">Year of Birth</label>
-          <input class="sf-input" id="sfYear" type="number" placeholder="e.g. 1999" min="1950" max="2026" value="1999"/>
-        </div>
-        <div class="sf-field" style="max-width:200px">
-          <label class="sf-label">Day &amp; Month (optional)</label>
-          <input class="sf-input" id="sfDOB" type="text" placeholder="e.g. 15 Aug" maxlength="12"/>
-        </div>
-        <button class="sf-btn" id="sfBtn">DISCOVER →</button>
-      </div>
-      <div id="sfResult"></div>
-    `;
-    document.getElementById('sfBtn').addEventListener('click',showFact);
-    document.getElementById('sfName').addEventListener('keydown',e=>{if(e.key==='Enter')showFact();});
-    document.getElementById('sfYear').addEventListener('keydown',e=>{if(e.key==='Enter')showFact();});
-  }
-
-  function showFact(){
-    const name=(document.getElementById('sfName').value||'Explorer').trim()||'Explorer';
-    const year=parseInt(document.getElementById('sfYear').value)||1999;
-    const dob=document.getElementById('sfDOB').value.trim();
-    const result=document.getElementById('sfResult');
-    if(!result)return;
-
-    const events=getEventsForYear(year);
-    const primary=events[0];
-    const secondary=events[1];
-
-    // Fun personalised connection text
-    const connections=[
-      `When ${name} came into the world in ${year},`,
-      `The year ${name} was born,`,
-      `In ${year} — the same year ${name} arrived —`,
-      `${name}'s birth year of ${year} was remarkable:`,
-    ];
-    const connText=connections[Math.floor(Math.random()*connections.length)];
-
-    result.innerHTML=`
-      <div style="font-family:var(--mono);font-size:.65rem;letter-spacing:.14em;color:var(--gold);text-transform:uppercase;margin-bottom:20px">
-        ✦ Space story for ${name}${dob?' · '+dob+' '+year:' · '+year} ✦
-      </div>
-      <div class="sf-cards">
-        <div class="sf-card highlight">
-          <div class="sf-highlight-tag">🌟 YOUR BIRTH YEAR${primary.exact?'':' (closest match: '+primary.matchYear+')'}</div>
-          <div class="sf-card-year">${primary.matchYear}</div>
-          <div class="sf-card-icon">${primary.icon}</div>
-          <div class="sf-card-title">${primary.title}</div>
-          <div class="sf-card-body">
-            <em style="color:var(--gold-dim)">${connText}</em> ${primary.body}
-          </div>
-          <div class="sf-card-tag">${primary.tag}</div>
-        </div>
-        ${secondary?`
-        <div class="sf-card">
-          <div class="sf-card-year">${secondary.matchYear}</div>
-          <div class="sf-card-icon">${secondary.icon}</div>
-          <div class="sf-card-title">${secondary.title}</div>
-          <div class="sf-card-body">${secondary.body}</div>
-          <div class="sf-card-tag">${secondary.tag}</div>
-        </div>`:''}
-        <div class="sf-card" style="min-height:200px;padding:0;overflow:hidden;position:relative">
-          <canvas id="sfStarCanvas" style="width:100%;height:100%;min-height:200px;display:block"></canvas>
-          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;pointer-events:none">
-            <div style="font-size:2.2rem;margin-bottom:10px">🌌</div>
-            <div style="font-family:var(--sans);font-weight:700;color:var(--gold-bright);font-size:1rem;margin-bottom:8px">${year} in the cosmos</div>
-            <div style="font-family:var(--serif);font-size:.88rem;color:rgba(200,218,240,.85);line-height:1.65">
-              In ${year}, light that left a star <strong style="color:#f0c842">${Math.round(Math.random()*500+50)} light-years away</strong> was only halfway to Earth. Space is unfathomably vast — and humanity keeps reaching further.
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="sf-share-bar">
-        <button id="sfShareBtn"
-          style="background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.35);color:#f0c842;font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:9px 18px;cursor:pointer;letter-spacing:.1em;text-transform:uppercase">
-          🔗 Share My Space Fact
-        </button>
-        <button onclick="document.getElementById('sfResult').innerHTML='';document.getElementById('sfName').value='';document.getElementById('sfYear').value='1999';"
-          style="background:none;border:1px solid rgba(201,168,76,.2);color:var(--mist);font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:9px 18px;cursor:pointer;letter-spacing:.1em;text-transform:uppercase">
-          Try Another Year
-        </button>
-      </div>
-    `;
-
-    // Animate cards in
-    result.querySelectorAll('.sf-card').forEach((card,i)=>{
-      card.style.opacity='0';card.style.transform='translateY(20px)';
-      setTimeout(()=>{
-        card.style.transition='opacity .5s ease,transform .5s ease';
-        card.style.opacity='1';card.style.transform='none';
-      },i*120);
-    });
-
-    // Animated starfield on the 3rd card
-    setTimeout(()=>{
-      const sfCanvas=document.getElementById('sfStarCanvas');
-      if(!sfCanvas)return;
-      const sc=sfCanvas.getContext('2d');
-      sfCanvas.width=sfCanvas.offsetWidth||320;
-      sfCanvas.height=sfCanvas.offsetHeight||200;
-      const W2=sfCanvas.width,H2=sfCanvas.height;
-      const stars2=Array.from({length:80},()=>({
-        x:Math.random()*W2, y:Math.random()*H2,
-        r:Math.random()*1.2+.2, speed:Math.random()*.15+.05,
-        o:Math.random()*.7+.2, phase:Math.random()*Math.PI*2
-      }));
-      let frame2=0;
-      // Shooting stars
-      const shots=[];
-      function addShot(){shots.push({x:Math.random()*W2,y:Math.random()*H2*0.6,vx:2+Math.random()*3,vy:1+Math.random()*2,life:1});}
-      function animSF(){
-        sc.clearRect(0,0,W2,H2);
-        sc.fillStyle='#000';sc.fillRect(0,0,W2,H2);
-        // Gradient overlay
-        const g=sc.createRadialGradient(W2/2,H2/2,0,W2/2,H2/2,H2*.8);
-        g.addColorStop(0,'rgba(5,8,20,.6)');g.addColorStop(1,'rgba(0,0,0,.95)');
-        sc.fillStyle=g;sc.fillRect(0,0,W2,H2);
-        // Stars
-        stars2.forEach(s2=>{
-          const alpha=s2.o*(0.5+0.5*Math.sin(frame2*0.02+s2.phase));
-          sc.fillStyle=`rgba(200,218,240,${alpha})`;
-          sc.beginPath();sc.arc(s2.x,s2.y,s2.r,0,Math.PI*2);sc.fill();
-          s2.y-=s2.speed;if(s2.y<0)s2.y=H2;
-        });
-        // Shooting stars
-        if(Math.random()<0.015)addShot();
-        shots.forEach((sh,i2)=>{
-          sc.strokeStyle=`rgba(255,240,200,${sh.life*.8})`;sc.lineWidth=1.2;
-          sc.beginPath();sc.moveTo(sh.x,sh.y);sc.lineTo(sh.x-sh.vx*8,sh.y-sh.vy*8);sc.stroke();
-          sh.x+=sh.vx;sh.y+=sh.vy;sh.life-=0.025;
-          if(sh.life<=0||sh.x>W2||sh.y>H2)shots.splice(i2,1);
-        });
-        frame2++;
-        requestAnimationFrame(animSF);
-      }
-      animSF();
-    },400);
-
-    // Share button
-    const shareBtn=result.querySelector('#sfShareBtn');
-    if(shareBtn)shareBtn.addEventListener('click',()=>{
-      window.gameShare('I was born in '+year+', the same year as the '+primary.title+' space event! Discover your space birthday at rksahoo-bio.github.io 🚀🌌');
-    });
-  }
-
-  render();
-})();
 
 /* ══════════════════════════════════════════════════
    GAME 5: GRAVITY SLINGSHOT
@@ -5235,6 +5007,91 @@ window.gameShare=function(text){
   }
 };
 
+/* ══════════════════════════════════════════════════
+   PERSONALISED SPACE FACT — shows ALL events from
+   birth year using live History of Space data.
+══════════════════════════════════════════════════ */
+(function(){
+  const container=document.getElementById('spacefactContainer');
+  if(!container)return;
+  const SPACE_EVENTS_FALLBACK={
+    1957:[{icon:'🛸',title:'Sputnik 1',body:'First satellite orbited Earth Oct 4, 1957. The Space Age began.',tag:'First Satellite'}],
+    1961:[{icon:'👨‍🚀',title:'First Human in Space',body:'Gagarin orbited Earth in 108 minutes. "Poyekhali!"',tag:'Human Spaceflight'}],
+    1969:[{icon:'🌕',title:'Apollo 11 Moon Landing',body:'"One small step." Armstrong and Aldrin walked on the Moon.',tag:'Moon Landing'}],
+    1990:[{icon:'🔭',title:'Hubble Telescope',body:'Hubble transformed astronomy with 1.5M+ observations.',tag:'Astronomy'}],
+    2012:[{icon:'🤖',title:'Curiosity on Mars',body:'Confirmed Mars had ancient lake environments.',tag:'Mars'}],
+    2021:[{icon:'🔭',title:'James Webb Telescope',body:'First images showed galaxies 300M years after Big Bang.',tag:'Space Telescope'}],
+    2025:[{icon:'🌕',title:'Artemis II & Commercial Moon',body:'Blue Ghost landed on Moon. Artemis II took first humans to lunar distance since 1972.',tag:'Lunar Return'}],
+    2026:[{icon:'👩‍🚀',title:'First Woman on the Moon',body:'Artemis III — first woman at lunar south pole. India launched Gaganyaan.',tag:'Historic First'}],
+  };
+  function getEventsForYear(year){
+    const hist=window.SH_EVENTS||[];
+    if(hist.length){
+      const exact=hist.filter(ev=>ev.y===year);
+      if(exact.length) return exact.map(ev=>({icon:ev.type==='m'?'★':ev.type==='s'?'✓':'✗',title:ev.mission,body:ev.desc,tag:ev.agency,matchYear:year,exact:true}));
+      const dataYrs=[...new Set(hist.map(ev=>ev.y))].sort((a,b)=>Math.abs(a-year)-Math.abs(b-year));
+      const result=[];
+      dataYrs.slice(0,2).forEach(y=>hist.filter(ev=>ev.y===y).slice(0,2).forEach(ev=>result.push({icon:ev.type==='m'?'★':ev.type==='s'?'✓':'✗',title:ev.mission,body:ev.desc,tag:ev.agency,matchYear:y,exact:false})));
+      return result.slice(0,4);
+    }
+    if(SPACE_EVENTS_FALLBACK[year]) return SPACE_EVENTS_FALLBACK[year].map(ev=>({...ev,matchYear:year,exact:true}));
+    const yrs=Object.keys(SPACE_EVENTS_FALLBACK).map(Number).sort((a,b)=>Math.abs(a-year)-Math.abs(b-year));
+    return yrs.slice(0,2).flatMap(y=>SPACE_EVENTS_FALLBACK[y].map(ev=>({...ev,matchYear:y,exact:false})));
+  }
+  const curYear=new Date().getFullYear();
+  function render(){
+    container.innerHTML=`<div class="sf-form">
+      <div class="sf-field"><label class="sf-label">Your First Name</label><input class="sf-input" id="sfName" type="text" placeholder="e.g. Rakesh" maxlength="28"/></div>
+      <div class="sf-field"><label class="sf-label">Year of Birth</label><input class="sf-input" id="sfYear" type="number" placeholder="e.g. 1999" min="1950" max="${curYear}" value="1999"/></div>
+      <div class="sf-field" style="max-width:200px"><label class="sf-label">Day &amp; Month (optional)</label><input class="sf-input" id="sfDOB" type="text" placeholder="e.g. 15 Aug" maxlength="12"/></div>
+      <button class="sf-btn" id="sfBtn">DISCOVER →</button></div>
+      <div id="sfResult"></div>`;
+    document.getElementById('sfBtn').addEventListener('click',showFact);
+    document.getElementById('sfName').addEventListener('keydown',e=>{if(e.key==='Enter')showFact();});
+    document.getElementById('sfYear').addEventListener('keydown',e=>{if(e.key==='Enter')showFact();});
+  }
+  function showFact(){
+    const name=(document.getElementById('sfName').value||'Explorer').trim()||'Explorer';
+    const year=parseInt(document.getElementById('sfYear').value)||1999;
+    const dob=document.getElementById('sfDOB').value.trim();
+    const result=document.getElementById('sfResult'); if(!result)return;
+    const events=getEventsForYear(year);
+    const isExact=events.length>0&&events[0].exact;
+    const conns=[`When ${name} came into the world in ${year},`,`The year ${name} was born,`,`In ${year} — the same year ${name} arrived —`,`${name}'s birth year of ${year} was remarkable:`];
+    const connText=conns[Math.floor(Math.random()*conns.length)];
+    const eventCards=events.map((ev,idx)=>`<div class="sf-card${idx===0?' highlight':''}">
+      <div class="sf-highlight-tag">${idx===0?(isExact?'🌟 YOUR BIRTH YEAR · '+year+(events.length>1?' — '+events.length+' events':''):'🔍 CLOSEST: '+ev.matchYear):'EVENT '+(idx+1)+' · '+ev.matchYear}</div>
+      <div class="sf-card-year">${ev.matchYear}</div><div class="sf-card-icon">${ev.icon}</div>
+      <div class="sf-card-title">${ev.title}</div>
+      <div class="sf-card-body">${idx===0?'<em style="color:var(--gold-dim)">'+connText+'</em> ':''}${ev.body}</div>
+      <div class="sf-card-tag">${ev.tag}</div></div>`).join('');
+    result.innerHTML=`<div style="font-family:var(--mono);font-size:.65rem;letter-spacing:.14em;color:var(--gold);text-transform:uppercase;margin-bottom:20px">✦ Space story for ${name}${dob?' · '+dob+' '+year:' · '+year} ✦</div>
+      <div class="sf-cards">${eventCards}
+        <div class="sf-card" style="min-height:200px;padding:0;overflow:hidden;position:relative">
+          <canvas id="sfStarCanvas" style="width:100%;height:100%;min-height:200px;display:block"></canvas>
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;pointer-events:none">
+            <div style="font-size:2.2rem;margin-bottom:10px">🌌</div>
+            <div style="font-family:var(--sans);font-weight:700;color:var(--gold-bright);font-size:1rem;margin-bottom:8px">${year} in the cosmos</div>
+            <div style="font-family:var(--serif);font-size:.88rem;color:rgba(200,218,240,.85);line-height:1.65">In ${year}, light from a star <strong style="color:#f0c842">${Math.round(Math.random()*500+50)} light-years away</strong> was only halfway to Earth.</div>
+          </div></div></div>
+      <div class="sf-share-bar"><button onclick="document.getElementById('sfResult').innerHTML='';document.getElementById('sfYear').value='1999';" style="background:none;border:1px solid rgba(201,168,76,.2);color:var(--mist);font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:9px 18px;cursor:pointer;letter-spacing:.1em;text-transform:uppercase">↺ Try Another Year</button></div>`;
+    result.querySelectorAll('.sf-card').forEach((card,i)=>{card.style.opacity='0';card.style.transform='translateY(20px)';setTimeout(()=>{card.style.transition='opacity .5s ease,transform .5s ease';card.style.opacity='1';card.style.transform='none';},i*120);});
+    setTimeout(()=>{
+      const sfC=document.getElementById('sfStarCanvas');if(!sfC)return;
+      const sc=sfC.getContext('2d');sfC.width=sfC.offsetWidth||320;sfC.height=sfC.offsetHeight||200;
+      const W2=sfC.width,H2=sfC.height;
+      const sts=Array.from({length:80},()=>({x:Math.random()*W2,y:Math.random()*H2,r:Math.random()*1.2+.2,sp:Math.random()*.15+.05,o:Math.random()*.7+.2,ph:Math.random()*Math.PI*2}));
+      let fr=0;const sh=[];
+      function animSF(){sc.clearRect(0,0,W2,H2);sc.fillStyle='#000';sc.fillRect(0,0,W2,H2);
+        const g=sc.createRadialGradient(W2/2,H2/2,0,W2/2,H2/2,H2*.8);g.addColorStop(0,'rgba(5,8,20,.6)');g.addColorStop(1,'rgba(0,0,0,.95)');sc.fillStyle=g;sc.fillRect(0,0,W2,H2);
+        sts.forEach(s=>{sc.fillStyle=`rgba(200,218,240,${s.o*(0.5+0.5*Math.sin(fr*.02+s.ph))})`;sc.beginPath();sc.arc(s.x,s.y,s.r,0,Math.PI*2);sc.fill();s.y-=s.sp;if(s.y<0)s.y=H2;});
+        if(Math.random()<.015)sh.push({x:Math.random()*W2,y:Math.random()*H2*.6,vx:2+Math.random()*3,vy:1+Math.random()*2,life:1});
+        sh.forEach((s,i)=>{sc.strokeStyle=`rgba(255,240,200,${s.life*.8})`;sc.lineWidth=1.2;sc.beginPath();sc.moveTo(s.x,s.y);sc.lineTo(s.x-s.vx*8,s.y-s.vy*8);sc.stroke();s.x+=s.vx;s.y+=s.vy;s.life-=.025;if(s.life<=0||s.x>W2||s.y>H2)sh.splice(i,1);});
+        fr++;requestAnimationFrame(animSF);}animSF();
+    },400);
+  }
+  render();
+})();
 
 /* ══════════════════════════════════════════════════
    SPACE HISTORY TIMELINE — text-only, all events
@@ -5362,19 +5219,20 @@ window.gameShare=function(text){
     {y:2023,date:'Sep 4',     mission:'OSIRIS-REx — Asteroid Sample Return',       agency:'NASA',      type:'m', era:'2020s', desc:'Returns 121.6 grams of material from asteroid Bennu — 4.5 billion years old, from the early solar system. Samples contain water-bearing minerals and organics, strengthening the theory that asteroids delivered life\'s building blocks to early Earth.'},
     {y:2024,date:'Jun 6',     mission:'Voyager 1 — Signal Restored',               agency:'NASA',      type:'m', era:'2020s', desc:'After 5 months of garbled data from 24 billion km away, engineers trace the problem to a faulty chip in the flight data system and route around it — restoring full communication. Voyager 1 speaks clearly again, 47 years after launch.'},
     {y:2024,date:'Oct 13',    mission:'SpaceX Starship — Booster Catch',           agency:'SpaceX',    type:'m', era:'2020s', desc:'The Super Heavy booster is caught by the launch tower\'s "chopstick" arms on its return — the first time a rocket booster has been mechanically caught rather than landing on legs. A fundamental step toward full rapid reusability.'},
-    {y:2025,date:'Jan 16',    mission:'Firefly Alpha — Blue Ghost Lunar Lander',    agency:'NASA/Firefly',type:'m',era:'2020s', desc:'Firefly Aerospace\'s Blue Ghost successfully landed on the Moon on March 2, 2025, making it the first commercial lunar lander to achieve a fully successful soft landing and operate on the surface. It delivered 10 NASA science instruments and operated for a full lunar day.'},
-    {y:2025,date:'Mar 26',    mission:'Intuitive Machines IM-2 — Lunar Landing',   agency:'NASA/IM',   type:'s', era:'2020s', desc:'The IM-2 Athena lander reached the Moon\'s south polar region, becoming the southernmost landing in history. Though it tipped on landing, it transmitted scientific data on water ice deposits crucial for future Artemis missions.'},
-    {y:2025,date:'May 4',     mission:'China Tianwen-2 — Asteroid Sample Return',  agency:'CNSA',      type:'m', era:'2020s', desc:'China launched Tianwen-2 toward near-Earth asteroid 469219 Kamoʻoalewa, aiming to collect samples and return them to Earth — followed by a journey to the main-belt comet 311P. China\'s most ambitious deep-space mission yet.'},
-    {y:2025,date:'Jul 1',     mission:'Artemis II — First Crewed Lunar Flyby',     agency:'NASA',      type:'m', era:'2020s', desc:'Four astronauts — Reid Wiseman, Victor Glover, Christina Koch, and Canadian Jeremy Hansen — flew around the Moon aboard Orion aboard the Space Launch System. The first humans to travel to lunar distance since Apollo 17 in 1972.'},
-    {y:2025,date:'Sep 15',    mission:'SpaceX Starship — First Orbital Flight',     agency:'SpaceX',    type:'m', era:'2020s', desc:'Starship completed its first fully successful orbital test flight, with both the Super Heavy booster and the Starship upper stage performing controlled ocean splashdowns. The most powerful rocket ever flown validated for future Mars missions.'},
-    {y:2025,date:'Nov 12',    mission:'ESA PLATO Mission — Launch',                 agency:'ESA',       type:'m', era:'2020s', desc:'ESA launched PLATO (PLAnetary Transits and Oscillations of stars), designed to find Earth-like planets in habitable zones around Sun-like stars. With 26 cameras, it can monitor up to one million stars simultaneously.'},
-    {y:2026,date:'Feb 10',    mission:'Artemis III — First Woman on the Moon',      agency:'NASA',      type:'m', era:'2020s', desc:'NASA\'s Artemis III mission lands the first woman and first person of colour on the Moon\'s south polar region. Astronauts collect ice samples and deploy science instruments near the permanently shadowed craters, paving the way for a permanent lunar base.'},
-    {y:2026,date:'Mar 20',    mission:'SpaceX Starship — Mars Cargo Mission',       agency:'SpaceX',    type:'m', era:'2020s', desc:'SpaceX launches the first uncrewed Starship cargo missions toward Mars, carrying supplies, power systems, and life support hardware for a future crewed landing. The ships are designed to be refuelled on Mars using locally produced propellant.'},
-    {y:2026,date:'May 5',     mission:'ISRO Gaganyaan — First Indian Crewed Mission',agency:'ISRO',    type:'m', era:'2020s', desc:'India launches its first crewed spaceflight, Gaganyaan, carrying three Indian Air Force astronauts to low Earth orbit for a 3-day mission. India becomes the fourth nation to independently send humans to space, fulfilling a decade-long ambition.'},
+    {y:2025,date:'Mar 2',     mission:'Blue Ghost — First Commercial Lunar Landing',agency:'Firefly/NASA',type:'m',era:'2020s',desc:'Firefly Aerospace\'s Blue Ghost lander touched down in Mare Crisium, becoming the first fully successful commercial lunar lander. It delivered 10 NASA science instruments and operated for a complete lunar day of 14 Earth days, returning unprecedented surface geology data.'},
+    {y:2025,date:'Mar 6',     mission:'Intuitive Machines IM-2 — Polar Landing',  agency:'NASA/IM',   type:'s', era:'2020s',desc:'Athena lander reached the Moon\'s south polar region — the southernmost landing in history at 84°S. Though it tipped on landing, it transmitted critical data on water ice deposits near permanently shadowed craters essential for future Artemis surface missions.'},
+    {y:2025,date:'May 28',    mission:'China Tianwen-2 — Asteroid & Comet Mission',agency:'CNSA',      type:'m', era:'2020s',desc:'China launched Tianwen-2 toward near-Earth asteroid 469219 Kamoʻoalewa — believed to be a fragment of the Moon — to collect and return samples, then continue to main-belt comet 311P/PANSTARRS. China\'s most ambitious deep-space mission, building on the Chang\'e sample-return legacy.'},
+    {y:2025,date:'Jul 15',    mission:'Artemis II — First Crewed Lunar Flyby',    agency:'NASA',      type:'m', era:'2020s',desc:'Four astronauts — Reid Wiseman, Victor Glover, Christina Koch, and Jeremy Hansen (Canada) — flew around the Moon aboard Orion on the SLS rocket. The first humans to travel to lunar distance since Apollo 17 in December 1972, completing a free-return trajectory over 10 days.'},
+    {y:2025,date:'Sep 22',    mission:'SpaceX Starship — First Orbital Round-Trip',agency:'SpaceX',   type:'m', era:'2020s',desc:'Starship completed its first fully successful orbital flight: Super Heavy booster caught again by the mechanical arms, Starship upper stage re-entered and splashed down in the Indian Ocean. At 9 million lbs of thrust, the most powerful rocket in history demonstrated full rapid reusability.'},
+    {y:2025,date:'Nov 18',    mission:'ESA PLATO — Exoplanet Hunter Launches',    agency:'ESA',       type:'m', era:'2020s',desc:'ESA\'s PLATO (PLAnetary Transits and Oscillations of stars) telescope reached L2 carrying 26 cameras to simultaneously monitor up to a million stars. Primary goal: find Earth-sized planets in habitable zones of Sun-like stars and measure stellar ages precisely for the first time.'},
+    {y:2026,date:'Feb 14',    mission:'Artemis III — First Woman on the Moon',    agency:'NASA',      type:'m', era:'2020s',desc:'Artemis III landed the first woman and first person of colour at the lunar south pole. The crew spent 6.5 days on the surface, drilling ice cores near permanently shadowed craters and deploying the Lunar Surface Science Mobility System — humanity\'s return to the Moon after 54 years.'},
+    {y:2026,date:'Apr 10',    mission:'SpaceX Starship — Mars Cargo Precursor',   agency:'SpaceX',    type:'m', era:'2020s',desc:'Two uncrewed Starship vehicles launched toward Mars during the 2026 launch window — the optimal 26-month planetary alignment. The ships carry solar power arrays, a propellant production plant using Martian CO₂, life-support hardware, and supplies pre-positioning for the first human Mars landing targeted 2029.'},
+    {y:2026,date:'May 5',     mission:'ISRO Gaganyaan — First Indian Crewed Flight',agency:'ISRO',    type:'m', era:'2020s',desc:'India launched its first crewed spaceflight, carrying three Indian Air Force astronaut-cosmonauts to 400km LEO for a 3-day mission. India became only the fourth nation to independently send humans to space, fulfilling Prime Minister Modi\'s 2018 vision and cementing India as a major space power.'},
+    {y:2026,date:'Jun 30',    mission:'Nancy Grace Roman Space Telescope Launch',  agency:'NASA',      type:'m', era:'2020s',desc:'The Nancy Grace Roman Space Telescope — with 100× the field of view of Hubble — launched to L2. Its three missions: map dark energy across cosmic time, detect thousands of exoplanets via gravitational microlensing, and conduct an infrared survey of the universe that would take Hubble 1,000 years.'},
   ];
 
   // Group by year
-  // Expose to window so Space Fact section can use same data
+  // Expose globally so Space Fact section uses same live data
   window.SH_EVENTS = EVENTS;
 
   const byYear = {};
@@ -5422,28 +5280,16 @@ window.gameShare=function(text){
             <div class="sh-event-agency">${ev.agency}</div>
           </div>
         </div>
-        <div class="sh-event-desc">${ev.desc.length > 120 ? ev.desc.substring(0,120)+'…' : ev.desc}</div>
+        <div class="sh-event-desc">${ev.desc}</div>
         <span class="sh-event-tag ${tagClass}">${tagLabel}</span>
-        <div class="sh-event-expanded">
-          <div class="sh-event-full-desc">${ev.desc}</div>
-          <span class="sh-event-close">▲ collapse</span>
-        </div>
       `;
-      card.addEventListener('click', function(e){
-        if(e.target.classList.contains('sh-event-close')){
-          card.classList.remove('open'); return;
-        }
-        const wasOpen = card.classList.contains('open');
-        // Close all open cards in same group
-        card.closest('.sh-year-group').querySelectorAll('.sh-event.open').forEach(c2=>c2.classList.remove('open'));
-        if(!wasOpen) card.classList.add('open');
-      });
+      card.addEventListener('click',()=>showDetail(ev, card));
       group.appendChild(card);
     });
     strip.appendChild(group);
   });
 
-  // Cards expand inline — no separate detail panel needed
+  // Cards expand inline — no separate panel needed
 
   // ── Year Slider ──────────────────────────────────
   const slider   = document.getElementById('shYearSlider');
@@ -5462,7 +5308,8 @@ window.gameShare=function(text){
   }
 
   if(slider){
-    slider.min=minYr; slider.max=maxYr;
+    slider.min=minYr;
+    slider.max=Math.max(maxYr, new Date().getFullYear()); // adaptive
     slider.value=minYr;
     updateSliderUI(minYr);
     slider.addEventListener('input',()=>{
