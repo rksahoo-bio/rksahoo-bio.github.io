@@ -1,13 +1,13 @@
 {
   "search_metadata": {
-    "id": "6a5990df80a078ac78b76af0",
+    "id": "6a5a2bc7be918a245a31d2a8",
     "status": "Success",
-    "json_endpoint": "https://serpapi.com/searches/DQQj1cuokETp2nwEb38B8A/6a5990df80a078ac78b76af0.json",
-    "created_at": "2026-07-17 02:18:07 UTC",
-    "processed_at": "2026-07-17 02:18:07 UTC",
+    "json_endpoint": "https://serpapi.com/searches/DQQj1cuokETp2nwEb38B8A/6a5a2bc7be918a245a31d2a8.json",
+    "created_at": "2026-07-17 13:19:03 UTC",
+    "processed_at": "2026-07-17 13:19:03 UTC",
     "google_scholar_author_url": "https://scholar.google.com/citations?user=naY3uPgAAAAJ&hl=en",
-    "raw_html_file": "https://serpapi.com/searches/DQQj1cuokETp2nwEb38B8A/6a5990df80a078ac78b76af0.html",
-    "total_time_taken": 3.55
+    "raw_html_file": "https://serpapi.com/searches/DQQj1cuokETp2nwEb38B8A/6a5a2bc7be918a245a31d2a8.html",
+    "total_time_taken": 2.33
   },
   "search_parameters": {
     "engine": "google_scholar_author",
@@ -146,8 +146,8 @@
       "title": "Comparative analysis of obstacle avoidance path planning algorithms for robotic manipulators: RRT, APF, and CHOMP",
       "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:Se3iqnhoufwC",
       "citation_id": "naY3uPgAAAAJ:Se3iqnhoufwC",
-      "authors": "A Uppal, RK Sahoo, M Sinha",
-      "publication": "Authorea Preprints, 2025",
+      "authors": "A Uppal, M Sinha, RK Sahoo",
+      "publication": "TechRxiv 2025 (1229), 2025",
       "cited_by": {
         "value": null
       },
