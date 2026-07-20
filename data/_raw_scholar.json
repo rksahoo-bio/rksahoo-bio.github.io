@@ -1,13 +1,13 @@
 {
   "search_metadata": {
-    "id": "6a5d899f822c5fd26a61a61b",
+    "id": "6a5e2935f3a0a78aaa8fa7d1",
     "status": "Success",
-    "json_endpoint": "https://serpapi.com/searches/DQQj1cuokETp2nwEb38B8A/6a5d899f822c5fd26a61a61b.json",
-    "created_at": "2026-07-20 02:36:15 UTC",
-    "processed_at": "2026-07-20 02:36:15 UTC",
+    "json_endpoint": "https://serpapi.com/searches/DQQj1cuokETp2nwEb38B8A/6a5e2935f3a0a78aaa8fa7d1.json",
+    "created_at": "2026-07-20 13:57:09 UTC",
+    "processed_at": "2026-07-20 13:57:09 UTC",
     "google_scholar_author_url": "https://scholar.google.com/citations?user=naY3uPgAAAAJ&hl=en",
-    "raw_html_file": "https://serpapi.com/searches/DQQj1cuokETp2nwEb38B8A/6a5d899f822c5fd26a61a61b.html",
-    "total_time_taken": 0.96
+    "raw_html_file": "https://serpapi.com/searches/DQQj1cuokETp2nwEb38B8A/6a5e2935f3a0a78aaa8fa7d1.html",
+    "total_time_taken": 1.66
   },
   "search_parameters": {
     "engine": "google_scholar_author",
@@ -87,6 +87,20 @@
       "year": "2024"
     },
     {
+      "title": "Comparative analysis of obstacle avoidance path planning algorithms for robotic manipulators: RRT, APF, and CHOMP",
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:Se3iqnhoufwC",
+      "citation_id": "naY3uPgAAAAJ:Se3iqnhoufwC",
+      "authors": "A Uppal, M Sinha, RK Sahoo",
+      "publication": "TechRxiv 2025 (1229), 2025",
+      "cited_by": {
+        "value": 1,
+        "link": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=10607870738709480258",
+        "serpapi_link": "https://serpapi.com/search.json?cites=10607870738709480258&engine=google_scholar&hl=en",
+        "cites_id": "10607870738709480258"
+      },
+      "year": "2025"
+    },
+    {
       "title": "Model-Less Feedback Control of Space-based Continuum Manipulators using Backbone Tension Optimization",
       "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:ufrVoPGSRksC",
       "citation_id": "naY3uPgAAAAJ:ufrVoPGSRksC",
@@ -141,17 +155,6 @@
         "cites_id": "3214994570949949061"
       },
       "year": "2020"
-    },
-    {
-      "title": "Comparative analysis of obstacle avoidance path planning algorithms for robotic manipulators: RRT, APF, and CHOMP",
-      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=naY3uPgAAAAJ&citation_for_view=naY3uPgAAAAJ:Se3iqnhoufwC",
-      "citation_id": "naY3uPgAAAAJ:Se3iqnhoufwC",
-      "authors": "A Uppal, M Sinha, RK Sahoo",
-      "publication": "TechRxiv 2025 (1229), 2025",
-      "cited_by": {
-        "value": null
-      },
-      "year": "2025"
     },
     {
       "title": "Obstacle Avoidance of UAV in Dynamic Environments Using Direction and Velocity-Adaptive Artificial Potential Field",
@@ -233,8 +236,8 @@
     "table": [
       {
         "citations": {
-          "all": 14,
-          "since_2021": 14
+          "all": 15,
+          "since_2021": 15
         }
       },
       {
@@ -258,6 +261,10 @@
       {
         "year": 2025,
         "citations": 13
+      },
+      {
+        "year": 2026,
+        "citations": 1
       }
     ]
   },
