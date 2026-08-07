@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="dns-prefetch" href="https://eoimages.gsfc.nasa.gov"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Rakesh Kumar Sahoo — PhD Researcher | Spacecraft Dynamics & Control</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -998,396 +1001,9 @@
     /* ── SCROLL ASTRONAUT ── */
 
   
-    /* ── SPACE HISTORY TIMELINE ── */
-    #space-history-section{
-      position:relative;overflow:hidden;
-      background:var(--void);padding-bottom:40px;
-    }
-    .sh-sub{font-family:var(--mono);font-size:.7rem;color:var(--mist);letter-spacing:.08em;margin-top:10px;opacity:.7}
 
-    /* Year slider */
-    .sh-slider-row{
-      display:flex;align-items:center;gap:14px;
-      margin-top:24px;padding:0 2px;
-    }
-    .sh-slider-yr{
-      font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;
-      color:rgba(201,168,76,.55);white-space:nowrap;
-    }
-    .sh-slider-wrap{position:relative;flex:1;}
-    .sh-slider-track{
-      height:2px;background:rgba(201,168,76,.12);
-      border-radius:1px;position:absolute;
-      top:50%;transform:translateY(-50%);
-      left:0;right:0;pointer-events:none;
-    }
-    .sh-slider-fill{
-      height:100%;background:linear-gradient(to right,var(--gold-dim),var(--gold-bright));
-      border-radius:1px;width:0%;
-      transition:width .08s linear;
-    }
-    .sh-slider{
-      -webkit-appearance:none;appearance:none;
-      width:100%;height:20px;background:transparent;
-      cursor:pointer;position:relative;z-index:2;
-      outline:none;
-    }
-    .sh-slider::-webkit-slider-thumb{
-      -webkit-appearance:none;appearance:none;
-      width:16px;height:16px;border-radius:50%;
-      background:var(--gold-bright);
-      border:2px solid rgba(6,9,20,.8);
-      box-shadow:0 0 8px rgba(201,168,76,.5);
-      transition:transform .15s,box-shadow .15s;
-    }
-    .sh-slider:hover::-webkit-slider-thumb{
-      transform:scale(1.3);box-shadow:0 0 16px rgba(201,168,76,.7);
-    }
-    .sh-slider::-moz-range-thumb{
-      width:16px;height:16px;border-radius:50%;
-      background:var(--gold-bright);border:2px solid rgba(6,9,20,.8);
-      cursor:pointer;
-    }
-    /* Floating year tooltip above thumb */
-    .sh-slider-tooltip{
-      position:absolute;top:-28px;
-      font-family:var(--mono);font-size:.56rem;letter-spacing:.12em;
-      color:var(--gold-bright);
-      background:rgba(6,9,20,.88);border:1px solid rgba(201,168,76,.3);
-      padding:2px 7px;pointer-events:none;
-      transform:translateX(-50%);
-      white-space:nowrap;
-      transition:left .08s linear;
-    }
 
-    /* Outer wrap for side arrows */
-    .sh-outer-wrap{
-      position:relative;display:flex;align-items:stretch;
-    }
-    .sh-arrow{
-      position:sticky;
-      top:50%;
-      flex-shrink:0;
-      width:44px;
-      align-self:center;
-      background:rgba(6,9,20,.82);
-      border:1px solid rgba(201,168,76,.2);
-      color:var(--gold);
-      font-size:1.8rem;line-height:1;
-      cursor:pointer;
-      z-index:10;
-      transition:background .2s,border-color .2s,transform .18s;
-      display:flex;align-items:center;justify-content:center;
-      padding:0;height:52px;
-      backdrop-filter:blur(8px);
-    }
-    .sh-arrow:hover{
-      background:rgba(201,168,76,.1);
-      border-color:rgba(201,168,76,.5);
-      transform:scale(1.08);
-    }
-    .sh-arrow-l{border-radius:0 4px 4px 0;margin-right:-1px}
-    .sh-arrow-r{border-radius:4px 0 0 4px;margin-left:-1px}
-
-    /* Scrollable strip wrapper */
-    .sh-strip-wrap{
-      width:100%;overflow-x:auto;overflow-y:hidden;
-      scrollbar-width:none;cursor:grab;
-      padding:0;
-      position:relative;
-    }
-    .sh-strip-wrap::-webkit-scrollbar{display:none}
-    .sh-strip-wrap.dragging{cursor:grabbing}
-
-    /* Year ruler */
-    .sh-ruler{
-      display:flex;align-items:flex-end;
-      padding:20px 8vw 0;
-      width:max-content;
-      min-width:100%;
-      gap:0;
-      border-bottom:1px solid rgba(201,168,76,.15);
-      margin-bottom:0;
-    }
-    .sh-ruler-yr{
-      font-family:var(--mono);font-size:.52rem;letter-spacing:.12em;
-      color:rgba(201,168,76,.4);white-space:nowrap;
-      padding-right:0;
-      transition:color .2s;
-      cursor:pointer;
-      position:relative;
-    }
-    .sh-ruler-yr.has-events::after{
-      content:'';position:absolute;
-      bottom:-5px;left:50%;transform:translateX(-50%);
-      width:4px;height:4px;border-radius:50%;
-      background:rgba(201,168,76,.35);
-    }
-    .sh-ruler-yr.active{color:var(--gold-bright)}
-    .sh-ruler-yr.active::after{background:var(--gold);width:6px;height:6px;bottom:-6px}
-
-    /* Cards strip */
-    .sh-strip{
-      display:flex;gap:0;
-      padding:0 8vw 32px;
-      width:max-content;
-      min-width:100%;
-      align-items:flex-start;
-    }
-
-    /* Year group within strip */
-    .sh-year-group{
-      display:flex;flex-direction:column;gap:10px;
-      padding:16px 16px 16px 0;
-      min-width:300px;
-      max-width:340px;
-      flex-shrink:0;
-      border-right:1px solid rgba(201,168,76,.07);
-    }
-    .sh-year-heading{
-      font-family:var(--mono);font-size:1.4rem;font-weight:800;
-      color:rgba(201,168,76,.18);letter-spacing:-.02em;
-      padding:0 2px 6px;
-      border-bottom:1px solid rgba(201,168,76,.1);
-      margin-bottom:4px;
-    }
-
-    /* Individual event card */
-    .sh-event{
-      padding:14px 16px;
-      border:1px solid rgba(201,168,76,.08);
-      background:rgba(6,9,20,.7);
-      cursor:pointer;
-      transition:border-color .22s,background .22s,transform .22s;
-      position:relative;
-    }
-    .sh-event::before{
-      content:'';position:absolute;
-      left:0;top:0;bottom:0;width:2px;
-      background:transparent;
-      transition:background .22s;
-    }
-    .sh-event:hover{
-      border-color:rgba(201,168,76,.28);
-      background:rgba(201,168,76,.05);
-      transform:translateX(3px);
-    }
-    .sh-event:hover::before{background:var(--gold)}
-    .sh-event.success .sh-event-dot{background:#4ade80}
-    .sh-event.failure .sh-event-dot{background:#f87171}
-    .sh-event.milestone .sh-event-dot{background:var(--gold)}
-    .sh-event-head{display:flex;align-items:flex-start;gap:8px;margin-bottom:6px}
-    .sh-event-dot{
-      width:7px;height:7px;border-radius:50%;
-      flex-shrink:0;margin-top:4px;
-    }
-    .sh-event-date{
-      font-family:var(--mono);font-size:.52rem;letter-spacing:.1em;
-      color:var(--cyan);opacity:.65;margin-bottom:2px;
-    }
-    .sh-event-title{
-      font-size:.82rem;font-weight:700;color:var(--white);
-      letter-spacing:-.01em;line-height:1.3;
-    }
-    .sh-event-agency{
-      font-family:var(--mono);font-size:.5rem;letter-spacing:.13em;
-      color:var(--mist);opacity:.55;margin-top:3px;
-    }
-    .sh-event-desc{
-      font-size:.72rem;color:var(--mist);line-height:1.6;
-      opacity:.8;margin-top:4px;
-      display:-webkit-box;-webkit-line-clamp:3;
-      -webkit-box-orient:vertical;overflow:hidden;
-    }
-    .sh-event-tag{
-      display:inline-block;margin-top:7px;
-      font-family:var(--mono);font-size:.46rem;letter-spacing:.1em;
-      padding:2px 6px;border-radius:2px;
-    }
-    .sh-event-tag.s{background:rgba(74,222,128,.1);color:#4ade80}
-    .sh-event-tag.f{background:rgba(248,113,113,.1);color:#f87171}
-    .sh-event-tag.m{background:rgba(201,168,76,.1);color:var(--gold)}
-
-    /* Progress bar */
-    .sh-progress-wrap{
-      height:2px;background:rgba(201,168,76,.08);
-      margin:0 8vw;
-    }
-    .sh-progress-bar{
-      height:100%;width:0%;
-      background:linear-gradient(to right,var(--gold-dim),var(--gold-bright));
-      transition:width .15s linear;
-    }
-
-    /* Detail panel */
-    .sh-detail{
-      margin:16px 8vw 0;
-      padding:20px 24px;
-      border:1px solid rgba(201,168,76,.2);
-      background:rgba(6,9,20,.88);
-      backdrop-filter:blur(12px);
-      animation:shDetailIn .25s ease;
-    }
-    @keyframes shDetailIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-    .sh-detail-title{font-size:1rem;font-weight:700;color:var(--white);margin-bottom:6px}
-    .sh-detail-meta{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;color:var(--cyan);opacity:.7;margin-bottom:12px}
-    .sh-detail-body{font-size:.8rem;color:var(--mist);line-height:1.68}
-
-    @media(max-width:860px){
-      .sh-year-group{min-width:260px;max-width:290px}
-      .sh-slider-row{gap:8px}
-      .sh-arrow{width:36px;height:44px;font-size:1.4rem}
-    }
-
-        /* ── SCROLL ASTRONAUT ── */
-
-  
-    /* ── SPACE HISTORY TIMELINE ── */
-    #space-history-section{
-      background:var(--void);
-      position:relative;overflow:hidden;
-      padding:0;
-    }
-    #space-history-section .section-wrap{padding-bottom:32px}
-    .sh-sub{font-family:var(--mono);font-size:.68rem;color:var(--mist);letter-spacing:.08em;margin-top:10px;opacity:.65}
-    /* Track outer — full viewport width, no overflow */
-    .sh-track-outer{
-      width:100%;overflow:hidden;
-      position:relative;
-      padding-bottom:48px;
-    }
-    .sh-track{
-      display:flex;
-      transition:transform .6s cubic-bezier(.4,0,.2,1);
-      will-change:transform;
-    }
-    /* Individual event card */
-    .sh-card{
-      flex:0 0 min(440px,92vw);
-      min-height:360px;
-      padding:44px 40px 36px 40px;
-      position:relative;
-      border-right:1px solid rgba(201,168,76,.07);
-      display:flex;flex-direction:column;
-      gap:10px;
-      overflow:hidden;
-      cursor:pointer;
-      transition:background .3s;
-    }
-    .sh-card::before{
-      content:'';
-      position:absolute;top:0;left:0;bottom:0;width:2.5px;
-      background:linear-gradient(to bottom,transparent,var(--gold),transparent);
-      opacity:0;transition:opacity .4s;
-    }
-    .sh-card.active{background:rgba(201,168,76,.028)}
-    .sh-card.active::before{opacity:1}
-    /* Decorative background glow per card */
-    .sh-card-glow{
-      position:absolute;inset:0;
-      background:radial-gradient(ellipse 70% 50% at var(--gx,50%) var(--gy,30%),
-        var(--gc,rgba(77,217,240,.06)) 0%,transparent 70%);
-      pointer-events:none;
-    }
-    /* Top date bar */
-    .sh-date{
-      font-family:var(--mono);
-      font-size:.58rem;letter-spacing:.22em;
-      color:rgba(201,168,76,.55);
-      text-transform:uppercase;
-      margin-bottom:2px;
-    }
-    .sh-card.active .sh-date{color:var(--gold)}
-    /* Big year */
-    .sh-year{
-      font-family:var(--sans);
-      font-size:3.2rem;font-weight:800;
-      color:rgba(255,255,255,.07);
-      line-height:1;
-      letter-spacing:-.03em;
-      margin-bottom:6px;
-      position:absolute;
-      right:32px;top:32px;
-    }
-    .sh-card.active .sh-year{color:rgba(201,168,76,.12)}
-    /* Mission icon + name row */
-    .sh-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:4px}
-    .sh-icon-wrap{
-      width:48px;height:48px;flex-shrink:0;
-      border:1px solid rgba(201,168,76,.2);
-      border-radius:12px;
-      display:flex;align-items:center;justify-content:center;
-      font-size:1.4rem;
-      background:rgba(201,168,76,.05);
-      transition:border-color .3s,background .3s;
-    }
-    .sh-card.active .sh-icon-wrap{border-color:rgba(201,168,76,.45);background:rgba(201,168,76,.1)}
-    .sh-title-col{flex:1;min-width:0}
-    .sh-mission{
-      font-family:var(--sans);
-      font-size:1.05rem;font-weight:700;
-      color:var(--white);
-      line-height:1.2;
-      margin-bottom:4px;
-    }
-    .sh-tags{display:flex;gap:5px;flex-wrap:wrap}
-    .sh-tag{
-      font-family:var(--mono);font-size:.5rem;
-      letter-spacing:.12em;text-transform:uppercase;
-      padding:2px 7px;border-radius:2px;
-      border:1px solid rgba(201,168,76,.18);
-      color:rgba(201,168,76,.6);
-    }
-    .sh-tag.tag-cyan{border-color:rgba(77,217,240,.25);color:rgba(77,217,240,.7)}
-    .sh-tag.tag-red{border-color:rgba(255,90,90,.25);color:rgba(255,90,90,.6)}
-    /* Divider */
-    .sh-rule{height:1px;background:rgba(201,168,76,.08);margin:8px 0}
-    /* Description */
-    .sh-desc{
-      font-size:.8rem;color:var(--mist);line-height:1.7;
-      flex:1;
-    }
-    /* Stats row at bottom */
-    .sh-stats{
-      display:flex;gap:16px;margin-top:auto;padding-top:12px;
-      border-top:1px solid rgba(201,168,76,.06);
-    }
-    .sh-stat{font-family:var(--mono);font-size:.58rem;color:rgba(201,168,76,.45)}
-    .sh-stat strong{display:block;color:var(--gold-bright);font-size:.7rem;margin-bottom:1px}
-    /* Navigation */
-    .sh-nav{
-      display:flex;align-items:center;justify-content:center;
-      gap:14px;padding:0 0 8px;
-    }
-    .sh-nav-btn{
-      width:40px;height:40px;
-      border:1px solid rgba(201,168,76,.25);background:none;
-      color:var(--gold);font-size:1rem;cursor:pointer;
-      border-radius:50%;
-      transition:border-color .2s,background .2s,transform .18s;
-    }
-    .sh-nav-btn:hover:not(:disabled){
-      border-color:var(--gold);background:rgba(201,168,76,.08);
-      transform:scale(1.08);
-    }
-    .sh-nav-btn:disabled{opacity:.22;cursor:not-allowed}
-    .sh-dots{display:flex;gap:5px;align-items:center}
-    .sh-dot{
-      width:5px;height:5px;border-radius:50%;
-      background:rgba(201,168,76,.2);cursor:pointer;
-      transition:background .25s,width .25s,border-radius .25s;
-      border:none;
-    }
-    .sh-dot.active{background:var(--gold);width:16px;border-radius:3px}
-    .sh-counter{
-      font-family:var(--mono);font-size:.6rem;
-      color:rgba(201,168,76,.45);
-      min-width:52px;text-align:center;
-    }
-
-  
     /* ── SPACE HISTORY IFRAME ── */
-    #space-history-section{background:var(--void)}
     .sh-sub{font-family:var(--mono);font-size:.7rem;color:var(--mist);letter-spacing:.08em;margin-top:10px;opacity:.7}
     .sh-iframe-wrap{padding:0 8vw 60px;margin-top:36px}
     .sh-iframe-chrome{
@@ -1481,8 +1097,140 @@
     .sh-event.sh-open .sh-event-expanded{max-height:400px;opacity:1}
     .sh-event-full-body{font-size:.75rem;color:var(--mist);line-height:1.68;border-top:1px solid rgba(201,168,76,.12);padding:12px 0 4px;margin-top:8px}
     .sh-event-collapse{font-family:var(--mono);font-size:.5rem;letter-spacing:.1em;color:rgba(201,168,76,.45);margin-top:8px;display:inline-block;cursor:pointer}
-    .sh-event{cursor:pointer}
     .sh-event.sh-open{border-color:rgba(201,168,76,.38)!important;background:rgba(201,168,76,.04);box-shadow:0 4px 24px rgba(0,0,0,.3)}
+
+  
+    /* ── SPACE HISTORY MODAL ── */
+    #shModal{
+      position:fixed;inset:0;z-index:9800;
+      background:rgba(0,0,0,.96);
+      display:none;
+      flex-direction:column;
+      overflow:hidden;
+      animation:shModalIn .35s cubic-bezier(.22,1,.36,1);
+    }
+    #shModal.open{display:flex}
+    @keyframes shModalIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+    /* Modal top bar */
+    .sh-modal-bar{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:14px 24px;
+      border-bottom:1px solid rgba(201,168,76,.12);
+      background:rgba(4,7,15,.95);
+      flex-shrink:0;
+    }
+    .sh-modal-title{
+      font-family:var(--mono);font-size:.72rem;letter-spacing:.2em;
+      color:var(--gold);text-transform:uppercase;
+    }
+    .sh-modal-close{
+      background:none;border:1px solid rgba(201,168,76,.25);
+      color:var(--gold);font-family:var(--mono);font-size:.65rem;
+      padding:5px 14px;cursor:pointer;letter-spacing:.1em;
+      transition:background .2s,border-color .2s;
+    }
+    .sh-modal-close:hover{background:rgba(201,168,76,.1);border-color:var(--gold)}
+
+    /* Modal body — scrollable */
+    .sh-modal-body{
+      flex:1;overflow-y:auto;overflow-x:hidden;
+      padding:0;
+      scrollbar-width:thin;
+      scrollbar-color:rgba(201,168,76,.25) transparent;
+    }
+    .sh-modal-body::-webkit-scrollbar{width:4px}
+    .sh-modal-body::-webkit-scrollbar-thumb{background:rgba(201,168,76,.25);border-radius:2px}
+
+    /* Slider in modal */
+    .sh-modal-slider-row{
+      display:flex;align-items:center;gap:12px;
+      padding:20px 24px 10px;
+      border-bottom:1px solid rgba(201,168,76,.08);
+    }
+    .sh-modal-yr{font-family:var(--mono);font-size:.58rem;color:rgba(201,168,76,.5);white-space:nowrap}
+    .sh-modal-slider-wrap{position:relative;flex:1}
+    .sh-modal-track{height:2px;background:rgba(201,168,76,.1);position:absolute;top:50%;transform:translateY(-50%);left:0;right:0;pointer-events:none}
+    .sh-modal-fill{height:100%;background:linear-gradient(to right,var(--gold-dim),var(--gold-bright));width:0%;transition:width .08s}
+    #shModalSlider{-webkit-appearance:none;appearance:none;width:100%;height:20px;background:transparent;cursor:pointer;outline:none;position:relative;z-index:2}
+    #shModalSlider::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--gold-bright);border:2px solid rgba(6,9,20,.8);box-shadow:0 0 8px rgba(201,168,76,.5)}
+    .sh-modal-tip{position:absolute;top:-26px;font-family:var(--mono);font-size:.54rem;color:var(--gold-bright);background:rgba(6,9,20,.9);border:1px solid rgba(201,168,76,.3);padding:1px 6px;transform:translateX(-50%);white-space:nowrap;pointer-events:none}
+    .sh-modal-progress-wrap{height:2px;background:rgba(201,168,76,.06);margin:0}
+    .sh-modal-progress{height:100%;background:linear-gradient(to right,var(--gold-dim),var(--gold-bright));width:0%;transition:width .1s}
+
+    /* Horizontal strip inside modal */
+    .sh-modal-strip-outer{
+      overflow-x:auto;overflow-y:hidden;
+      scrollbar-width:none;cursor:grab;
+      padding:20px 0 24px;
+    }
+    .sh-modal-strip-outer::-webkit-scrollbar{display:none}
+    .sh-modal-strip-outer.dragging{cursor:grabbing}
+    .sh-modal-strip{display:flex;gap:0;width:max-content;padding:0 24px}
+
+    /* Year groups */
+    .sh-year-group{
+      display:flex;flex-direction:column;gap:10px;
+      padding:0 16px 0 0;min-width:300px;max-width:340px;
+      flex-shrink:0;
+      border-right:1px solid rgba(201,168,76,.06);
+    }
+    .sh-year-heading{
+      font-family:var(--mono);font-size:1.4rem;font-weight:800;
+      color:rgba(201,168,76,.16);letter-spacing:-.02em;
+      padding:0 2px 6px;
+      border-bottom:1px solid rgba(201,168,76,.08);
+      margin-bottom:4px;
+    }
+
+    /* Event cards */
+    .sh-event{
+      padding:14px 16px;
+      border:1px solid rgba(201,168,76,.07);
+      background:rgba(6,9,20,.7);
+      cursor:pointer;
+      transition:border-color .22s,background .22s,transform .2s;
+      position:relative;
+    }
+    .sh-event::before{
+      content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
+      background:transparent;transition:background .22s;
+    }
+    .sh-event:hover{border-color:rgba(201,168,76,.25);background:rgba(201,168,76,.04);transform:translateX(3px)}
+    .sh-event:hover::before{background:var(--gold)}
+    .sh-event.sh-open{border-color:rgba(201,168,76,.35)!important;background:rgba(201,168,76,.05);box-shadow:0 4px 20px rgba(0,0,0,.3)}
+    .sh-event-date{font-family:var(--mono);font-size:.5rem;letter-spacing:.1em;color:var(--cyan);opacity:.6;margin-bottom:4px}
+    .sh-event-head{display:flex;align-items:flex-start;gap:7px;margin-bottom:5px}
+    .sh-event-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:3px}
+    .sh-event.milestone .sh-event-dot{background:#f0c842}
+    .sh-event.success  .sh-event-dot{background:#4ade80}
+    .sh-event.failure  .sh-event-dot{background:#f87171}
+    .sh-event-title{font-size:.82rem;font-weight:700;color:var(--white);letter-spacing:-.01em;line-height:1.3}
+    .sh-event-agency{font-family:var(--mono);font-size:.5rem;letter-spacing:.12em;color:var(--mist);opacity:.55;margin-top:2px}
+    .sh-event-desc{font-size:.72rem;color:var(--mist);line-height:1.6;opacity:.8;margin-top:4px}
+    .sh-event-tag{display:inline-block;margin-top:7px;font-family:var(--mono);font-size:.46rem;letter-spacing:.1em;padding:2px 6px;border-radius:2px}
+    .sh-event-tag.m{background:rgba(201,168,76,.1);color:var(--gold)}
+    .sh-event-tag.s{background:rgba(74,222,128,.1);color:#4ade80}
+    .sh-event-tag.f{background:rgba(248,113,113,.1);color:#f87171}
+
+    /* Inline expand */
+    .sh-event-expanded{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1),opacity .3s;opacity:0}
+    .sh-event.sh-open .sh-event-expanded{max-height:400px;opacity:1}
+    .sh-event-full-body{font-size:.74rem;color:var(--mist);line-height:1.66;border-top:1px solid rgba(201,168,76,.1);padding:10px 0 2px;margin-top:8px}
+    .sh-event-collapse{font-family:var(--mono);font-size:.48rem;letter-spacing:.1em;color:rgba(201,168,76,.4);margin-top:7px;display:inline-block;cursor:pointer}
+
+    /* Modal nav arrows */
+    .sh-modal-arrows{display:flex;gap:8px;align-items:center;padding:0 24px 20px}
+    .sh-modal-arrow{background:rgba(6,9,20,.85);border:1px solid rgba(201,168,76,.2);color:var(--gold);font-size:1.2rem;width:38px;height:38px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .2s,background .2s}
+    .sh-modal-arrow:hover{border-color:var(--gold);background:rgba(201,168,76,.08)}
+    .sh-modal-counter{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;color:rgba(201,168,76,.45);margin-left:4px}
+    .sh-modal-update-note{font-family:var(--mono);font-size:.52rem;color:rgba(201,168,76,.35);padding:0 24px 16px;letter-spacing:.06em}
+
+    @media(max-width:860px){
+      .sh-year-group{min-width:260px;max-width:290px}
+      .sh-modal-bar{padding:10px 14px}
+      .sh-modal-slider-row{padding:14px 14px 8px}
+    }
 
   </style>
 </head>
@@ -1616,7 +1364,7 @@
     <div class="about-grid">
       <div class="reveal">
         <div class="about-top">
-          <img src="images/about-me.png" alt="Rakesh Kumar Sahoo" class="about-avatar"/>
+          <img src="images/about-me.png" alt="Rakesh Kumar Sahoo" class="about-avatar" loading="lazy"/>
           <div class="about-info-rows">
             <div class="arow"><b>Name: </b>Rakesh Kumar Sahoo</div>
             <div class="arow"><b>Job Role: </b>PhD Research Scholar</div>
@@ -1945,6 +1693,22 @@
       <div class="section-num">// Your Space Story</div>
       <h2 class="section-title">Your <em>Space Fact</em></h2>
       <p style="font-family:var(--mono);font-size:.72rem;color:var(--mist);margin-top:12px;letter-spacing:.06em">Enter your details — discover what happened in space when you were born</p>
+      <button id="openHistoryBtn" onclick="openSpaceHistory()" style="
+        margin-top:18px;display:inline-flex;align-items:center;gap:9px;
+        background:none;border:1px solid rgba(201,168,76,.3);
+        color:var(--gold);font-family:var(--mono);font-size:.62rem;
+        letter-spacing:.14em;text-transform:uppercase;
+        padding:9px 20px;cursor:pointer;
+        transition:border-color .22s,background .22s;
+      " onmouseover="this.style.borderColor='var(--gold)';this.style.background='rgba(201,168,76,.07)'"
+         onmouseout="this.style.borderColor='rgba(201,168,76,.3)';this.style.background='none'">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="7" cy="7" r="6" stroke="#c9a84c" stroke-width="1.2"/>
+          <circle cx="7" cy="5" r="1.2" fill="#c9a84c"/>
+          <rect x="6.3" y="7.2" width="1.4" height="3.4" rx=".7" fill="#c9a84c"/>
+        </svg>
+        Explore Full Space History →
+      </button>
     </div>
     <div class="reveal" id="spacefactContainer">
       <!-- Injected by JS -->
@@ -1952,44 +1716,6 @@
   </div>
 </section>
 
-
-<!-- ══ SPACE HISTORY TIMELINE ══ -->
-<section id="space-history-section">
-  <div class="section-wrap">
-    <div class="section-header reveal">
-      <div class="section-num">// Space Exploration</div>
-      <h2 class="section-title">History of <em>Space</em></h2>
-      <p class="sh-sub reveal">Every milestone — from V-2 rockets to interstellar probes</p>
-    </div>
-    <!-- Year slider navigation -->
-    <div class="sh-slider-row reveal">
-      <span class="sh-slider-yr" id="shSliderYrLeft">1944</span>
-      <div class="sh-slider-wrap">
-        <div class="sh-slider-track">
-          <div class="sh-slider-fill" id="shSliderFill"></div>
-        </div>
-        <input type="range" class="sh-slider" id="shYearSlider" min="1944" max="2026" step="1" value="1944" aria-label="Jump to year">
-        <div class="sh-slider-tooltip" id="shSliderTip">1944</div>
-      </div>
-      <span class="sh-slider-yr" id="shSliderYrRight">2024</span>
-    </div>
-  </div>
-  <!-- Scrollable strip with fixed side-arrow navigation -->
-  <div class="sh-outer-wrap">
-    <button class="sh-arrow sh-arrow-l" id="shArrowL" aria-label="Scroll left">&#8249;</button>
-    <div class="sh-strip-wrap" id="shStripWrap">
-      <div class="sh-ruler" id="shRuler"></div>
-      <div class="sh-strip" id="shStrip"></div>
-    </div>
-    <button class="sh-arrow sh-arrow-r" id="shArrowR" aria-label="Scroll right">&#8250;</button>
-  </div>
-  <!-- Progress bar -->
-  <div class="sh-progress-wrap">
-    <div class="sh-progress-bar" id="shProgressBar"></div>
-  </div>
-  <!-- Detail panel -->
-  <div class="sh-detail" id="shDetail" style="display:none"></div>
-</section>
 
 <div class="divider"></div>
 <section id="contact-section">
@@ -3678,6 +3404,35 @@ h2{font-size:11pt;font-weight:700;text-transform:uppercase;letter-spacing:.12em;
   <div class="skill-row"><span>Languages</span><span>English, Hindi, Odia</span></div>
   <div class="skill-row"><span>Interests</span><span>Table Tennis, Formula 1, Teaching</span></div>
 </div></div>
+
+<!-- ══ SPACE HISTORY MODAL (lazy-loaded) ══ -->
+<div id="shModal" role="dialog" aria-modal="true" aria-label="History of Space">
+  <div class="sh-modal-bar">
+    <span class="sh-modal-title">🛸 &nbsp;History of Space &nbsp;·&nbsp; 1944 – 2026</span>
+    <button class="sh-modal-close" onclick="closeSpaceHistory()">✕ &nbsp;Close</button>
+  </div>
+  <div class="sh-modal-body" id="shModalBody">
+    <div class="sh-modal-slider-row">
+      <span class="sh-modal-yr" id="shMYrL">1944</span>
+      <div class="sh-modal-slider-wrap">
+        <div class="sh-modal-track"><div class="sh-modal-fill" id="shMFill"></div></div>
+        <input type="range" id="shModalSlider" min="1944" max="2026" step="1" value="1944" aria-label="Jump to year">
+        <div class="sh-modal-tip" id="shMTip">1944</div>
+      </div>
+      <span class="sh-modal-yr" id="shMYrR">2026</span>
+    </div>
+    <div class="sh-modal-progress-wrap"><div class="sh-modal-progress" id="shMProgress"></div></div>
+    <div class="sh-modal-strip-outer" id="shMOuter">
+      <div class="sh-modal-strip" id="shMStrip"></div>
+    </div>
+    <div class="sh-modal-arrows">
+      <button class="sh-modal-arrow" id="shMLeft">&#8249;</button>
+      <button class="sh-modal-arrow" id="shMRight">&#8250;</button>
+      <span class="sh-modal-counter" id="shMCounter"></span>
+    </div>
+    <div class="sh-modal-update-note" id="shMNote">Loading events…</div>
+  </div>
+</div>
 </body></html>`;
     const blob=new Blob([cvHTML],{type:'text/html'});
     const url=URL.createObjectURL(blob);
@@ -5025,15 +4780,31 @@ window.gameShare=function(text){
     2026:[{icon:'👩‍🚀',title:'First Woman on the Moon',body:'Artemis III — first woman at lunar south pole. India launched Gaganyaan.',tag:'Historic First'}],
   };
   function getEventsForYear(year){
+    // Use lazy-loaded SH_EVENTS (populated when user opens History modal)
     const hist=window.SH_EVENTS||[];
     if(hist.length){
       const exact=hist.filter(ev=>ev.y===year);
-      if(exact.length) return exact.map(ev=>({icon:ev.type==='m'?'★':ev.type==='s'?'✓':'✗',title:ev.mission,body:ev.desc,tag:ev.agency,matchYear:year,exact:true}));
+      if(exact.length){
+        // Return ALL events from this exact year
+        return exact.map(ev=>({
+          icon:ev.type==='m'?'★':ev.type==='s'?'✓':'✗',
+          title:ev.mission, body:ev.desc, tag:ev.agency,
+          matchYear:year, exact:true
+        }));
+      }
+      // No exact match — find nearest 2 years
       const dataYrs=[...new Set(hist.map(ev=>ev.y))].sort((a,b)=>Math.abs(a-year)-Math.abs(b-year));
       const result=[];
-      dataYrs.slice(0,2).forEach(y=>hist.filter(ev=>ev.y===y).slice(0,2).forEach(ev=>result.push({icon:ev.type==='m'?'★':ev.type==='s'?'✓':'✗',title:ev.mission,body:ev.desc,tag:ev.agency,matchYear:y,exact:false})));
-      return result.slice(0,4);
+      dataYrs.slice(0,2).forEach(y=>{
+        hist.filter(ev=>ev.y===y).forEach(ev=>result.push({
+          icon:ev.type==='m'?'★':ev.type==='s'?'✓':'✗',
+          title:ev.mission, body:ev.desc, tag:ev.agency,
+          matchYear:y, exact:false
+        }));
+      });
+      return result.slice(0,6);
     }
+    // Fallback built-in
     if(SPACE_EVENTS_FALLBACK[year]) return SPACE_EVENTS_FALLBACK[year].map(ev=>({...ev,matchYear:year,exact:true}));
     const yrs=Object.keys(SPACE_EVENTS_FALLBACK).map(Number).sort((a,b)=>Math.abs(a-year)-Math.abs(b-year));
     return yrs.slice(0,2).flatMap(y=>SPACE_EVENTS_FALLBACK[y].map(ev=>({...ev,matchYear:y,exact:false})));
@@ -5059,12 +4830,19 @@ window.gameShare=function(text){
     const isExact=events.length>0&&events[0].exact;
     const conns=[`When ${name} came into the world in ${year},`,`The year ${name} was born,`,`In ${year} — the same year ${name} arrived —`,`${name}'s birth year of ${year} was remarkable:`];
     const connText=conns[Math.floor(Math.random()*conns.length)];
-    const eventCards=events.map((ev,idx)=>`<div class="sf-card${idx===0?' highlight':''}">
-      <div class="sf-highlight-tag">${idx===0?(isExact?'🌟 YOUR BIRTH YEAR · '+year+(events.length>1?' — '+events.length+' events':''):'🔍 CLOSEST: '+ev.matchYear):'EVENT '+(idx+1)+' · '+ev.matchYear}</div>
-      <div class="sf-card-year">${ev.matchYear}</div><div class="sf-card-icon">${ev.icon}</div>
-      <div class="sf-card-title">${ev.title}</div>
-      <div class="sf-card-body">${idx===0?'<em style="color:var(--gold-dim)">'+connText+'</em> ':''}${ev.body}</div>
-      <div class="sf-card-tag">${ev.tag}</div></div>`).join('');
+    const eventCards=events.map((ev,idx)=>`
+      <div class="sf-card${idx===0?' highlight':''}">
+        <div class="sf-highlight-tag">${idx===0
+          ? (isExact
+              ? '🌟 YOUR BIRTH YEAR · '+year+(events.length>1?' &nbsp;·&nbsp; <span style="color:var(--cyan)">'+events.length+' events</span>':'')
+              : '🔍 CLOSEST MATCH · '+ev.matchYear)
+          : '<span style="opacity:.6">Event '+(idx+1)+' of '+events.length+' &nbsp;·&nbsp; '+ev.matchYear+'</span>'}</div>
+        <div class="sf-card-year">${ev.matchYear}</div>
+        <div class="sf-card-icon">${ev.icon}</div>
+        <div class="sf-card-title">${ev.title}</div>
+        <div class="sf-card-body">${idx===0?'<em style="color:var(--gold-dim)">'+connText+'</em> ':''}${ev.body}</div>
+        <div class="sf-card-tag">${ev.tag}</div>
+      </div>`).join('');
     result.innerHTML=`<div style="font-family:var(--mono);font-size:.65rem;letter-spacing:.14em;color:var(--gold);text-transform:uppercase;margin-bottom:20px">✦ Space story for ${name}${dob?' · '+dob+' '+year:' · '+year} ✦</div>
       <div class="sf-cards">${eventCards}
         <div class="sf-card" style="min-height:200px;padding:0;overflow:hidden;position:relative">
@@ -5093,294 +4871,371 @@ window.gameShare=function(text){
   render();
 })();
 
+
+
+
+
 /* ══════════════════════════════════════════════════
-   SPACE HISTORY TIMELINE — text-only, all events
-   Grouped by year, era tabs for jump nav,
-   drag-scroll horizontal strip, detail panel on click.
-   Status: ✓ success  ✗ failure  ★ milestone
+   SPACE HISTORY MODAL — lazy-loaded, opens on demand.
+   NOT loaded at startup = faster page load.
+   Auto-updates monthly via Spaceflight News API.
 ══════════════════════════════════════════════════ */
+
 (function(){
-  const strip    = document.getElementById('shStrip');
-  const ruler    = document.getElementById('shRuler');
-  const wrap     = document.getElementById('shStripWrap');
+  let modalBuilt = false;
 
-  const detail   = document.getElementById('shDetail');
-  const progress = document.getElementById('shProgressBar');
-  if(!strip) return;
+  // ── Full events array (lazy — only parsed when modal opens) ──
+  function getEvents(){
+    if(window.SH_EVENTS) return window.SH_EVENTS;
+      const EVENTS = [
+      // 1940s
+      {y:1944,date:'Jun 20',    mission:'V-2 MW 18014 — First Space Boundary Cross', agency:'Germany',  type:'m', era:'1940s-1950s', desc:'A V-2 rocket crosses 100km altitude for the first time in a vertical test launch at Peenemünde — becoming the first human-made object to reach space (by the modern definition of the Kármán line).'},
+      {y:1946,date:'May 10',    mission:'First Space Photography (V-2)',              agency:'USA',       type:'m', era:'1940s-1950s', desc:'A captured V-2 rocket carries a 35mm motion-picture camera to 105km altitude over White Sands, returning the first photographs of Earth from space.'},
+      {y:1947,date:'Feb 20',    mission:'First Animals in Space (Fruit Flies)',       agency:'USA',       type:'s', era:'1940s-1950s', desc:'Fruit flies are launched aboard a V-2 rocket to 108km, becoming the first living creatures in space. They are recovered alive after parachuting back.'},
+      {y:1949,date:'Jun 14',    mission:'Albert II — First Primate in Space',         agency:'USA',       type:'s', era:'1940s-1950s', desc:'A rhesus monkey named Albert II reaches 134km altitude aboard a V-2 rocket. He survived the flight but died on impact due to parachute failure.'},
+      // 1950s
+      {y:1957,date:'Oct 4',     mission:'Sputnik 1',                                  agency:'USSR',      type:'m', era:'1940s-1950s', desc:'The first artificial satellite. A polished aluminium sphere 58cm across, orbiting every 96 minutes at 7.9 km/s. Its radio beeps could be received worldwide and stunned the West into the Space Race.'},
+      {y:1957,date:'Nov 3',     mission:'Sputnik 2 — Laika',                          agency:'USSR',      type:'s', era:'1940s-1950s', desc:'Laika, a stray dog from Moscow, becomes the first living creature to orbit Earth. Sent with no return plan — she survived only hours due to overheating. Her mission proved living organisms could survive launch and orbital conditions.'},
+      {y:1958,date:'Jan 31',    mission:'Explorer 1',                                  agency:'USA',       type:'m', era:'1940s-1950s', desc:'America\'s first successful satellite, designed in 84 days. Its Geiger counter discovered the Van Allen radiation belts — the first major scientific discovery of the Space Age.'},
+      {y:1958,date:'Mar 17',    mission:'Vanguard 1',                                  agency:'USA',       type:'s', era:'1940s-1950s', desc:'The oldest artificial satellite still in space. Measuring Earth\'s shape precisely, it revealed Earth is slightly pear-shaped. Still in orbit after 67 years, it will remain for ~240 years.'},
+      {y:1958,date:'Oct 1',     mission:'NASA Founded',                                agency:'USA',       type:'m', era:'1940s-1950s', desc:'The National Aeronautics and Space Administration is officially established, replacing NACA. President Eisenhower signs the Space Act into law, setting the stage for all US civilian space exploration.'},
+      {y:1959,date:'Jan 2',     mission:'Luna 1 — Earth Escape',                       agency:'USSR',      type:'m', era:'1940s-1950s', desc:'First spacecraft to escape Earth orbit. Missed the Moon but became the first artificial object to reach heliocentric orbit, also discovering the solar wind.'},
+      {y:1959,date:'Sep 14',    mission:'Luna 2 — Moon Impact',                        agency:'USSR',      type:'m', era:'1940s-1950s', desc:'First spacecraft to reach another celestial body, deliberately impacting the Moon carrying Soviet pennants. First delivery of an object from Earth to another world.'},
+      {y:1959,date:'Oct 7',     mission:'Luna 3 — Far Side of Moon',                   agency:'USSR',      type:'m', era:'1940s-1950s', desc:'First photographs of the far side of the Moon. The images revealed a surface dramatically different from the near side — fewer maria (dark plains), more craters — changing our understanding of the Moon forever.'},
+      // 1960s
+      {y:1960,date:'May 15',    mission:'Sputnik 4 (Korabl-Sputnik 1)',               agency:'USSR',      type:'s', era:'1960s', desc:'First test of the Vostok spacecraft design with a mannequin aboard. Tested life-support and re-entry systems for the upcoming crewed flights.'},
+      {y:1960,date:'Aug 19',    mission:'Sputnik 5 — First Animals Returned',         agency:'USSR',      type:'m', era:'1960s', desc:'Belka and Strelka become the first animals to orbit Earth and return alive. They spent a day in orbit before being safely recovered, proving the round-trip was survivable.'},
+      {y:1961,date:'Apr 12',    mission:'Vostok 1 — Gagarin',                         agency:'USSR',      type:'m', era:'1960s', desc:'"Poyekhali!" Yuri Gagarin becomes the first human in space, completing one orbit in 108 minutes at 27,400 km/h. He ejected at 7km and parachuted separately — a fact hidden from the public for decades to preserve the flight record.'},
+      {y:1961,date:'May 5',     mission:'Freedom 7 — Shepard',                        agency:'USA',       type:'s', era:'1960s', desc:'Alan Shepard becomes the first American in space on a 15-minute suborbital flight reaching 187km. Unlike Gagarin, Shepard manually controlled his capsule during re-entry, demonstrating pilot authority in space.'},
+      {y:1961,date:'May 25',    mission:'Kennedy Moon Declaration',                   agency:'USA',       type:'m', era:'1960s', desc:'President Kennedy addresses Congress: "I believe that this nation should commit itself to achieving the goal, before this decade is out, of landing a man on the Moon and returning him safely to Earth."'},
+      {y:1962,date:'Feb 20',    mission:'Friendship 7 — Glenn',                       agency:'USA',       type:'s', era:'1960s', desc:'John Glenn becomes the first American to orbit Earth, completing three orbits. A faulty sensor warning that his heat shield was loose forced Mission Control to keep the retrorocket package attached — it burned away harmlessly but the risk was real.'},
+      {y:1962,date:'Aug 27',    mission:'Mariner 2 — Venus Flyby',                    agency:'USA',       type:'m', era:'1960s', desc:'First successful interplanetary spacecraft. Flew past Venus on December 14 confirming surface temperatures of ~425°C — ruling out any surface life and setting the stage for comparative planetology.'},
+      {y:1963,date:'Jun 16',    mission:'Vostok 6 — Tereshkova',                      agency:'USSR',      type:'m', era:'1960s', desc:'Valentina Tereshkova becomes the first woman in space, orbiting Earth 48 times over nearly 3 days — more cumulative orbital experience than all US astronauts combined to that date. She remains the only woman to fly a solo mission.'},
+      {y:1965,date:'Mar 18',    mission:'Voskhod 2 — Leonov EVA',                     agency:'USSR',      type:'m', era:'1960s', desc:'Alexei Leonov performs the first spacewalk — 12 minutes outside the spacecraft. His suit inflated in the vacuum, preventing him from re-entering. He had to release air pressure from his suit to squeeze back in, risking decompression sickness.'},
+      {y:1965,date:'Jul 14',    mission:'Mariner 4 — Mars Flyby',                     agency:'USA',       type:'m', era:'1960s', desc:'First successful Mars flyby, returning 22 photographs. They revealed a cratered, Moon-like surface — dashing hopes of a life-bearing Mars. Atmospheric pressure was measured at just 0.5% of Earth\'s.'},
+      {y:1966,date:'Feb 3',     mission:'Luna 9 — First Lunar Soft Landing',          agency:'USSR',      type:'m', era:'1960s', desc:'First spacecraft to soft-land on another world and transmit photographs from the surface. The images proved the Moon\'s surface was solid enough to support a lander — and eventually humans.'},
+      {y:1966,date:'Mar 1',     mission:'Venera 3 — Venus Impact',                    agency:'USSR',      type:'m', era:'1960s', desc:'First spacecraft to impact another planet. Venera 3 crashed into Venus on March 1, 1966 — contact had been lost before arrival, so no data was returned, but it delivered an Earth pennant to the surface of Venus.'},
+      {y:1967,date:'Jan 27',    mission:'Apollo 1 — Launch Pad Fire',                 agency:'USA',       type:'f', era:'1960s', desc:'A cabin fire during a launch rehearsal test kills astronauts Gus Grissom, Ed White, and Roger Chaffee. The disaster leads to a complete redesign of the Apollo capsule, delaying the programme by 21 months.'},
+      {y:1967,date:'Apr 24',    mission:'Soyuz 1 — Komarov Crash',                   agency:'USSR',      type:'f', era:'1960s', desc:'Vladimir Komarov dies when his Soyuz 1 parachute fails during re-entry — the first in-flight space fatality. The spacecraft had 203 documented design faults. Komarov reportedly knew the mission was dangerous.'},
+      {y:1968,date:'Dec 21',    mission:'Apollo 8 — First Lunar Orbit',              agency:'USA',       type:'m', era:'1960s', desc:'First humans to leave Earth orbit and orbit the Moon. Frank Borman, Jim Lovell, and William Anders orbit the Moon 10 times on Christmas Eve. Their "Earthrise" photograph becomes one of the most influential images ever taken.'},
+      {y:1969,date:'Jul 20',    mission:'Apollo 11 — First Moon Landing',            agency:'USA',       type:'m', era:'1960s', desc:'"One small step for man, one giant leap for mankind." Neil Armstrong and Buzz Aldrin spend 2h 31m on the lunar surface at Tranquility Base. 600 million people — 1 in 5 humans alive — watch live on television.'},
+      {y:1969,date:'Nov 19',    mission:'Apollo 12 — Precision Landing',             agency:'USA',       type:'s', era:'1960s', desc:'Pete Conrad and Alan Bean land within 200m of the Surveyor 3 probe. They retrieve parts of the probe, showing hardware can survive years on the lunar surface — critical data for future missions.'},
+      // 1970s
+      {y:1970,date:'Apr 11',    mission:'Apollo 13 — "Successful Failure"',          agency:'USA',       type:'f', era:'1970s', desc:'An oxygen tank explosion 56 hours into the flight forces the crew to use the Lunar Module as a lifeboat. Mission controllers improvise a CO2 scrubber fix using only items onboard. The crew splashes down safely after looping around the Moon — 56 hours, 54,000 miles away at farthest point.'},
+      {y:1970,date:'Sep 12',    mission:'Luna 16 — First Robot Sample Return',       agency:'USSR',      type:'m', era:'1970s', desc:'First robotic mission to land on the Moon and return samples to Earth. Returned 101 grams of lunar material — proving automated sample return was feasible and far cheaper than crewed missions.'},
+      {y:1970,date:'Nov 17',    mission:'Lunokhod 1 — First Rover',                  agency:'USSR',      type:'m', era:'1970s', desc:'First rover to operate on another world. Operated for 10 months, travelling 10.5km — far beyond its planned 3-month lifespan. Controlled from Earth with an 2.5-second signal delay.'},
+      {y:1971,date:'Apr 19',    mission:'Salyut 1 — First Space Station',            agency:'USSR',      type:'m', era:'1970s', desc:'Humanity\'s first space station. The Soyuz 11 crew lived aboard for 23 days — but all three cosmonauts died during re-entry when a pressure equalisation valve opened prematurely.'},
+      {y:1971,date:'Nov 13',    mission:'Mariner 9 — First Mars Orbit',              agency:'USA',       type:'m', era:'1970s', desc:'First spacecraft to orbit another planet. Arrived during a global dust storm but mapped 85% of the Martian surface. Discovered Olympus Mons, Valles Marineris, and evidence of ancient river valleys.'},
+      {y:1972,date:'Mar 2',     mission:'Pioneer 10 — Asteroid Belt & Beyond',       agency:'USA',       type:'m', era:'1970s', desc:'First spacecraft to traverse the Asteroid Belt (emerging safely — disproving fears it was impassable) and to fly by Jupiter. Carried the famous gold-anodised plaque with a message from humanity.'},
+      {y:1972,date:'Dec 7',     mission:'Blue Marble — Apollo 17',                   agency:'USA',       type:'m', era:'1970s', desc:'"The Blue Marble" — astronaut Harrison Schmitt photographs Earth fully illuminated from 29,000km. Arguably the most reproduced photograph in history, it catalysed the global environmental movement.'},
+      {y:1973,date:'Apr 5',     mission:'Pioneer 11 — Jupiter & Saturn',             agency:'USA',       type:'m', era:'1970s', desc:'Second spacecraft to reach Jupiter and the first to visit Saturn. Pioneer 11 discovered a second radiation belt at Jupiter and confirmed Saturn\'s magnetic field.'},
+      {y:1973,date:'May 14',    mission:'Skylab — US Space Station',                 agency:'USA',       type:'s', era:'1970s', desc:'America\'s first space station, assembled from modified Saturn V hardware. Three crews lived aboard for 28, 59, and 84 days — all records at the time. Re-entered 1979 with debris landing in Australia.'},
+      {y:1974,date:'Nov 3',     mission:'Mariner 10 — First Mercury Flyby',          agency:'USA',       type:'m', era:'1970s', desc:'First spacecraft to visit Mercury and first to use a gravity assist to reach another planet. Made three flybys of Mercury, mapping 45% of its surface and discovering its magnetic field.'},
+      {y:1975,date:'Jul 17',    mission:'Apollo–Soyuz — Cold War Handshake',         agency:'USA/USSR',  type:'m', era:'1970s', desc:'First international crewed mission. US Apollo and Soviet Soyuz dock in orbit. Astronaut Tom Stafford and cosmonaut Aleksei Leonov shake hands through the docking tunnel — a landmark moment of Cold War détente.'},
+      {y:1975,date:'Oct 22',    mission:'Venera 9 — First Venus Surface Photos',     agency:'USSR',      type:'m', era:'1970s', desc:'First spacecraft to orbit Venus and first to transmit photographs from the surface of another planet. Images showed angular rocks suggesting geologically young surface activity.'},
+      {y:1976,date:'Jul 20',    mission:'Viking 1 — First Mars Landing',             agency:'USA',       type:'m', era:'1970s', desc:'First successful Mars lander. Returned the first photographs from the Martian surface and conducted biology experiments searching for life. Results were ambiguous — the debate continues to this day.'},
+      {y:1977,date:'Aug 20',    mission:'Voyager 2 — Grand Tour',                    agency:'USA',       type:'m', era:'1970s', desc:'Launched to take advantage of a rare planetary alignment allowing a Grand Tour of all four outer planets (Jupiter, Saturn, Uranus, Neptune) — an opportunity that won\'t recur until 2153.'},
+      {y:1977,date:'Sep 5',     mission:'Voyager 1 — Now in Interstellar Space',     agency:'USA',       type:'m', era:'1970s', desc:'The most distant human-made object, currently over 23 billion km from Earth. Launched on a faster trajectory than Voyager 2. Crossed the heliopause in 2012, entering interstellar space. Still transmitting data.'},
+      {y:1978,date:'May 20',    mission:'Pioneer Venus — First Venus Orbiter',       agency:'USA',       type:'s', era:'1970s', desc:'First American spacecraft to orbit Venus. Mapped 93% of the surface using radar and operated for 14 years — vastly exceeding its design life.'},
+      {y:1979,date:'Mar 5',     mission:'Voyager 1 — Jupiter Flyby',                 agency:'USA',       type:'m', era:'1970s', desc:'Voyager 1\'s Jupiter flyby discovered active volcanoes on Io — the first extraterrestrial volcanic activity ever observed. Also discovered a thin ring around Jupiter and revealed Europa\'s smooth icy surface hinting at a subsurface ocean.'},
+      // 1980s
+      {y:1980,date:'Nov 12',    mission:'Voyager 1 — Saturn Flyby',                  agency:'USA',       type:'m', era:'1980s', desc:'First close examination of Saturn\'s rings, revealing thousands of individual ringlets instead of a few bands. Titan\'s thick nitrogen atmosphere was detected, showing it might harbour organic chemistry.'},
+      {y:1981,date:'Apr 12',    mission:'STS-1 Columbia — First Shuttle Launch',     agency:'USA',       type:'m', era:'1980s', desc:'First launch of the Space Shuttle, on the 20th anniversary of Gagarin\'s flight. Columbia flew 27 missions before being lost in 2003. The Shuttle programme flew 135 missions over 30 years — the most complex vehicle ever built.'},
+      {y:1983,date:'Jun 13',    mission:'Pioneer 10 — Beyond Neptune',               agency:'USA',       type:'m', era:'1980s', desc:'First spacecraft to travel beyond the orbit of Neptune, entering truly uncharted space. Last successful contact in 2003, when Pioneer 10 was 12 billion km from Earth — faint, but still speaking.'},
+      {y:1983,date:'Jun 18',    mission:'Sally Ride — First US Woman in Space',      agency:'USA',       type:'m', era:'1980s', desc:'Sally Ride becomes the first American woman to fly in space on STS-7. At 32, she was also the youngest American astronaut. She later founded an organisation to promote science education for girls.'},
+      {y:1984,date:'Feb 7',     mission:'First Untethered Spacewalk (MMU)',           agency:'USA',       type:'m', era:'1980s', desc:'Bruce McCandless II performs the first untethered spacewalk using a Manned Manoeuvring Unit — a jet-powered backpack. The photograph of him floating freely 100m from the Shuttle, with Earth below, became iconic.'},
+      {y:1986,date:'Jan 28',    mission:'Challenger STS-51L — Disaster',             agency:'USA',       type:'f', era:'1980s', desc:'Space Shuttle Challenger breaks apart 73 seconds after launch, killing all 7 crew including teacher Christa McAuliffe. O-ring failure in cold weather caused the disaster. The programme was grounded for 32 months.'},
+      {y:1986,date:'Feb 19',    mission:'Mir — First Modular Space Station',         agency:'USSR',      type:'m', era:'1980s', desc:'The first modular space station, built over a decade as new modules were added. Operated for 15 years (3× its design life), hosting 125 cosmonauts/astronauts from 12 countries and conducting 23,000 experiments.'},
+      {y:1986,date:'Mar 13',    mission:'Giotto — First Comet Close-Up',             agency:'ESA',       type:'m', era:'1980s', desc:'ESA\'s Giotto flies through the coma of Halley\'s Comet, returning the first close-up images of a cometary nucleus. The nucleus was found to be 15km long, darker than coal, and far more irregular than expected.'},
+      {y:1989,date:'Aug 25',    mission:'Voyager 2 — Neptune Flyby',                 agency:'USA',       type:'m', era:'1980s', desc:'The only spacecraft ever to visit Neptune and Uranus. Voyager 2 discovered six new moons, active geysers on Triton, and a Great Dark Spot storm. After Neptune, both Voyagers headed for interstellar space.'},
+      // 1990s
+      {y:1990,date:'Apr 24',    mission:'Hubble Space Telescope — Launch',           agency:'NASA/ESA',  type:'m', era:'1990s', desc:'The most important space telescope in history, deployed at 540km altitude. An initial mirror flaw (1.3mm off specification) blurred early images but was corrected in 1993. Has made over 1.5 million observations, determined the expansion rate of the universe, and confirmed dark energy.'},
+      {y:1991,date:'Apr 5',     mission:'Compton Gamma Ray Observatory',             agency:'NASA',      type:'s', era:'1990s', desc:'The second of NASA\'s four Great Observatories. Surveyed the sky in gamma rays, discovering that gamma-ray bursts were uniformly distributed — proving they were extragalactic, from billions of light-years away.'},
+      {y:1992,date:'May 7',     mission:'ATLAS-1 — First Tethered Satellite',        agency:'NASA/ASI',  type:'f', era:'1990s', desc:'A tethered satellite experiment on STS-46 failed when the tether jammed after only 256m were deployed. A later attempt (STS-75, 1996) deployed 19.7km before the tether snapped — but confirmed that electrodynamic tethers could generate electricity in orbit.'},
+      {y:1993,date:'Dec 2',     mission:'Hubble Servicing Mission 1',                agency:'NASA',      type:'m', era:'1990s', desc:'STS-61 crew performs five spacewalks to install corrective optics, giving Hubble perfect vision. Described as "the repair job of the century" — restoring full scientific capability and public confidence in NASA.'},
+      {y:1994,date:'Jul 16',    mission:'Shoemaker-Levy 9 — Jupiter Impact',         agency:'Int\'l',    type:'m', era:'1990s', desc:'First observed collision of two solar system bodies. Comet Shoemaker-Levy 9 had broken into 21 fragments that struck Jupiter over 6 days, leaving impact scars larger than Earth. Transformed planetary defence understanding.'},
+      {y:1995,date:'Mar 22',    mission:'Polyakov — 437 Day Record',                  agency:'Russia',    type:'m', era:'1990s', desc:'Valeri Polyakov returns from Mir after 437.7 days — the longest single spaceflight ever. His mission proved that humans could physically survive a round-trip to Mars (estimated 500+ days). He was able to walk after landing.'},
+      {y:1995,date:'Dec 7',     mission:'Galileo — Jupiter Orbit',                   agency:'NASA',      type:'m', era:'1990s', desc:'First spacecraft to orbit Jupiter, studying it for nearly 8 years. An atmospheric probe released months earlier provided the first direct measurements of Jupiter\'s atmosphere — including winds at 700 km/h. Mission ended with deliberate impact to prevent contamination of Europa.'},
+      {y:1997,date:'Jul 4',     mission:'Pathfinder · Sojourner Rover',              agency:'NASA',      type:'m', era:'1990s', desc:'Sojourner became the first operational rover on another planet, studying the chemistry of Martian rocks. The mission pioneered airbag landing technology. Designed for 7 days, Sojourner operated for 85 days.'},
+      {y:1997,date:'Oct 15',    mission:'Cassini-Huygens — Saturn Mission',          agency:'NASA/ESA',  type:'m', era:'1990s', desc:'The most complex interplanetary spacecraft ever launched. Reached Saturn in 2004, orbited for 13 years, and released the Huygens probe to Titan. Discovered liquid methane lakes on Titan, active geysers on Enceladus, and the most detailed Saturn ring data ever collected.'},
+      {y:1998,date:'Nov 20',    mission:'ISS — Zarya (First Module)',                 agency:'NASA/RSA',  type:'m', era:'1990s', desc:'The first module of the International Space Station is launched. Zarya (Russian for "dawn") provided initial propulsion and power. The station has been continuously inhabited since November 2000 — over 24 years. Involves 15 nations.'},
+      {y:1999,date:'Jul 23',    mission:'Chandra X-Ray Observatory',                 agency:'NASA',      type:'m', era:'1990s', desc:'The third Great Observatory, still operating after 25 years. Has observed black holes, galaxy clusters, and supernova remnants, revealing the hot, energetic side of the universe invisible to optical telescopes.'},
+      // 2000s
+      {y:2001,date:'Feb 12',    mission:'NEAR Shoemaker — Asteroid Landing',         agency:'NASA',      type:'m', era:'2000s', desc:'First spacecraft to orbit and land on an asteroid (433 Eros). Not designed for landing, it executed a historic soft landing anyway and survived — transmitting data from the surface for 16 days.'},
+      {y:2001,date:'Apr 28',    mission:'First Space Tourist — Dennis Tito',          agency:'Russia',    type:'m', era:'2000s', desc:'Dennis Tito pays $20 million for a seat on a Soyuz to the ISS, becoming the first privately-funded space tourist. NASA initially resisted his flight, but Russia overrode their objections.'},
+      {y:2003,date:'Feb 1',     mission:'Columbia STS-107 — Disaster',               agency:'NASA',      type:'f', era:'2000s', desc:'Space Shuttle Columbia breaks apart during re-entry, killing all 7 crew. A foam impact on launch had damaged the heat shield tiles. The Shuttle was grounded for 29 months while 28 fixes were implemented.'},
+      {y:2003,date:'Oct 15',    mission:'Shenzhou 5 — First Chinese Crewed Flight',  agency:'CNSA',      type:'m', era:'2000s', desc:'Yang Liwei becomes China\'s first astronaut (taikonaut), making China the third nation to independently launch humans into space. He orbited for 21.5 hours in a capsule closely based on Soviet Soyuz technology.'},
+      {y:2004,date:'Jan 3',     mission:'Spirit Rover — Mars Landing',               agency:'NASA',      type:'m', era:'2000s', desc:'Spirit and its twin Opportunity land on opposite sides of Mars. Designed for 90 days, Opportunity operated for 14 years and 45km. Spirit became stuck in soft soil in 2009 and sent its last signal in 2011.'},
+      {y:2004,date:'Jun 21',    mission:'SpaceShipOne — First Private Spaceflight',  agency:'Scaled',    type:'m', era:'2000s', desc:'SpaceShipOne reaches space (112km) on a privately-funded flight, winning the $10 million Ansari X Prize — requiring two flights to 100km within 2 weeks. Proved commercial spaceflight was technically and financially feasible.'},
+      {y:2004,date:'Jul 1',     mission:'Cassini — Saturn Orbit Insertion',          agency:'NASA/ESA',  type:'m', era:'2000s', desc:'After a 7-year journey, Cassini executes a flawless Saturn orbit insertion — threading a gap between the planet\'s rings. The 97-minute engine burn was the most critical and dangerous manoeuvre of the mission.'},
+      {y:2005,date:'Jan 14',    mission:'Huygens — Titan Landing',                   agency:'ESA',       type:'m', era:'2000s', desc:'Most distant landing in the solar system. Huygens descends through Titan\'s thick orange atmosphere for 2.5 hours before landing in a muddy plain. Reveals rivers and seas of liquid methane — the only known world besides Earth with active surface liquids.'},
+      {y:2005,date:'Jul 4',     mission:'Deep Impact — Comet Strike',                agency:'NASA',      type:'m', era:'2000s', desc:'A 370kg copper impactor deliberately strikes Comet Tempel 1, creating a crater and ejecting a plume of water ice and dust. The world\'s first deliberate impact on a solar system body — a precursor to planetary defence experiments.'},
+      {y:2006,date:'Jan 15',    mission:'Stardust — Comet Sample Return',            agency:'NASA',      type:'m', era:'2000s', desc:'First return of cometary material to Earth. Brought back samples from Comet Wild 2 in an aerogel collector, revealing glycine (a building block of life) — suggesting life\'s ingredients are distributed throughout the cosmos.'},
+      {y:2006,date:'Jan 19',    mission:'New Horizons — Pluto Mission Launch',       agency:'NASA',      type:'s', era:'2000s', desc:'Launched on the fastest spacecraft in history at the time (58,536 km/h), New Horizons heads for Pluto on a 9.5-year journey. It becomes the first mission to a Kuiper Belt object.'},
+      {y:2007,date:'Sep 27',    mission:'DAWN — Asteroid Belt Mission',              agency:'NASA',      type:'s', era:'2000s', desc:'First mission to orbit two extraterrestrial targets. Dawn used ion propulsion to visit both Vesta (2011) and Ceres (2015) — the largest objects in the asteroid belt. Discovered bright salt deposits on Ceres suggesting geological activity.'},
+      {y:2008,date:'May 25',    mission:'Phoenix — Mars Polar Landing',              agency:'NASA',      type:'m', era:'2000s', desc:'First Mars landing in the polar region. Confirmed the presence of water ice just centimetres below the Martian surface — directly excavating and observing it. A crucial discovery for Mars colonisation planning.'},
+      {y:2009,date:'May 11',    mission:'Herschel & Planck Observatories',           agency:'ESA',       type:'s', era:'2000s', desc:'The largest infrared space telescope (Herschel) and most precise cosmic microwave background mapper (Planck) launched together. Planck produced the most detailed map of the early universe ever made, refining the age of the cosmos to 13.82 billion years.'},
+      // 2010s
+      {y:2012,date:'Aug 5',     mission:'Curiosity — Mars Science Laboratory',       agency:'NASA',      type:'m', era:'2010s', desc:'A car-sized nuclear rover (899kg) using a sky-crane landing system — the most complex Mars landing ever attempted. Still operating after 13 years, Curiosity has confirmed ancient lake environments, found organic molecules, and measured seasonal methane fluctuations.'},
+      {y:2012,date:'Aug 25',    mission:'Voyager 1 — Interstellar Space',            agency:'NASA',      type:'m', era:'2010s', desc:'Confirmed in 2013 to have entered interstellar space in August 2012 — the first human-made object to do so. Now over 23 billion km away, it receives commands and sends data on a 22+ hour round-trip signal delay.'},
+      {y:2014,date:'Nov 12',    mission:'Rosetta · Philae — Comet Landing',          agency:'ESA',       type:'m', era:'2010s', desc:'First soft landing on a comet (67P/Churyumov-Gerasimenko). Philae bounced twice before settling in a shadowed crater, limiting its battery life. Rosetta orbited the comet for 2 years, returning unprecedented detail of comet chemistry and structure.'},
+      {y:2015,date:'Jul 14',    mission:'New Horizons — Pluto Flyby',                agency:'NASA',      type:'m', era:'2010s', desc:'After 9.5 years, New Horizons flies 12,500km from Pluto, revealing a heart-shaped nitrogen glacier (Tombaugh Regio) the size of Texas, 3,500m tall ice mountains, and a layered blue atmosphere. Pluto was far more geologically active than anyone expected.'},
+      {y:2015,date:'Dec 21',    mission:'SpaceX Falcon 9 — First Booster Landing',   agency:'SpaceX',    type:'m', era:'2010s', desc:'First orbital rocket booster to successfully land and be recovered. The propulsive vertical landing — after delivering satellites to orbit — transformed launch economics. Reused boosters can save $40 million per flight.'},
+      {y:2016,date:'Sep 30',    mission:'Rosetta — Planned Comet Impact',            agency:'ESA',       type:'s', era:'2010s', desc:'ESA\'s Rosetta spacecraft ends its 12-year mission with a controlled impact on Comet 67P. The final images, transmitted at 3 bytes/second, show the comet\'s surface in extraordinary detail — right up to the moment of impact.'},
+      {y:2018,date:'Nov 26',    mission:'InSight — Mars Interior',                   agency:'NASA',      type:'s', era:'2010s', desc:'First mission dedicated to studying Mars\'s deep interior. Deployed a seismometer that detected hundreds of marsquakes, measured heat flow from the interior, and used radio signals to precisely measure Mars\'s wobble — revealing its core structure.'},
+      {y:2019,date:'Apr 10',    mission:'First Black Hole Image — M87*',             agency:'EHT',       type:'m', era:'2010s', desc:'The Event Horizon Telescope, a global network of radio telescopes acting as an Earth-sized dish, images M87* — a black hole 6.5 billion times the mass of the Sun, 55 million light-years away. The image matches Einstein\'s 1916 predictions perfectly.'},
+      {y:2019,date:'Jul 22',    mission:'Chandrayaan-2 — Moon Orbiter',              agency:'ISRO',      type:'s', era:'2010s', desc:'India\'s second Moon mission — the orbiter remains operational, but the Vikram lander crash-landed due to a software error in the final descent phase. Despite the partial failure, the orbiter continues to produce valuable lunar science.'},
+      // 2020s
+      {y:2020,date:'Feb 10',    mission:'Solar Orbiter — Sun Up Close',              agency:'ESA/NASA',  type:'s', era:'2020s', desc:'The spacecraft designed to image the Sun\'s poles for the first time. Has returned the closest images ever taken of the Sun, revealing "campfires" — small solar flares covering the surface — and providing new data on the solar wind\'s origin.'},
+      {y:2020,date:'May 30',    mission:'Crew Dragon — First Commercial Crew',       agency:'SpaceX/NASA',type:'m',era:'2020s', desc:'SpaceX Crew Dragon carries NASA astronauts to the ISS, ending a 9-year gap in US crewed orbital launches since the Shuttle retired in 2011. The first commercially operated crewed orbital spacecraft to dock with the ISS.'},
+      {y:2020,date:'Jul 19',    mission:'Hope Mars Mission — UAE',                   agency:'UAE',       type:'m', era:'2020s', desc:'The Arab world\'s first interplanetary mission. The Hope probe enters Mars orbit in February 2021, studying the Martian atmosphere and weather patterns. The UAE became the fifth country to successfully reach Mars.'},
+      {y:2021,date:'Feb 18',    mission:'Perseverance Rover + Ingenuity',            agency:'NASA',      type:'m', era:'2020s', desc:'Perseverance lands in Jezero Crater (an ancient lake bed) to search for biosignatures. Deploys Ingenuity, which achieves the first powered flight on another planet on April 19 — the Wright Brothers moment of interplanetary exploration.'},
+      {y:2021,date:'Jul 11',    mission:'First Civilian Spaceflights',               agency:'Virgin/Blue',type:'m',era:'2020s', desc:'Richard Branson (Virgin Galactic, Jul 11) and Jeff Bezos (Blue Origin, Jul 20) both reach space within 9 days. The commercial space tourism era begins in earnest. Bezos\'s crew included Wally Funk, 82 — the oldest person in space.'},
+      {y:2021,date:'Dec 25',    mission:'James Webb Space Telescope — Launch',       agency:'NASA/ESA',  type:'m', era:'2020s', desc:'Launched on Christmas Day from Kourou, Webb unfolds its 6.5m gold mirror — the most complex deployment in space history. Reached its L2 orbit 1.5 million km from Earth. First images (Jul 2022) showed galaxies from 300 million years after the Big Bang.'},
+      {y:2022,date:'Nov 16',    mission:'Artemis 1 — Return to the Moon',            agency:'NASA',      type:'m', era:'2020s', desc:'First flight of the Space Launch System (SLS) and Orion capsule — uncrewed. Orion flew a 25-day lunar orbit mission, travelling 430,000 km from Earth. A test of all systems before astronauts fly on Artemis 2 (2025).'},
+      {y:2023,date:'Aug 23',    mission:'Chandrayaan-3 — South Pole Landing',        agency:'ISRO',      type:'m', era:'2020s', desc:'India becomes the first country to land at the Moon\'s south pole — and only the fourth nation to soft-land on the Moon. Vikram lander detected moonquakes and confirmed sulphur and other elements at the south pole. A historic achievement.'},
+      {y:2023,date:'Sep 4',     mission:'OSIRIS-REx — Asteroid Sample Return',       agency:'NASA',      type:'m', era:'2020s', desc:'Returns 121.6 grams of material from asteroid Bennu — 4.5 billion years old, from the early solar system. Samples contain water-bearing minerals and organics, strengthening the theory that asteroids delivered life\'s building blocks to early Earth.'},
+      {y:2024,date:'Jun 6',     mission:'Voyager 1 — Signal Restored',               agency:'NASA',      type:'m', era:'2020s', desc:'After 5 months of garbled data from 24 billion km away, engineers trace the problem to a faulty chip in the flight data system and route around it — restoring full communication. Voyager 1 speaks clearly again, 47 years after launch.'},
+      {y:2024,date:'Oct 13',    mission:'SpaceX Starship — Booster Catch',           agency:'SpaceX',    type:'m', era:'2020s', desc:'The Super Heavy booster is caught by the launch tower\'s "chopstick" arms on its return — the first time a rocket booster has been mechanically caught rather than landing on legs. A fundamental step toward full rapid reusability.'},
+      {y:2025,date:'Mar 2',     mission:'Blue Ghost — First Commercial Lunar Landing',agency:'Firefly/NASA',type:'m',era:'2020s',desc:'Firefly Aerospace\'s Blue Ghost lander touched down in Mare Crisium, becoming the first fully successful commercial lunar lander. It delivered 10 NASA science instruments and operated for a complete lunar day of 14 Earth days, returning unprecedented surface geology data.'},
+      {y:2025,date:'Mar 6',     mission:'Intuitive Machines IM-2 — Polar Landing',  agency:'NASA/IM',   type:'s', era:'2020s',desc:'Athena lander reached the Moon\'s south polar region — the southernmost landing in history at 84°S. Though it tipped on landing, it transmitted critical data on water ice deposits near permanently shadowed craters essential for future Artemis surface missions.'},
+      {y:2025,date:'May 28',    mission:'China Tianwen-2 — Asteroid & Comet Mission',agency:'CNSA',      type:'m', era:'2020s',desc:'China launched Tianwen-2 toward near-Earth asteroid 469219 Kamoʻoalewa — believed to be a fragment of the Moon — to collect and return samples, then continue to main-belt comet 311P/PANSTARRS. China\'s most ambitious deep-space mission, building on the Chang\'e sample-return legacy.'},
+      {y:2025,date:'Jul 15',    mission:'Artemis II — First Crewed Lunar Flyby',    agency:'NASA',      type:'m', era:'2020s',desc:'Four astronauts — Reid Wiseman, Victor Glover, Christina Koch, and Jeremy Hansen (Canada) — flew around the Moon aboard Orion on the SLS rocket. The first humans to travel to lunar distance since Apollo 17 in December 1972, completing a free-return trajectory over 10 days.'},
+      {y:2025,date:'Sep 22',    mission:'SpaceX Starship — First Orbital Round-Trip',agency:'SpaceX',   type:'m', era:'2020s',desc:'Starship completed its first fully successful orbital flight: Super Heavy booster caught again by the mechanical arms, Starship upper stage re-entered and splashed down in the Indian Ocean. At 9 million lbs of thrust, the most powerful rocket in history demonstrated full rapid reusability.'},
+      {y:2025,date:'Nov 18',    mission:'ESA PLATO — Exoplanet Hunter Launches',    agency:'ESA',       type:'m', era:'2020s',desc:'ESA\'s PLATO (PLAnetary Transits and Oscillations of stars) telescope reached L2 carrying 26 cameras to simultaneously monitor up to a million stars. Primary goal: find Earth-sized planets in habitable zones of Sun-like stars and measure stellar ages precisely for the first time.'},
+      {y:2026,date:'Feb 14',    mission:'Artemis III — First Woman on the Moon',    agency:'NASA',      type:'m', era:'2020s',desc:'Artemis III landed the first woman and first person of colour at the lunar south pole. The crew spent 6.5 days on the surface, drilling ice cores near permanently shadowed craters and deploying the Lunar Surface Science Mobility System — humanity\'s return to the Moon after 54 years.'},
+      {y:2026,date:'Apr 10',    mission:'SpaceX Starship — Mars Cargo Precursor',   agency:'SpaceX',    type:'m', era:'2020s',desc:'Two uncrewed Starship vehicles launched toward Mars during the 2026 launch window — the optimal 26-month planetary alignment. The ships carry solar power arrays, a propellant production plant using Martian CO₂, life-support hardware, and supplies pre-positioning for the first human Mars landing targeted 2029.'},
+      {y:2026,date:'May 5',     mission:'ISRO Gaganyaan — First Indian Crewed Flight',agency:'ISRO',    type:'m', era:'2020s',desc:'India launched its first crewed spaceflight, carrying three Indian Air Force astronaut-cosmonauts to 400km LEO for a 3-day mission. India became only the fourth nation to independently send humans to space, fulfilling Prime Minister Modi\'s 2018 vision and cementing India as a major space power.'},
+      {y:2026,date:'Jun 30',    mission:'Nancy Grace Roman Space Telescope Launch',  agency:'NASA',      type:'m', era:'2020s',desc:'The Nancy Grace Roman Space Telescope — with 100× the field of view of Hubble — launched to L2. Its three missions: map dark energy across cosmic time, detect thousands of exoplanets via gravitational microlensing, and conduct an infrared survey of the universe that would take Hubble 1,000 years.'},
+    ];
+    window.SH_EVENTS = EVENTS;
+    return EVENTS;
+  }
 
-  // type: 'm'=milestone, 's'=success, 'f'=failure
-  const EVENTS = [
-    // 1940s
-    {y:1944,date:'Jun 20',    mission:'V-2 MW 18014 — First Space Boundary Cross', agency:'Germany',  type:'m', era:'1940s-1950s', desc:'A V-2 rocket crosses 100km altitude for the first time in a vertical test launch at Peenemünde — becoming the first human-made object to reach space (by the modern definition of the Kármán line).'},
-    {y:1946,date:'May 10',    mission:'First Space Photography (V-2)',              agency:'USA',       type:'m', era:'1940s-1950s', desc:'A captured V-2 rocket carries a 35mm motion-picture camera to 105km altitude over White Sands, returning the first photographs of Earth from space.'},
-    {y:1947,date:'Feb 20',    mission:'First Animals in Space (Fruit Flies)',       agency:'USA',       type:'s', era:'1940s-1950s', desc:'Fruit flies are launched aboard a V-2 rocket to 108km, becoming the first living creatures in space. They are recovered alive after parachuting back.'},
-    {y:1949,date:'Jun 14',    mission:'Albert II — First Primate in Space',         agency:'USA',       type:'s', era:'1940s-1950s', desc:'A rhesus monkey named Albert II reaches 134km altitude aboard a V-2 rocket. He survived the flight but died on impact due to parachute failure.'},
-    // 1950s
-    {y:1957,date:'Oct 4',     mission:'Sputnik 1',                                  agency:'USSR',      type:'m', era:'1940s-1950s', desc:'The first artificial satellite. A polished aluminium sphere 58cm across, orbiting every 96 minutes at 7.9 km/s. Its radio beeps could be received worldwide and stunned the West into the Space Race.'},
-    {y:1957,date:'Nov 3',     mission:'Sputnik 2 — Laika',                          agency:'USSR',      type:'s', era:'1940s-1950s', desc:'Laika, a stray dog from Moscow, becomes the first living creature to orbit Earth. Sent with no return plan — she survived only hours due to overheating. Her mission proved living organisms could survive launch and orbital conditions.'},
-    {y:1958,date:'Jan 31',    mission:'Explorer 1',                                  agency:'USA',       type:'m', era:'1940s-1950s', desc:'America\'s first successful satellite, designed in 84 days. Its Geiger counter discovered the Van Allen radiation belts — the first major scientific discovery of the Space Age.'},
-    {y:1958,date:'Mar 17',    mission:'Vanguard 1',                                  agency:'USA',       type:'s', era:'1940s-1950s', desc:'The oldest artificial satellite still in space. Measuring Earth\'s shape precisely, it revealed Earth is slightly pear-shaped. Still in orbit after 67 years, it will remain for ~240 years.'},
-    {y:1958,date:'Oct 1',     mission:'NASA Founded',                                agency:'USA',       type:'m', era:'1940s-1950s', desc:'The National Aeronautics and Space Administration is officially established, replacing NACA. President Eisenhower signs the Space Act into law, setting the stage for all US civilian space exploration.'},
-    {y:1959,date:'Jan 2',     mission:'Luna 1 — Earth Escape',                       agency:'USSR',      type:'m', era:'1940s-1950s', desc:'First spacecraft to escape Earth orbit. Missed the Moon but became the first artificial object to reach heliocentric orbit, also discovering the solar wind.'},
-    {y:1959,date:'Sep 14',    mission:'Luna 2 — Moon Impact',                        agency:'USSR',      type:'m', era:'1940s-1950s', desc:'First spacecraft to reach another celestial body, deliberately impacting the Moon carrying Soviet pennants. First delivery of an object from Earth to another world.'},
-    {y:1959,date:'Oct 7',     mission:'Luna 3 — Far Side of Moon',                   agency:'USSR',      type:'m', era:'1940s-1950s', desc:'First photographs of the far side of the Moon. The images revealed a surface dramatically different from the near side — fewer maria (dark plains), more craters — changing our understanding of the Moon forever.'},
-    // 1960s
-    {y:1960,date:'May 15',    mission:'Sputnik 4 (Korabl-Sputnik 1)',               agency:'USSR',      type:'s', era:'1960s', desc:'First test of the Vostok spacecraft design with a mannequin aboard. Tested life-support and re-entry systems for the upcoming crewed flights.'},
-    {y:1960,date:'Aug 19',    mission:'Sputnik 5 — First Animals Returned',         agency:'USSR',      type:'m', era:'1960s', desc:'Belka and Strelka become the first animals to orbit Earth and return alive. They spent a day in orbit before being safely recovered, proving the round-trip was survivable.'},
-    {y:1961,date:'Apr 12',    mission:'Vostok 1 — Gagarin',                         agency:'USSR',      type:'m', era:'1960s', desc:'"Poyekhali!" Yuri Gagarin becomes the first human in space, completing one orbit in 108 minutes at 27,400 km/h. He ejected at 7km and parachuted separately — a fact hidden from the public for decades to preserve the flight record.'},
-    {y:1961,date:'May 5',     mission:'Freedom 7 — Shepard',                        agency:'USA',       type:'s', era:'1960s', desc:'Alan Shepard becomes the first American in space on a 15-minute suborbital flight reaching 187km. Unlike Gagarin, Shepard manually controlled his capsule during re-entry, demonstrating pilot authority in space.'},
-    {y:1961,date:'May 25',    mission:'Kennedy Moon Declaration',                   agency:'USA',       type:'m', era:'1960s', desc:'President Kennedy addresses Congress: "I believe that this nation should commit itself to achieving the goal, before this decade is out, of landing a man on the Moon and returning him safely to Earth."'},
-    {y:1962,date:'Feb 20',    mission:'Friendship 7 — Glenn',                       agency:'USA',       type:'s', era:'1960s', desc:'John Glenn becomes the first American to orbit Earth, completing three orbits. A faulty sensor warning that his heat shield was loose forced Mission Control to keep the retrorocket package attached — it burned away harmlessly but the risk was real.'},
-    {y:1962,date:'Aug 27',    mission:'Mariner 2 — Venus Flyby',                    agency:'USA',       type:'m', era:'1960s', desc:'First successful interplanetary spacecraft. Flew past Venus on December 14 confirming surface temperatures of ~425°C — ruling out any surface life and setting the stage for comparative planetology.'},
-    {y:1963,date:'Jun 16',    mission:'Vostok 6 — Tereshkova',                      agency:'USSR',      type:'m', era:'1960s', desc:'Valentina Tereshkova becomes the first woman in space, orbiting Earth 48 times over nearly 3 days — more cumulative orbital experience than all US astronauts combined to that date. She remains the only woman to fly a solo mission.'},
-    {y:1965,date:'Mar 18',    mission:'Voskhod 2 — Leonov EVA',                     agency:'USSR',      type:'m', era:'1960s', desc:'Alexei Leonov performs the first spacewalk — 12 minutes outside the spacecraft. His suit inflated in the vacuum, preventing him from re-entering. He had to release air pressure from his suit to squeeze back in, risking decompression sickness.'},
-    {y:1965,date:'Jul 14',    mission:'Mariner 4 — Mars Flyby',                     agency:'USA',       type:'m', era:'1960s', desc:'First successful Mars flyby, returning 22 photographs. They revealed a cratered, Moon-like surface — dashing hopes of a life-bearing Mars. Atmospheric pressure was measured at just 0.5% of Earth\'s.'},
-    {y:1966,date:'Feb 3',     mission:'Luna 9 — First Lunar Soft Landing',          agency:'USSR',      type:'m', era:'1960s', desc:'First spacecraft to soft-land on another world and transmit photographs from the surface. The images proved the Moon\'s surface was solid enough to support a lander — and eventually humans.'},
-    {y:1966,date:'Mar 1',     mission:'Venera 3 — Venus Impact',                    agency:'USSR',      type:'m', era:'1960s', desc:'First spacecraft to impact another planet. Venera 3 crashed into Venus on March 1, 1966 — contact had been lost before arrival, so no data was returned, but it delivered an Earth pennant to the surface of Venus.'},
-    {y:1967,date:'Jan 27',    mission:'Apollo 1 — Launch Pad Fire',                 agency:'USA',       type:'f', era:'1960s', desc:'A cabin fire during a launch rehearsal test kills astronauts Gus Grissom, Ed White, and Roger Chaffee. The disaster leads to a complete redesign of the Apollo capsule, delaying the programme by 21 months.'},
-    {y:1967,date:'Apr 24',    mission:'Soyuz 1 — Komarov Crash',                   agency:'USSR',      type:'f', era:'1960s', desc:'Vladimir Komarov dies when his Soyuz 1 parachute fails during re-entry — the first in-flight space fatality. The spacecraft had 203 documented design faults. Komarov reportedly knew the mission was dangerous.'},
-    {y:1968,date:'Dec 21',    mission:'Apollo 8 — First Lunar Orbit',              agency:'USA',       type:'m', era:'1960s', desc:'First humans to leave Earth orbit and orbit the Moon. Frank Borman, Jim Lovell, and William Anders orbit the Moon 10 times on Christmas Eve. Their "Earthrise" photograph becomes one of the most influential images ever taken.'},
-    {y:1969,date:'Jul 20',    mission:'Apollo 11 — First Moon Landing',            agency:'USA',       type:'m', era:'1960s', desc:'"One small step for man, one giant leap for mankind." Neil Armstrong and Buzz Aldrin spend 2h 31m on the lunar surface at Tranquility Base. 600 million people — 1 in 5 humans alive — watch live on television.'},
-    {y:1969,date:'Nov 19',    mission:'Apollo 12 — Precision Landing',             agency:'USA',       type:'s', era:'1960s', desc:'Pete Conrad and Alan Bean land within 200m of the Surveyor 3 probe. They retrieve parts of the probe, showing hardware can survive years on the lunar surface — critical data for future missions.'},
-    // 1970s
-    {y:1970,date:'Apr 11',    mission:'Apollo 13 — "Successful Failure"',          agency:'USA',       type:'f', era:'1970s', desc:'An oxygen tank explosion 56 hours into the flight forces the crew to use the Lunar Module as a lifeboat. Mission controllers improvise a CO2 scrubber fix using only items onboard. The crew splashes down safely after looping around the Moon — 56 hours, 54,000 miles away at farthest point.'},
-    {y:1970,date:'Sep 12',    mission:'Luna 16 — First Robot Sample Return',       agency:'USSR',      type:'m', era:'1970s', desc:'First robotic mission to land on the Moon and return samples to Earth. Returned 101 grams of lunar material — proving automated sample return was feasible and far cheaper than crewed missions.'},
-    {y:1970,date:'Nov 17',    mission:'Lunokhod 1 — First Rover',                  agency:'USSR',      type:'m', era:'1970s', desc:'First rover to operate on another world. Operated for 10 months, travelling 10.5km — far beyond its planned 3-month lifespan. Controlled from Earth with an 2.5-second signal delay.'},
-    {y:1971,date:'Apr 19',    mission:'Salyut 1 — First Space Station',            agency:'USSR',      type:'m', era:'1970s', desc:'Humanity\'s first space station. The Soyuz 11 crew lived aboard for 23 days — but all three cosmonauts died during re-entry when a pressure equalisation valve opened prematurely.'},
-    {y:1971,date:'Nov 13',    mission:'Mariner 9 — First Mars Orbit',              agency:'USA',       type:'m', era:'1970s', desc:'First spacecraft to orbit another planet. Arrived during a global dust storm but mapped 85% of the Martian surface. Discovered Olympus Mons, Valles Marineris, and evidence of ancient river valleys.'},
-    {y:1972,date:'Mar 2',     mission:'Pioneer 10 — Asteroid Belt & Beyond',       agency:'USA',       type:'m', era:'1970s', desc:'First spacecraft to traverse the Asteroid Belt (emerging safely — disproving fears it was impassable) and to fly by Jupiter. Carried the famous gold-anodised plaque with a message from humanity.'},
-    {y:1972,date:'Dec 7',     mission:'Blue Marble — Apollo 17',                   agency:'USA',       type:'m', era:'1970s', desc:'"The Blue Marble" — astronaut Harrison Schmitt photographs Earth fully illuminated from 29,000km. Arguably the most reproduced photograph in history, it catalysed the global environmental movement.'},
-    {y:1973,date:'Apr 5',     mission:'Pioneer 11 — Jupiter & Saturn',             agency:'USA',       type:'m', era:'1970s', desc:'Second spacecraft to reach Jupiter and the first to visit Saturn. Pioneer 11 discovered a second radiation belt at Jupiter and confirmed Saturn\'s magnetic field.'},
-    {y:1973,date:'May 14',    mission:'Skylab — US Space Station',                 agency:'USA',       type:'s', era:'1970s', desc:'America\'s first space station, assembled from modified Saturn V hardware. Three crews lived aboard for 28, 59, and 84 days — all records at the time. Re-entered 1979 with debris landing in Australia.'},
-    {y:1974,date:'Nov 3',     mission:'Mariner 10 — First Mercury Flyby',          agency:'USA',       type:'m', era:'1970s', desc:'First spacecraft to visit Mercury and first to use a gravity assist to reach another planet. Made three flybys of Mercury, mapping 45% of its surface and discovering its magnetic field.'},
-    {y:1975,date:'Jul 17',    mission:'Apollo–Soyuz — Cold War Handshake',         agency:'USA/USSR',  type:'m', era:'1970s', desc:'First international crewed mission. US Apollo and Soviet Soyuz dock in orbit. Astronaut Tom Stafford and cosmonaut Aleksei Leonov shake hands through the docking tunnel — a landmark moment of Cold War détente.'},
-    {y:1975,date:'Oct 22',    mission:'Venera 9 — First Venus Surface Photos',     agency:'USSR',      type:'m', era:'1970s', desc:'First spacecraft to orbit Venus and first to transmit photographs from the surface of another planet. Images showed angular rocks suggesting geologically young surface activity.'},
-    {y:1976,date:'Jul 20',    mission:'Viking 1 — First Mars Landing',             agency:'USA',       type:'m', era:'1970s', desc:'First successful Mars lander. Returned the first photographs from the Martian surface and conducted biology experiments searching for life. Results were ambiguous — the debate continues to this day.'},
-    {y:1977,date:'Aug 20',    mission:'Voyager 2 — Grand Tour',                    agency:'USA',       type:'m', era:'1970s', desc:'Launched to take advantage of a rare planetary alignment allowing a Grand Tour of all four outer planets (Jupiter, Saturn, Uranus, Neptune) — an opportunity that won\'t recur until 2153.'},
-    {y:1977,date:'Sep 5',     mission:'Voyager 1 — Now in Interstellar Space',     agency:'USA',       type:'m', era:'1970s', desc:'The most distant human-made object, currently over 23 billion km from Earth. Launched on a faster trajectory than Voyager 2. Crossed the heliopause in 2012, entering interstellar space. Still transmitting data.'},
-    {y:1978,date:'May 20',    mission:'Pioneer Venus — First Venus Orbiter',       agency:'USA',       type:'s', era:'1970s', desc:'First American spacecraft to orbit Venus. Mapped 93% of the surface using radar and operated for 14 years — vastly exceeding its design life.'},
-    {y:1979,date:'Mar 5',     mission:'Voyager 1 — Jupiter Flyby',                 agency:'USA',       type:'m', era:'1970s', desc:'Voyager 1\'s Jupiter flyby discovered active volcanoes on Io — the first extraterrestrial volcanic activity ever observed. Also discovered a thin ring around Jupiter and revealed Europa\'s smooth icy surface hinting at a subsurface ocean.'},
-    // 1980s
-    {y:1980,date:'Nov 12',    mission:'Voyager 1 — Saturn Flyby',                  agency:'USA',       type:'m', era:'1980s', desc:'First close examination of Saturn\'s rings, revealing thousands of individual ringlets instead of a few bands. Titan\'s thick nitrogen atmosphere was detected, showing it might harbour organic chemistry.'},
-    {y:1981,date:'Apr 12',    mission:'STS-1 Columbia — First Shuttle Launch',     agency:'USA',       type:'m', era:'1980s', desc:'First launch of the Space Shuttle, on the 20th anniversary of Gagarin\'s flight. Columbia flew 27 missions before being lost in 2003. The Shuttle programme flew 135 missions over 30 years — the most complex vehicle ever built.'},
-    {y:1983,date:'Jun 13',    mission:'Pioneer 10 — Beyond Neptune',               agency:'USA',       type:'m', era:'1980s', desc:'First spacecraft to travel beyond the orbit of Neptune, entering truly uncharted space. Last successful contact in 2003, when Pioneer 10 was 12 billion km from Earth — faint, but still speaking.'},
-    {y:1983,date:'Jun 18',    mission:'Sally Ride — First US Woman in Space',      agency:'USA',       type:'m', era:'1980s', desc:'Sally Ride becomes the first American woman to fly in space on STS-7. At 32, she was also the youngest American astronaut. She later founded an organisation to promote science education for girls.'},
-    {y:1984,date:'Feb 7',     mission:'First Untethered Spacewalk (MMU)',           agency:'USA',       type:'m', era:'1980s', desc:'Bruce McCandless II performs the first untethered spacewalk using a Manned Manoeuvring Unit — a jet-powered backpack. The photograph of him floating freely 100m from the Shuttle, with Earth below, became iconic.'},
-    {y:1986,date:'Jan 28',    mission:'Challenger STS-51L — Disaster',             agency:'USA',       type:'f', era:'1980s', desc:'Space Shuttle Challenger breaks apart 73 seconds after launch, killing all 7 crew including teacher Christa McAuliffe. O-ring failure in cold weather caused the disaster. The programme was grounded for 32 months.'},
-    {y:1986,date:'Feb 19',    mission:'Mir — First Modular Space Station',         agency:'USSR',      type:'m', era:'1980s', desc:'The first modular space station, built over a decade as new modules were added. Operated for 15 years (3× its design life), hosting 125 cosmonauts/astronauts from 12 countries and conducting 23,000 experiments.'},
-    {y:1986,date:'Mar 13',    mission:'Giotto — First Comet Close-Up',             agency:'ESA',       type:'m', era:'1980s', desc:'ESA\'s Giotto flies through the coma of Halley\'s Comet, returning the first close-up images of a cometary nucleus. The nucleus was found to be 15km long, darker than coal, and far more irregular than expected.'},
-    {y:1989,date:'Aug 25',    mission:'Voyager 2 — Neptune Flyby',                 agency:'USA',       type:'m', era:'1980s', desc:'The only spacecraft ever to visit Neptune and Uranus. Voyager 2 discovered six new moons, active geysers on Triton, and a Great Dark Spot storm. After Neptune, both Voyagers headed for interstellar space.'},
-    // 1990s
-    {y:1990,date:'Apr 24',    mission:'Hubble Space Telescope — Launch',           agency:'NASA/ESA',  type:'m', era:'1990s', desc:'The most important space telescope in history, deployed at 540km altitude. An initial mirror flaw (1.3mm off specification) blurred early images but was corrected in 1993. Has made over 1.5 million observations, determined the expansion rate of the universe, and confirmed dark energy.'},
-    {y:1991,date:'Apr 5',     mission:'Compton Gamma Ray Observatory',             agency:'NASA',      type:'s', era:'1990s', desc:'The second of NASA\'s four Great Observatories. Surveyed the sky in gamma rays, discovering that gamma-ray bursts were uniformly distributed — proving they were extragalactic, from billions of light-years away.'},
-    {y:1992,date:'May 7',     mission:'ATLAS-1 — First Tethered Satellite',        agency:'NASA/ASI',  type:'f', era:'1990s', desc:'A tethered satellite experiment on STS-46 failed when the tether jammed after only 256m were deployed. A later attempt (STS-75, 1996) deployed 19.7km before the tether snapped — but confirmed that electrodynamic tethers could generate electricity in orbit.'},
-    {y:1993,date:'Dec 2',     mission:'Hubble Servicing Mission 1',                agency:'NASA',      type:'m', era:'1990s', desc:'STS-61 crew performs five spacewalks to install corrective optics, giving Hubble perfect vision. Described as "the repair job of the century" — restoring full scientific capability and public confidence in NASA.'},
-    {y:1994,date:'Jul 16',    mission:'Shoemaker-Levy 9 — Jupiter Impact',         agency:'Int\'l',    type:'m', era:'1990s', desc:'First observed collision of two solar system bodies. Comet Shoemaker-Levy 9 had broken into 21 fragments that struck Jupiter over 6 days, leaving impact scars larger than Earth. Transformed planetary defence understanding.'},
-    {y:1995,date:'Mar 22',    mission:'Polyakov — 437 Day Record',                  agency:'Russia',    type:'m', era:'1990s', desc:'Valeri Polyakov returns from Mir after 437.7 days — the longest single spaceflight ever. His mission proved that humans could physically survive a round-trip to Mars (estimated 500+ days). He was able to walk after landing.'},
-    {y:1995,date:'Dec 7',     mission:'Galileo — Jupiter Orbit',                   agency:'NASA',      type:'m', era:'1990s', desc:'First spacecraft to orbit Jupiter, studying it for nearly 8 years. An atmospheric probe released months earlier provided the first direct measurements of Jupiter\'s atmosphere — including winds at 700 km/h. Mission ended with deliberate impact to prevent contamination of Europa.'},
-    {y:1997,date:'Jul 4',     mission:'Pathfinder · Sojourner Rover',              agency:'NASA',      type:'m', era:'1990s', desc:'Sojourner became the first operational rover on another planet, studying the chemistry of Martian rocks. The mission pioneered airbag landing technology. Designed for 7 days, Sojourner operated for 85 days.'},
-    {y:1997,date:'Oct 15',    mission:'Cassini-Huygens — Saturn Mission',          agency:'NASA/ESA',  type:'m', era:'1990s', desc:'The most complex interplanetary spacecraft ever launched. Reached Saturn in 2004, orbited for 13 years, and released the Huygens probe to Titan. Discovered liquid methane lakes on Titan, active geysers on Enceladus, and the most detailed Saturn ring data ever collected.'},
-    {y:1998,date:'Nov 20',    mission:'ISS — Zarya (First Module)',                 agency:'NASA/RSA',  type:'m', era:'1990s', desc:'The first module of the International Space Station is launched. Zarya (Russian for "dawn") provided initial propulsion and power. The station has been continuously inhabited since November 2000 — over 24 years. Involves 15 nations.'},
-    {y:1999,date:'Jul 23',    mission:'Chandra X-Ray Observatory',                 agency:'NASA',      type:'m', era:'1990s', desc:'The third Great Observatory, still operating after 25 years. Has observed black holes, galaxy clusters, and supernova remnants, revealing the hot, energetic side of the universe invisible to optical telescopes.'},
-    // 2000s
-    {y:2001,date:'Feb 12',    mission:'NEAR Shoemaker — Asteroid Landing',         agency:'NASA',      type:'m', era:'2000s', desc:'First spacecraft to orbit and land on an asteroid (433 Eros). Not designed for landing, it executed a historic soft landing anyway and survived — transmitting data from the surface for 16 days.'},
-    {y:2001,date:'Apr 28',    mission:'First Space Tourist — Dennis Tito',          agency:'Russia',    type:'m', era:'2000s', desc:'Dennis Tito pays $20 million for a seat on a Soyuz to the ISS, becoming the first privately-funded space tourist. NASA initially resisted his flight, but Russia overrode their objections.'},
-    {y:2003,date:'Feb 1',     mission:'Columbia STS-107 — Disaster',               agency:'NASA',      type:'f', era:'2000s', desc:'Space Shuttle Columbia breaks apart during re-entry, killing all 7 crew. A foam impact on launch had damaged the heat shield tiles. The Shuttle was grounded for 29 months while 28 fixes were implemented.'},
-    {y:2003,date:'Oct 15',    mission:'Shenzhou 5 — First Chinese Crewed Flight',  agency:'CNSA',      type:'m', era:'2000s', desc:'Yang Liwei becomes China\'s first astronaut (taikonaut), making China the third nation to independently launch humans into space. He orbited for 21.5 hours in a capsule closely based on Soviet Soyuz technology.'},
-    {y:2004,date:'Jan 3',     mission:'Spirit Rover — Mars Landing',               agency:'NASA',      type:'m', era:'2000s', desc:'Spirit and its twin Opportunity land on opposite sides of Mars. Designed for 90 days, Opportunity operated for 14 years and 45km. Spirit became stuck in soft soil in 2009 and sent its last signal in 2011.'},
-    {y:2004,date:'Jun 21',    mission:'SpaceShipOne — First Private Spaceflight',  agency:'Scaled',    type:'m', era:'2000s', desc:'SpaceShipOne reaches space (112km) on a privately-funded flight, winning the $10 million Ansari X Prize — requiring two flights to 100km within 2 weeks. Proved commercial spaceflight was technically and financially feasible.'},
-    {y:2004,date:'Jul 1',     mission:'Cassini — Saturn Orbit Insertion',          agency:'NASA/ESA',  type:'m', era:'2000s', desc:'After a 7-year journey, Cassini executes a flawless Saturn orbit insertion — threading a gap between the planet\'s rings. The 97-minute engine burn was the most critical and dangerous manoeuvre of the mission.'},
-    {y:2005,date:'Jan 14',    mission:'Huygens — Titan Landing',                   agency:'ESA',       type:'m', era:'2000s', desc:'Most distant landing in the solar system. Huygens descends through Titan\'s thick orange atmosphere for 2.5 hours before landing in a muddy plain. Reveals rivers and seas of liquid methane — the only known world besides Earth with active surface liquids.'},
-    {y:2005,date:'Jul 4',     mission:'Deep Impact — Comet Strike',                agency:'NASA',      type:'m', era:'2000s', desc:'A 370kg copper impactor deliberately strikes Comet Tempel 1, creating a crater and ejecting a plume of water ice and dust. The world\'s first deliberate impact on a solar system body — a precursor to planetary defence experiments.'},
-    {y:2006,date:'Jan 15',    mission:'Stardust — Comet Sample Return',            agency:'NASA',      type:'m', era:'2000s', desc:'First return of cometary material to Earth. Brought back samples from Comet Wild 2 in an aerogel collector, revealing glycine (a building block of life) — suggesting life\'s ingredients are distributed throughout the cosmos.'},
-    {y:2006,date:'Jan 19',    mission:'New Horizons — Pluto Mission Launch',       agency:'NASA',      type:'s', era:'2000s', desc:'Launched on the fastest spacecraft in history at the time (58,536 km/h), New Horizons heads for Pluto on a 9.5-year journey. It becomes the first mission to a Kuiper Belt object.'},
-    {y:2007,date:'Sep 27',    mission:'DAWN — Asteroid Belt Mission',              agency:'NASA',      type:'s', era:'2000s', desc:'First mission to orbit two extraterrestrial targets. Dawn used ion propulsion to visit both Vesta (2011) and Ceres (2015) — the largest objects in the asteroid belt. Discovered bright salt deposits on Ceres suggesting geological activity.'},
-    {y:2008,date:'May 25',    mission:'Phoenix — Mars Polar Landing',              agency:'NASA',      type:'m', era:'2000s', desc:'First Mars landing in the polar region. Confirmed the presence of water ice just centimetres below the Martian surface — directly excavating and observing it. A crucial discovery for Mars colonisation planning.'},
-    {y:2009,date:'May 11',    mission:'Herschel & Planck Observatories',           agency:'ESA',       type:'s', era:'2000s', desc:'The largest infrared space telescope (Herschel) and most precise cosmic microwave background mapper (Planck) launched together. Planck produced the most detailed map of the early universe ever made, refining the age of the cosmos to 13.82 billion years.'},
-    // 2010s
-    {y:2012,date:'Aug 5',     mission:'Curiosity — Mars Science Laboratory',       agency:'NASA',      type:'m', era:'2010s', desc:'A car-sized nuclear rover (899kg) using a sky-crane landing system — the most complex Mars landing ever attempted. Still operating after 13 years, Curiosity has confirmed ancient lake environments, found organic molecules, and measured seasonal methane fluctuations.'},
-    {y:2012,date:'Aug 25',    mission:'Voyager 1 — Interstellar Space',            agency:'NASA',      type:'m', era:'2010s', desc:'Confirmed in 2013 to have entered interstellar space in August 2012 — the first human-made object to do so. Now over 23 billion km away, it receives commands and sends data on a 22+ hour round-trip signal delay.'},
-    {y:2014,date:'Nov 12',    mission:'Rosetta · Philae — Comet Landing',          agency:'ESA',       type:'m', era:'2010s', desc:'First soft landing on a comet (67P/Churyumov-Gerasimenko). Philae bounced twice before settling in a shadowed crater, limiting its battery life. Rosetta orbited the comet for 2 years, returning unprecedented detail of comet chemistry and structure.'},
-    {y:2015,date:'Jul 14',    mission:'New Horizons — Pluto Flyby',                agency:'NASA',      type:'m', era:'2010s', desc:'After 9.5 years, New Horizons flies 12,500km from Pluto, revealing a heart-shaped nitrogen glacier (Tombaugh Regio) the size of Texas, 3,500m tall ice mountains, and a layered blue atmosphere. Pluto was far more geologically active than anyone expected.'},
-    {y:2015,date:'Dec 21',    mission:'SpaceX Falcon 9 — First Booster Landing',   agency:'SpaceX',    type:'m', era:'2010s', desc:'First orbital rocket booster to successfully land and be recovered. The propulsive vertical landing — after delivering satellites to orbit — transformed launch economics. Reused boosters can save $40 million per flight.'},
-    {y:2016,date:'Sep 30',    mission:'Rosetta — Planned Comet Impact',            agency:'ESA',       type:'s', era:'2010s', desc:'ESA\'s Rosetta spacecraft ends its 12-year mission with a controlled impact on Comet 67P. The final images, transmitted at 3 bytes/second, show the comet\'s surface in extraordinary detail — right up to the moment of impact.'},
-    {y:2018,date:'Nov 26',    mission:'InSight — Mars Interior',                   agency:'NASA',      type:'s', era:'2010s', desc:'First mission dedicated to studying Mars\'s deep interior. Deployed a seismometer that detected hundreds of marsquakes, measured heat flow from the interior, and used radio signals to precisely measure Mars\'s wobble — revealing its core structure.'},
-    {y:2019,date:'Apr 10',    mission:'First Black Hole Image — M87*',             agency:'EHT',       type:'m', era:'2010s', desc:'The Event Horizon Telescope, a global network of radio telescopes acting as an Earth-sized dish, images M87* — a black hole 6.5 billion times the mass of the Sun, 55 million light-years away. The image matches Einstein\'s 1916 predictions perfectly.'},
-    {y:2019,date:'Jul 22',    mission:'Chandrayaan-2 — Moon Orbiter',              agency:'ISRO',      type:'s', era:'2010s', desc:'India\'s second Moon mission — the orbiter remains operational, but the Vikram lander crash-landed due to a software error in the final descent phase. Despite the partial failure, the orbiter continues to produce valuable lunar science.'},
-    // 2020s
-    {y:2020,date:'Feb 10',    mission:'Solar Orbiter — Sun Up Close',              agency:'ESA/NASA',  type:'s', era:'2020s', desc:'The spacecraft designed to image the Sun\'s poles for the first time. Has returned the closest images ever taken of the Sun, revealing "campfires" — small solar flares covering the surface — and providing new data on the solar wind\'s origin.'},
-    {y:2020,date:'May 30',    mission:'Crew Dragon — First Commercial Crew',       agency:'SpaceX/NASA',type:'m',era:'2020s', desc:'SpaceX Crew Dragon carries NASA astronauts to the ISS, ending a 9-year gap in US crewed orbital launches since the Shuttle retired in 2011. The first commercially operated crewed orbital spacecraft to dock with the ISS.'},
-    {y:2020,date:'Jul 19',    mission:'Hope Mars Mission — UAE',                   agency:'UAE',       type:'m', era:'2020s', desc:'The Arab world\'s first interplanetary mission. The Hope probe enters Mars orbit in February 2021, studying the Martian atmosphere and weather patterns. The UAE became the fifth country to successfully reach Mars.'},
-    {y:2021,date:'Feb 18',    mission:'Perseverance Rover + Ingenuity',            agency:'NASA',      type:'m', era:'2020s', desc:'Perseverance lands in Jezero Crater (an ancient lake bed) to search for biosignatures. Deploys Ingenuity, which achieves the first powered flight on another planet on April 19 — the Wright Brothers moment of interplanetary exploration.'},
-    {y:2021,date:'Jul 11',    mission:'First Civilian Spaceflights',               agency:'Virgin/Blue',type:'m',era:'2020s', desc:'Richard Branson (Virgin Galactic, Jul 11) and Jeff Bezos (Blue Origin, Jul 20) both reach space within 9 days. The commercial space tourism era begins in earnest. Bezos\'s crew included Wally Funk, 82 — the oldest person in space.'},
-    {y:2021,date:'Dec 25',    mission:'James Webb Space Telescope — Launch',       agency:'NASA/ESA',  type:'m', era:'2020s', desc:'Launched on Christmas Day from Kourou, Webb unfolds its 6.5m gold mirror — the most complex deployment in space history. Reached its L2 orbit 1.5 million km from Earth. First images (Jul 2022) showed galaxies from 300 million years after the Big Bang.'},
-    {y:2022,date:'Nov 16',    mission:'Artemis 1 — Return to the Moon',            agency:'NASA',      type:'m', era:'2020s', desc:'First flight of the Space Launch System (SLS) and Orion capsule — uncrewed. Orion flew a 25-day lunar orbit mission, travelling 430,000 km from Earth. A test of all systems before astronauts fly on Artemis 2 (2025).'},
-    {y:2023,date:'Aug 23',    mission:'Chandrayaan-3 — South Pole Landing',        agency:'ISRO',      type:'m', era:'2020s', desc:'India becomes the first country to land at the Moon\'s south pole — and only the fourth nation to soft-land on the Moon. Vikram lander detected moonquakes and confirmed sulphur and other elements at the south pole. A historic achievement.'},
-    {y:2023,date:'Sep 4',     mission:'OSIRIS-REx — Asteroid Sample Return',       agency:'NASA',      type:'m', era:'2020s', desc:'Returns 121.6 grams of material from asteroid Bennu — 4.5 billion years old, from the early solar system. Samples contain water-bearing minerals and organics, strengthening the theory that asteroids delivered life\'s building blocks to early Earth.'},
-    {y:2024,date:'Jun 6',     mission:'Voyager 1 — Signal Restored',               agency:'NASA',      type:'m', era:'2020s', desc:'After 5 months of garbled data from 24 billion km away, engineers trace the problem to a faulty chip in the flight data system and route around it — restoring full communication. Voyager 1 speaks clearly again, 47 years after launch.'},
-    {y:2024,date:'Oct 13',    mission:'SpaceX Starship — Booster Catch',           agency:'SpaceX',    type:'m', era:'2020s', desc:'The Super Heavy booster is caught by the launch tower\'s "chopstick" arms on its return — the first time a rocket booster has been mechanically caught rather than landing on legs. A fundamental step toward full rapid reusability.'},
-    {y:2025,date:'Mar 2',     mission:'Blue Ghost — First Commercial Lunar Landing',agency:'Firefly/NASA',type:'m',era:'2020s',desc:'Firefly Aerospace\'s Blue Ghost lander touched down in Mare Crisium, becoming the first fully successful commercial lunar lander. It delivered 10 NASA science instruments and operated for a complete lunar day of 14 Earth days, returning unprecedented surface geology data.'},
-    {y:2025,date:'Mar 6',     mission:'Intuitive Machines IM-2 — Polar Landing',  agency:'NASA/IM',   type:'s', era:'2020s',desc:'Athena lander reached the Moon\'s south polar region — the southernmost landing in history at 84°S. Though it tipped on landing, it transmitted critical data on water ice deposits near permanently shadowed craters essential for future Artemis surface missions.'},
-    {y:2025,date:'May 28',    mission:'China Tianwen-2 — Asteroid & Comet Mission',agency:'CNSA',      type:'m', era:'2020s',desc:'China launched Tianwen-2 toward near-Earth asteroid 469219 Kamoʻoalewa — believed to be a fragment of the Moon — to collect and return samples, then continue to main-belt comet 311P/PANSTARRS. China\'s most ambitious deep-space mission, building on the Chang\'e sample-return legacy.'},
-    {y:2025,date:'Jul 15',    mission:'Artemis II — First Crewed Lunar Flyby',    agency:'NASA',      type:'m', era:'2020s',desc:'Four astronauts — Reid Wiseman, Victor Glover, Christina Koch, and Jeremy Hansen (Canada) — flew around the Moon aboard Orion on the SLS rocket. The first humans to travel to lunar distance since Apollo 17 in December 1972, completing a free-return trajectory over 10 days.'},
-    {y:2025,date:'Sep 22',    mission:'SpaceX Starship — First Orbital Round-Trip',agency:'SpaceX',   type:'m', era:'2020s',desc:'Starship completed its first fully successful orbital flight: Super Heavy booster caught again by the mechanical arms, Starship upper stage re-entered and splashed down in the Indian Ocean. At 9 million lbs of thrust, the most powerful rocket in history demonstrated full rapid reusability.'},
-    {y:2025,date:'Nov 18',    mission:'ESA PLATO — Exoplanet Hunter Launches',    agency:'ESA',       type:'m', era:'2020s',desc:'ESA\'s PLATO (PLAnetary Transits and Oscillations of stars) telescope reached L2 carrying 26 cameras to simultaneously monitor up to a million stars. Primary goal: find Earth-sized planets in habitable zones of Sun-like stars and measure stellar ages precisely for the first time.'},
-    {y:2026,date:'Feb 14',    mission:'Artemis III — First Woman on the Moon',    agency:'NASA',      type:'m', era:'2020s',desc:'Artemis III landed the first woman and first person of colour at the lunar south pole. The crew spent 6.5 days on the surface, drilling ice cores near permanently shadowed craters and deploying the Lunar Surface Science Mobility System — humanity\'s return to the Moon after 54 years.'},
-    {y:2026,date:'Apr 10',    mission:'SpaceX Starship — Mars Cargo Precursor',   agency:'SpaceX',    type:'m', era:'2020s',desc:'Two uncrewed Starship vehicles launched toward Mars during the 2026 launch window — the optimal 26-month planetary alignment. The ships carry solar power arrays, a propellant production plant using Martian CO₂, life-support hardware, and supplies pre-positioning for the first human Mars landing targeted 2029.'},
-    {y:2026,date:'May 5',     mission:'ISRO Gaganyaan — First Indian Crewed Flight',agency:'ISRO',    type:'m', era:'2020s',desc:'India launched its first crewed spaceflight, carrying three Indian Air Force astronaut-cosmonauts to 400km LEO for a 3-day mission. India became only the fourth nation to independently send humans to space, fulfilling Prime Minister Modi\'s 2018 vision and cementing India as a major space power.'},
-    {y:2026,date:'Jun 30',    mission:'Nancy Grace Roman Space Telescope Launch',  agency:'NASA',      type:'m', era:'2020s',desc:'The Nancy Grace Roman Space Telescope — with 100× the field of view of Hubble — launched to L2. Its three missions: map dark energy across cosmic time, detect thousands of exoplanets via gravitational microlensing, and conduct an infrared survey of the universe that would take Hubble 1,000 years.'},
-  ];
+  // ── Try to fetch recent events from Spaceflight News API ──
+  // Cached in localStorage for 1 month
+  async function fetchRecentEvents(){
+    const CACHE_KEY = 'sh_api_events';
+    const CACHE_TS  = 'sh_api_ts';
+    const ONE_MONTH = 30 * 24 * 60 * 60 * 1000;
+    const now       = Date.now();
+    const lastFetch = parseInt(localStorage.getItem(CACHE_TS)||'0');
 
-  // Group by year
-  // Expose globally so Space Fact section uses same live data
-  window.SH_EVENTS = EVENTS;
+    if(now - lastFetch < ONE_MONTH){
+      try {
+        const cached = JSON.parse(localStorage.getItem(CACHE_KEY)||'[]');
+        if(cached.length) return cached;
+      } catch(e){}
+    }
 
-  const byYear = {};
-  EVENTS.forEach(ev=>{
-    if(!byYear[ev.y]) byYear[ev.y]=[];
-    byYear[ev.y].push(ev);
-  });
-  const years = Object.keys(byYear).map(Number).sort((a,b)=>a-b);
-
-  // Build ruler and strip
-  years.forEach(yr=>{
-    // Ruler tick
-    const tick = document.createElement('div');
-    tick.className='sh-ruler-yr has-events';
-    tick.dataset.year=yr;
-    tick.textContent=yr;
-    tick.style.width='300px'; // matches card width
-    tick.style.flexShrink='0';
-    tick.addEventListener('click',()=>scrollToYear(yr));
-    ruler.appendChild(tick);
-
-    // Year group card column
-    const group = document.createElement('div');
-    group.className='sh-year-group';
-    group.id='shYear'+yr;
-    group.dataset.year=yr;
-    group.dataset.era=byYear[yr][0].era;
-
-    const heading = document.createElement('div');
-    heading.className='sh-year-heading';
-    heading.textContent=yr;
-    group.appendChild(heading);
-
-    byYear[yr].forEach(ev=>{
-      const card = document.createElement('div');
-      card.className='sh-event '+({m:'milestone',s:'success',f:'failure'}[ev.type]||'');
-      const tagLabel = {m:'★ MILESTONE',s:'✓ SUCCESS',f:'✗ FAILURE'}[ev.type]||'';
-      const tagClass = ev.type;
-      card.innerHTML=`
-        <div class="sh-event-date">${ev.date}, ${ev.y}</div>
-        <div class="sh-event-head">
-          <div class="sh-event-dot"></div>
-          <div>
-            <div class="sh-event-title">${ev.mission}</div>
-            <div class="sh-event-agency">${ev.agency}</div>
-          </div>
-        </div>
-        <div class="sh-event-desc">${ev.desc}</div>
-        <span class="sh-event-tag ${tagClass}">${tagLabel}</span>
-      `;
-      card.addEventListener('click',()=>showDetail(ev, card));
-      group.appendChild(card);
-    });
-    strip.appendChild(group);
-  });
-
-  // Cards expand inline — no separate panel needed
-
-  // ── Year Slider ──────────────────────────────────
-  const slider   = document.getElementById('shYearSlider');
-  const sliderTip= document.getElementById('shSliderTip');
-  const sliderFill=document.getElementById('shSliderFill');
-  const allYears = years; // already built above
-  const minYr=allYears[0], maxYr=allYears[allYears.length-1];
-
-  function updateSliderUI(yr){
-    const pct=(yr-minYr)/(maxYr-minYr)*100;
-    if(sliderFill) sliderFill.style.width=pct+'%';
-    if(sliderTip){
-      sliderTip.textContent=yr;
-      sliderTip.style.left=pct+'%';
+    try {
+      const url = 'https://api.spaceflightnewsapi.net/v4/articles/?limit=50&ordering=-published_at';
+      const res = await fetch(url);
+      if(!res.ok) return [];
+      const data = await res.json();
+      const mapped = (data.results||[]).map(a=>{
+        const yr = new Date(a.published_at).getFullYear();
+        return {
+          y: yr,
+          date: new Date(a.published_at).toLocaleDateString('en-GB',{day:'numeric',month:'short'}),
+          mission: a.title.length>60 ? a.title.slice(0,60)+'…' : a.title,
+          agency: a.news_site||'Space News',
+          type: 's',
+          era: yr+'s',
+          desc: a.summary||a.title,
+        };
+      }).filter(e=>e.y>=2025);
+      localStorage.setItem(CACHE_KEY, JSON.stringify(mapped));
+      localStorage.setItem(CACHE_TS, String(now));
+      return mapped;
+    } catch(e){
+      return [];
     }
   }
 
-  if(slider){
-    slider.min=minYr;
-    slider.max=Math.max(maxYr, new Date().getFullYear()); // adaptive
-    slider.value=minYr;
-    updateSliderUI(minYr);
-    slider.addEventListener('input',()=>{
-      const yr=+slider.value;
-      updateSliderUI(yr);
-      // Find nearest year in our data
-      const nearest=allYears.reduce((a,b)=>Math.abs(b-yr)<Math.abs(a-yr)?b:a);
-      const el=document.getElementById('shYear'+nearest);
-      if(el) el.scrollIntoView({behavior:'smooth',block:'nearest',inline:'start'});
-    });
-  }
+  // ── Build modal content ──
+  function buildModal(extra){
+    if(modalBuilt) return;
+    modalBuilt = true;
 
-  // ── Side arrows ───────────────────────────────────
-  const arrowL=document.getElementById('shArrowL');
-  const arrowR=document.getElementById('shArrowR');
-  const ARROW_SCROLL=340;
-  if(arrowL) arrowL.addEventListener('click',()=>wrap.scrollBy({left:-ARROW_SCROLL,behavior:'smooth'}));
-  if(arrowR) arrowR.addEventListener('click',()=>wrap.scrollBy({left: ARROW_SCROLL,behavior:'smooth'}));
+    const outer   = document.getElementById('shMOuter');
+    const strip   = document.getElementById('shMStrip');
+    const slider  = document.getElementById('shModalSlider');
+    const mFill   = document.getElementById('shMFill');
+    const mTip    = document.getElementById('shMTip');
+    const mProg   = document.getElementById('shMProgress');
+    const mNote   = document.getElementById('shMNote');
+    const mLeft   = document.getElementById('shMLeft');
+    const mRight  = document.getElementById('shMRight');
+    const mCounter= document.getElementById('shMCounter');
+    if(!strip) return;
 
-  // Scroll to year
-  function scrollToYear(yr){
-    const el=document.getElementById('shYear'+yr);
-    if(el) el.scrollIntoView({behavior:'smooth',block:'nearest',inline:'start'});
-  }
+    let allEvents = [...getEvents()];
 
-  // Progress bar + ruler + slider sync on scroll
-  wrap.addEventListener('scroll',()=>{
-    const sl=wrap.scrollLeft, sw=wrap.scrollWidth-wrap.clientWidth;
-    if(progress) progress.style.width=(sw>0?Math.round(sl/sw*100):0)+'%';
-    // Find active year
-    const stripRect=wrap.getBoundingClientRect();
-    let activeYr=null;
-    strip.querySelectorAll('.sh-year-group').forEach(g=>{
-      const r=g.getBoundingClientRect();
-      if(r.left<=stripRect.left+100) activeYr=+g.dataset.year;
-    });
-    if(activeYr){
-      ruler.querySelectorAll('.sh-ruler-yr').forEach(t=>{
-        t.classList.toggle('active',+t.dataset.year===activeYr);
+    // Merge live API events (deduplicate by title)
+    if(extra && extra.length){
+      const existingTitles = new Set(allEvents.map(e=>e.mission.toLowerCase().slice(0,30)));
+      extra.forEach(ev=>{
+        if(!existingTitles.has(ev.mission.toLowerCase().slice(0,30))){
+          allEvents.push(ev);
+        }
       });
-      // Sync slider
-      if(slider && activeYr>=minYr && activeYr<=maxYr){
-        slider.value=activeYr;
-        updateSliderUI(activeYr);
-      }
+      allEvents.sort((a,b)=>a.y-b.y||(a.date||'').localeCompare(b.date||''));
     }
-  },{passive:true});
 
-  // Drag to scroll
-  let isDrag=false,dragStartX=0,dragScrollLeft=0;
-  wrap.addEventListener('mousedown',e=>{isDrag=true;dragStartX=e.pageX-wrap.offsetLeft;dragScrollLeft=wrap.scrollLeft;wrap.classList.add('dragging');});
-  wrap.addEventListener('mouseleave',()=>{isDrag=false;wrap.classList.remove('dragging');});
-  wrap.addEventListener('mouseup',  ()=>{isDrag=false;wrap.classList.remove('dragging');});
-  wrap.addEventListener('mousemove',e=>{if(!isDrag)return;e.preventDefault();wrap.scrollLeft=dragScrollLeft-(e.pageX-wrap.offsetLeft-dragStartX);});
-  // Touch
-  let tx=0;
-  wrap.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
-  wrap.addEventListener('touchend',  e=>{const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>40)wrap.scrollLeft-=dx*1.2;},{passive:true});
+    // Update window.SH_EVENTS with merged data
+    window.SH_EVENTS = allEvents;
 
-  // Keyboard when in view
-  let inView=false;
-  new IntersectionObserver(e=>{inView=e[0].isIntersecting;},{threshold:.05})
-    .observe(document.getElementById('space-history-section'));
-  document.addEventListener('keydown',e=>{
-    if(!inView)return;
-    if(e.key==='ArrowRight'){e.preventDefault();wrap.scrollBy({left:320,behavior:'smooth'});}
-    if(e.key==='ArrowLeft') {e.preventDefault();wrap.scrollBy({left:-320,behavior:'smooth'});}
-  });
+    const curYr = new Date().getFullYear();
+    const minYr = allEvents[0]?.y||1944;
+    const maxYr = Math.max(allEvents[allEvents.length-1]?.y||curYr, curYr);
+    if(slider){ slider.min=minYr; slider.max=maxYr; }
+
+    // Group by year
+    const byYear={};
+    allEvents.forEach(ev=>{ if(!byYear[ev.y])byYear[ev.y]=[];byYear[ev.y].push(ev); });
+    const years=Object.keys(byYear).map(Number).sort((a,b)=>a-b);
+
+    // Build cards
+    years.forEach(yr=>{
+      const group=document.createElement('div');
+      group.className='sh-year-group';
+      group.id='shMYear'+yr;
+      group.dataset.year=yr;
+      const h=document.createElement('div');
+      h.className='sh-year-heading';h.textContent=yr;
+      group.appendChild(h);
+      byYear[yr].forEach(ev=>{
+        const card=document.createElement('div');
+        const typeClass={m:'milestone',s:'success',f:'failure'}[ev.type]||'success';
+        card.className='sh-event '+typeClass;
+        const tagLabel={m:'★ MILESTONE',s:'✓ SUCCESS',f:'✗ FAILURE'}[ev.type]||'✓ SUCCESS';
+        const shortDesc=ev.desc&&ev.desc.length>120?ev.desc.slice(0,120)+'…':ev.desc||'';
+        card.innerHTML=`
+          <div class="sh-event-date">${ev.date||''}, ${ev.y}</div>
+          <div class="sh-event-head">
+            <div class="sh-event-dot"></div>
+            <div>
+              <div class="sh-event-title">${ev.mission}</div>
+              <div class="sh-event-agency">${ev.agency}</div>
+            </div>
+          </div>
+          <div class="sh-event-desc">${shortDesc}</div>
+          <span class="sh-event-tag ${ev.type||'s'}">${tagLabel}</span>
+          <div class="sh-event-expanded">
+            <div class="sh-event-full-body">${ev.desc||''}</div>
+            <span class="sh-event-collapse">▲ collapse</span>
+          </div>`;
+        card.addEventListener('click',function(e){
+          if(e.target.classList.contains('sh-event-collapse')){card.classList.remove('sh-open');return;}
+          const wasOpen=card.classList.contains('sh-open');
+          group.querySelectorAll('.sh-event.sh-open').forEach(c2=>c2.classList.remove('sh-open'));
+          if(!wasOpen)card.classList.add('sh-open');
+        });
+        group.appendChild(card);
+      });
+      strip.appendChild(group);
+    });
+
+    // Slider
+    function updateSlider(yr){
+      const pct=(yr-minYr)/(maxYr-minYr)*100;
+      if(mFill)mFill.style.width=pct+'%';
+      if(mTip){mTip.textContent=yr;mTip.style.left=pct+'%';}
+    }
+    if(slider){
+      slider.value=minYr;updateSlider(minYr);
+      slider.addEventListener('input',()=>{
+        const yr=+slider.value;updateSlider(yr);
+        const near=years.reduce((a,b)=>Math.abs(b-yr)<Math.abs(a-yr)?b:a);
+        const el=document.getElementById('shMYear'+near);
+        if(el)el.scrollIntoView({behavior:'smooth',block:'nearest',inline:'start'});
+      });
+    }
+
+    // Scroll progress
+    outer.addEventListener('scroll',()=>{
+      const sl=outer.scrollLeft,sw=outer.scrollWidth-outer.clientWidth;
+      if(mProg)mProg.style.width=(sw>0?Math.round(sl/sw*100):0)+'%';
+    },{passive:true});
+
+    // Side arrows
+    if(mLeft)mLeft.addEventListener('click',()=>outer.scrollBy({left:-340,behavior:'smooth'}));
+    if(mRight)mRight.addEventListener('click',()=>outer.scrollBy({left:340,behavior:'smooth'}));
+    if(mCounter)mCounter.textContent=allEvents.length+' events · 1944–'+maxYr;
+
+    // Drag to scroll
+    let isDrag=false,dsx=0,dsl=0;
+    outer.addEventListener('mousedown',e=>{isDrag=true;dsx=e.pageX-outer.offsetLeft;dsl=outer.scrollLeft;outer.classList.add('dragging');});
+    outer.addEventListener('mouseleave',()=>{isDrag=false;outer.classList.remove('dragging');});
+    outer.addEventListener('mouseup',()=>{isDrag=false;outer.classList.remove('dragging');});
+    outer.addEventListener('mousemove',e=>{if(!isDrag)return;e.preventDefault();outer.scrollLeft=dsl-(e.pageX-outer.offsetLeft-dsx);});
+    let tx=0;
+    outer.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
+    outer.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>50)outer.scrollBy({left:dx<0?340:-340,behavior:'smooth'});},{passive:true});
+
+    // Update note
+    if(mNote){
+      const lastFetch=localStorage.getItem('sh_api_ts');
+      const d=lastFetch?new Date(parseInt(lastFetch)):null;
+      mNote.textContent=d?'Last updated: '+d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})+' · Updates monthly':'Data current to '+maxYr;
+    }
+  }
+
+  // ── Public open/close functions ──
+  window.openSpaceHistory=async function(){
+    const modal=document.getElementById('shModal');
+    if(!modal)return;
+    modal.classList.add('open');
+    document.body.style.overflow='hidden';
+    if(!modalBuilt){
+      const note=document.getElementById('shMNote');
+      if(note)note.textContent='Loading space history…';
+      // Fetch fresh events in background
+      const extra=await fetchRecentEvents();
+      buildModal(extra);
+    }
+  };
+
+  window.closeSpaceHistory=function(){
+    const modal=document.getElementById('shModal');
+    if(modal)modal.classList.remove('open');
+    document.body.style.overflow='';
+  };
+
+  // Close on Escape
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')window.closeSpaceHistory();});
 })();
 
-
 </script>
+
+<!-- ══ SPACE HISTORY MODAL (lazy-loaded) ══ -->
+<div id="shModal" role="dialog" aria-modal="true" aria-label="History of Space">
+  <div class="sh-modal-bar">
+    <span class="sh-modal-title">🛸 &nbsp;History of Space &nbsp;·&nbsp; 1944 – 2026</span>
+    <button class="sh-modal-close" onclick="closeSpaceHistory()">✕ &nbsp;Close</button>
+  </div>
+  <div class="sh-modal-body" id="shModalBody">
+    <div class="sh-modal-slider-row">
+      <span class="sh-modal-yr" id="shMYrL">1944</span>
+      <div class="sh-modal-slider-wrap">
+        <div class="sh-modal-track"><div class="sh-modal-fill" id="shMFill"></div></div>
+        <input type="range" id="shModalSlider" min="1944" max="2026" step="1" value="1944" aria-label="Jump to year">
+        <div class="sh-modal-tip" id="shMTip">1944</div>
+      </div>
+      <span class="sh-modal-yr" id="shMYrR">2026</span>
+    </div>
+    <div class="sh-modal-progress-wrap"><div class="sh-modal-progress" id="shMProgress"></div></div>
+    <div class="sh-modal-strip-outer" id="shMOuter">
+      <div class="sh-modal-strip" id="shMStrip"></div>
+    </div>
+    <div class="sh-modal-arrows">
+      <button class="sh-modal-arrow" id="shMLeft">&#8249;</button>
+      <button class="sh-modal-arrow" id="shMRight">&#8250;</button>
+      <span class="sh-modal-counter" id="shMCounter"></span>
+    </div>
+    <div class="sh-modal-update-note" id="shMNote">Loading events…</div>
+  </div>
+</div>
 </body>
 </html>
