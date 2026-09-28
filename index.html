@@ -1896,7 +1896,7 @@ navAs.forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open'
 
   function satPos(o,ang,cx,cy){
     // Scale orbits down on mobile so satellites stay on screen
-    const scale = W<=860 ? Math.min(0.72, W/520) : 1;
+    const scale = W<=860 ? Math.min(1.2, W/520) : 1;
     const a = o.a*scale, b = o.b*scale;
     const cosI=Math.cos(o.inc),sinI=Math.sin(o.inc);
     const x0=a*Math.cos(ang);
@@ -1921,7 +1921,7 @@ navAs.forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open'
   /* ── Earth: realistic NASA-style ocean blue with green landmasses ── */
   function drawEarth(cx,cy){
     // Scale Earth radius with viewport — desktop R=72, mobile slightly smaller
-    const R = W<=860 ? Math.min(44, W*0.11) : Math.min(72, W*0.06);
+    const R = W<=860 ? Math.min(58, W*0.14) : Math.min(72, W*0.06);
 
     // ── 1. Deep space ambient glow behind Earth ──
     let g=ctx.createRadialGradient(cx,cy,R*.6,cx,cy,R*2.8);
