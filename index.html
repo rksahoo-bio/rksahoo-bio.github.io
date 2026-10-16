@@ -1366,7 +1366,7 @@
       <div class="chord-wrap">
         <div class="chord-header">
           <span class="chord-header-lbl"><span class="chord-live"></span>Co-author Network</span>
-          <span class="chord-badge" id="chordBadge">Co-author Details</span>
+          <span class="chord-badge" id="chordBadge">Co-author · 0</span>
         </div>
         <div class="chord-canvas-outer">
           <canvas id="chordCanvas" width="560" height="560"></canvas>
@@ -3441,7 +3441,7 @@ const PUBLICATIONS_DATA=[
     const totalCoAuthors=authors.length;
 
     // Update badges
-    if(badge)badge.textContent=`Co-author · ${totalCoAuthors}`;
+    if(badge)badge.textContent=`View Co-authors · ${totalCoAuthors}`;
     if(cfTotalEl)cfTotalEl.textContent=totalCoAuthors;
 
     const DPR=window.devicePixelRatio||1;
