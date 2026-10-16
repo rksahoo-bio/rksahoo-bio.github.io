@@ -483,6 +483,38 @@
     .chord-canvas-outer{display:flex;justify-content:center;padding:20px;position:relative}
     #chordCanvas{display:block;cursor:none}
     .chord-tooltip{position:fixed;background:rgba(3,5,10,.95);border:1px solid rgba(201,168,76,.3);padding:7px 13px;font-family:var(--mono);font-size:.65rem;color:var(--white);pointer-events:none;opacity:0;transition:opacity .15s;white-space:nowrap;border-radius:2px;z-index:9999}
+    .chord-badge{cursor:none}
+    .chord-badge:hover{background:rgba(201,168,76,.22);border-color:rgba(201,168,76,.45)}
+
+    /* ── CO-AUTHOR DETAILS MODAL ── */
+    .camodal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0);backdrop-filter:blur(0px);-webkit-backdrop-filter:blur(0px);z-index:9200;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s ease,background .3s ease,backdrop-filter .3s ease}
+    .camodal-overlay.open{opacity:1;pointer-events:all;background:rgba(0,4,12,.84);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+    .camodal{position:relative;width:min(900px,94vw);max-height:88vh;overflow-y:auto;background:rgba(3,6,14,.97);border:1px solid rgba(201,168,76,.22);box-shadow:0 0 100px rgba(201,168,76,.07),0 28px 72px rgba(0,0,0,.75);padding:0;transform:translateY(18px) scale(.97);transition:transform .35s cubic-bezier(.22,1,.36,1)}
+    .camodal-overlay.open .camodal{transform:translateY(0) scale(1)}
+    .camodal::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.65),transparent);z-index:1}
+    .camodal-head{display:flex;align-items:center;justify-content:space-between;padding:22px 30px 20px;border-bottom:1px solid rgba(201,168,76,.1);position:sticky;top:0;background:rgba(3,6,14,.99);z-index:2}
+    .camodal-title-main{font-family:'Inter',sans-serif;font-weight:800;font-size:1.12rem;color:#f0c842;letter-spacing:.03em}
+    .camodal-title-sub{font-family:var(--mono);font-size:.58rem;letter-spacing:.18em;color:rgba(201,168,76,.45);font-weight:400;margin-top:3px;text-transform:uppercase}
+    .camodal-close{width:36px;height:36px;border-radius:50%;background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.18);display:flex;align-items:center;justify-content:center;cursor:none;transition:background .2s,border-color .2s,transform .22s;color:rgba(201,168,76,.65);font-size:.9rem;line-height:1;flex-shrink:0;outline:none}
+    .camodal-close:hover{background:rgba(201,168,76,.18);border-color:rgba(201,168,76,.5);color:#f0c842;transform:rotate(90deg)}
+    .camodal-body{padding:26px 30px 30px;display:grid;grid-template-columns:repeat(auto-fill,minmax(242px,1fr));gap:16px}
+    .cacard{background:rgba(8,13,24,.8);border:1px solid rgba(201,168,76,.09);padding:22px 20px;position:relative;overflow:hidden;transition:border-color .25s,transform .28s,box-shadow .28s}
+    .cacard:hover{border-color:rgba(201,168,76,.32);transform:translateY(-4px);box-shadow:0 10px 36px rgba(201,168,76,.06)}
+    .cacard::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.22),transparent);opacity:0;transition:opacity .25s}
+    .cacard:hover::after{opacity:1}
+    .cacard.highlighted{border-color:rgba(201,168,76,.45);background:rgba(201,168,76,.04)}
+    .cacard.highlighted::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#f0c842,transparent)}
+    .cacard-num{font-family:var(--mono);font-size:.52rem;letter-spacing:.18em;color:rgba(201,168,76,.3);text-transform:uppercase;margin-bottom:12px}
+    .cacard-color{width:30px;height:3px;border-radius:2px;margin-bottom:14px}
+    .cacard-name{font-family:'Inter',sans-serif;font-weight:800;font-size:.98rem;color:#e8dfc8;line-height:1.25;margin-bottom:5px}
+    .cacard-role{font-family:var(--mono);font-size:.61rem;color:rgba(128,150,185,.72);letter-spacing:.05em;margin-bottom:14px;line-height:1.55}
+    .cacard-inst{color:rgba(201,168,76,.42);display:block;margin-top:2px}
+    .cacard-papers{font-family:var(--mono);font-size:.58rem;color:rgba(201,168,76,.5);letter-spacing:.1em;margin-bottom:15px;display:flex;align-items:center;gap:7px}
+    .cacard-papers::before{content:'';display:inline-block;width:5px;height:5px;border-radius:50%;background:currentColor;flex-shrink:0}
+    .cacard-link{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:.59rem;letter-spacing:.1em;color:rgba(77,217,240,.68);text-decoration:none;border:1px solid rgba(77,217,240,.15);padding:5px 11px;transition:color .2s,border-color .2s,background .2s;text-transform:uppercase;cursor:none}
+    .cacard-link:hover{color:#4dd9f0;border-color:rgba(77,217,240,.4);background:rgba(77,217,240,.06)}
+    .cacard-link-dim{color:rgba(128,150,185,.28);border-color:rgba(128,150,185,.1);pointer-events:none}
+    @media(max-width:600px){.camodal-body{grid-template-columns:1fr;padding:16px 16px 20px}.camodal-head{padding:16px 16px 14px}.camodal{max-height:92vh}}
 
     /* ── ANIMATIONS ── */
     @keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
@@ -4512,6 +4544,195 @@ window.gameShare=function(text){
 
 
 
+
+
+/* ══════════════════════════════════════════════════
+   CO-AUTHOR DETAILS MODAL
+   Opens when clicking the "Co-author · N" badge or an arc segment.
+══════════════════════════════════════════════════ */
+(function(){
+  /* ── Per-author detail data ──────────────────────────────────────── */
+  /* Update homepage URLs as needed. Use '#' if not available.          */
+  const CA_DETAILS={
+    'Sinha M.':{
+      fullName:'Prof. Manoranjan Sinha',
+      role:'Professor, Aerospace Engineering',
+      institute:'IIT Kharagpur',
+      homepage:'http://www.facweb.iitkgp.ac.in/~sinha/',
+    },
+    'Kini V.V.':{
+      fullName:'Vedant Vivek Kini',
+      role:'Research Scholar, Aerospace Engineering',
+      institute:'IIT Kharagpur',
+      homepage:'#',
+    },
+    'Surya D.P.':{
+      fullName:'Dantu Phani Surya',
+      role:'Research Scholar, Aerospace Engineering',
+      institute:'IIT Kharagpur',
+      homepage:'#',
+    },
+    'Choudhary P.':{
+      fullName:'P. Choudhary',
+      role:'Research Scholar, Aerospace Engineering',
+      institute:'IIT Kharagpur',
+      homepage:'#',
+    },
+    'Uppal A.':{
+      fullName:'Adeetya Uppal',
+      role:'Research Scholar, Aerospace Engineering',
+      institute:'IIT Kharagpur',
+      homepage:'#',
+    },
+    'Behera S.K.':{
+      fullName:'S. K. Behera',
+      role:'Faculty, Mechanical Engineering',
+      institute:'NIT Rourkela',
+      homepage:'#',
+    },
+    'Jaiswal A.':{
+      fullName:'Akshat Jaiswal',
+      role:'Graduate Student, Mechanical Engineering',
+      institute:'NIT Rourkela',
+      homepage:'#',
+    },
+    'Sivalingam M.':{
+      fullName:'Murugan Sivalingam',
+      role:'Faculty, Mechanical Engineering',
+      institute:'NIT Rourkela',
+      homepage:'#',
+    },
+  };
+
+  const PALETTE=[
+    '#c9a84c','#4dd9f0','#e8c96a','#77b5d4','#f0c842',
+    '#8097b5','#90cda4','#e08060','#b088cc','#d4a0b0',
+    '#70b8c8','#c8a070','#88c888','#c06070','#9090d0'
+  ];
+
+  /* ── Create overlay + modal DOM ── */
+  const overlay=document.createElement('div');
+  overlay.id='camodalOverlay';overlay.className='camodal-overlay';
+  overlay.setAttribute('role','dialog');overlay.setAttribute('aria-modal','true');
+  overlay.innerHTML=`
+    <div class="camodal" id="camodalBox">
+      <div class="camodal-head">
+        <div>
+          <div class="camodal-title-main">Co-author Network</div>
+          <div class="camodal-title-sub">// Collaboration · <span id="camodalCount">8</span> researchers</div>
+        </div>
+        <button class="camodal-close" id="camodalClose" aria-label="Close modal">✕</button>
+      </div>
+      <div class="camodal-body" id="camodalBody"></div>
+    </div>`;
+  document.body.appendChild(overlay);
+
+  const closeBtn=document.getElementById('camodalClose');
+  const body=document.getElementById('camodalBody');
+  const countEl=document.getElementById('camodalCount');
+  const badge=document.getElementById('chordBadge');
+  const chordCanvas=document.getElementById('chordCanvas');
+  const ring=document.getElementById('cursorRing');
+
+  /* ── Ring expand helper ── */
+  function ringExpand(){if(ring){ring.style.width='52px';ring.style.height='52px';ring.style.borderColor='rgba(240,200,66,.8)';}}
+  function ringReset(){if(ring){ring.style.width='34px';ring.style.height='34px';ring.style.borderColor='rgba(201,168,76,.5)';}}
+
+  /* ── Build and open modal ── */
+  function openModal(highlightName){
+    const MAIN='Sahoo R.K.';
+    const coMap={};
+    PUBLICATIONS_DATA.forEach(pub=>{
+      pub.authors.filter(a=>a!==MAIN).forEach(a=>{
+        if(!coMap[a])coMap[a]={name:a,count:0,years:new Set()};
+        coMap[a].count++;
+        coMap[a].years.add(pub.year);
+      });
+    });
+    const authors=Object.values(coMap).sort((a,b)=>b.count-a.count);
+    if(countEl)countEl.textContent=authors.length;
+
+    body.innerHTML='';
+    authors.forEach((a,i)=>{
+      const det=CA_DETAILS[a.name]||{fullName:a.name,role:'Researcher',institute:'',homepage:'#'};
+      const isHighlighted=a.name===highlightName;
+      const paperLabel=`${a.count} joint paper${a.count!==1?'s':''} · ${[...a.years].sort((x,y)=>y-x).join(', ')}`;
+      const hasLink=det.homepage&&det.homepage!=='#';
+      const linkHTML=hasLink
+        ? `<a class="cacard-link" href="${det.homepage}" target="_blank" rel="noopener noreferrer">
+             <svg width="9" height="9" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 9L9 1M9 1H4M9 1V6"/></svg>
+             Homepage
+           </a>`
+        : `<span class="cacard-link cacard-link-dim">
+             <svg width="9" height="9" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 1v8M1 5h8"/></svg>
+             Link pending
+           </span>`;
+      const card=document.createElement('div');
+      card.className='cacard'+(isHighlighted?' highlighted':'');
+      card.innerHTML=`
+        <div class="cacard-num">Collaborator · ${String(i+1).padStart(2,'0')}</div>
+        <div class="cacard-color" style="background:${PALETTE[i%PALETTE.length]}"></div>
+        <div class="cacard-name">${det.fullName}</div>
+        <div class="cacard-role">${det.role}${det.institute?'<span class="cacard-inst">'+det.institute+'</span>':''}</div>
+        <div class="cacard-papers">${paperLabel}</div>
+        ${linkHTML}`;
+      body.appendChild(card);
+    });
+
+    overlay.classList.add('open');
+    document.body.style.overflow='hidden';
+    ringReset();
+    setTimeout(()=>closeBtn.focus(),60);
+  }
+
+  function closeModal(){
+    overlay.classList.remove('open');
+    document.body.style.overflow='';
+  }
+
+  /* ── Wire badge click ── */
+  if(badge){
+    badge.addEventListener('click',()=>openModal(null));
+    badge.addEventListener('mouseenter',ringExpand);
+    badge.addEventListener('mouseleave',ringReset);
+  }
+
+  /* ── Wire arc click ── */
+  if(chordCanvas){
+    chordCanvas.addEventListener('click',e=>{
+      const arcs=chordCanvas._arcs;if(!arcs)return;
+      const rect=chordCanvas.getBoundingClientRect();
+      const scaleX=chordCanvas.offsetWidth?chordCanvas._cx*2/chordCanvas.offsetWidth:1;
+      const mx=e.clientX-rect.left, my=e.clientY-rect.top;
+      const dx=mx-chordCanvas._cx*(chordCanvas.offsetWidth/(chordCanvas._cx*2)),
+            dy=my-chordCanvas._cy*(chordCanvas.offsetHeight/(chordCanvas._cy*2));
+      // Direct coord: canvas CSS size vs logical size
+      const S=chordCanvas.offsetWidth||chordCanvas._cx*2;
+      const lS=chordCanvas._cx*2;
+      const scale=lS/S;
+      const ldx=(mx*scale)-chordCanvas._cx, ldy=(my*scale)-chordCanvas._cy;
+      const dist=Math.sqrt(ldx*ldx+ldy*ldy);
+      if(dist<chordCanvas._innerR||dist>chordCanvas._outerR+6)return;
+      let ang=Math.atan2(ldy,ldx);if(ang<-Math.PI/2)ang+=Math.PI*2;
+      for(const a of arcs){
+        let s=a.start,en=a.end;
+        if(s<-Math.PI/2)s+=Math.PI*2;if(en<-Math.PI/2)en+=Math.PI*2;
+        const testAng=ang<s?ang+Math.PI*2:ang;
+        const testEnd=en<s?en+Math.PI*2:en;
+        if(testAng>=s&&testAng<=testEnd){openModal(a.name);return;}
+      }
+    });
+  }
+
+  /* ── Close handlers ── */
+  closeBtn.addEventListener('click',closeModal);
+  overlay.addEventListener('click',e=>{if(e.target===overlay)closeModal();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&overlay.classList.contains('open'))closeModal();});
+
+  /* ── Cursor ring on modal close button ── */
+  closeBtn.addEventListener('mouseenter',ringExpand);
+  closeBtn.addEventListener('mouseleave',ringReset);
+})();
 
 </script>
 </body>
